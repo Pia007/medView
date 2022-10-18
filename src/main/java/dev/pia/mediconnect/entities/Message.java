@@ -1,9 +1,12 @@
 package dev.pia.mediconnect.entities;
 
+import java.sql.Date;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import dev.pia.mediconnect.dtos.MessageDto;
 import lombok.*;
 
 @Entity
@@ -13,7 +16,7 @@ import lombok.*;
 @AllArgsConstructor 
 public class Message {
 
-    // fields
+    /* fields */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,58 +24,32 @@ public class Message {
     @Column(columnDefinition = "TEXT", length = 1000)
     private String body;
 
+    // date posted
+    @Column(name = "date_posted")
+    private Date datePosted;
+
     @Column(columnDefinition = "TEXT", length = 1000)
     private String reply;
+
+    // date replied
+    @Column(name = "date_replied")
+    private Date dateReplied;
 
     /* relationship to patient */
     @ManyToOne
     @JsonBackReference
     private Patient patient;
 
+    /* relationship to provider */ 
+    @ManyToOne
+    @JsonBackReference
+    private Provider provider;
 
-    // constructors
-    // public Message() {
-    // }
-
-    // public Message(int id, String body, String reply, Patient patient) {
-    //     this.id = id;
-    //     this.body = body;
-    //     this.reply = reply;
-    //     this.patient = patient;
-    // }
-
-    // getters and setters
-
-    // public int getId() {
-    //     return this.id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
-
-    // public String getBody() {
-    //     return this.body;
-    // }
-
-    // public void setBody(String body) {
-    //     this.body = body;
-    // }
-
-    // public String getReply() {
-    //     return this.reply;
-    // }
-
-    // public void setReply(String reply) {
-    //     this.reply = reply;
-    // }
-
-    // public Patient getPatient() {
-    //     return this.patient;
-    // }
-
-    // public void setPatient(Patient patient) {
-    //     this.patient = patient;
-    // }
+    /* custom constructor */
+    public Message(MessageDto messageDto) {
+        if (messageDto.getId() != null) {
+            this.id = messageDto.getId();
+        }
+    }
 
 }

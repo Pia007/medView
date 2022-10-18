@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import dev.pia.mediconnect.entities.Patient;
+import dev.pia.mediconnect.entities.Provider;
 // import dev.pia.mediconnect.entities.PatientRecord;
 // import dev.pia.mediconnect.entities.Provider;
 import lombok.Data;
@@ -15,25 +16,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PatientDto implements Serializable {
 
-    // fields
+    /*fields */
     private Long id;
     private String username;
     private String password;
-    // private PatientRecord patientInfo;
-    private ProviderDto provider;
-    private PatientRecordDto patientRecord;
+    private Provider provider;
     private Set<MessageDto> messageDtoSet = new HashSet<>();
     
-
-    // public PatientDto(Provider provider) {
-    //     if (provider.getFirstName() != null) {
-    //         this.firstName = provider.getFirstName();
-    //     }
-    //     if (provider.getLastName() != null) {
-    //         this.lastName = provider.getLastName();
-    //     }
-    // }
-
+    /* custom constructor */
     public PatientDto(Patient patient) {
         if (patient.getId() != null) {
             this.id = patient.getId();
@@ -47,31 +37,4 @@ public class PatientDto implements Serializable {
 
     }
 
-    // public PatientDto(PatientRecord patientRecord) {
-    //     if (patientRecord.getId() != null) {
-    //         this.id = patientRecord.getId();
-    //     }
-    //     if (patientRecord.getFirstName() != null) {
-    //         this.firstName = patientRecord.getFirstName();
-    //     }
-    //     if (patientRecord.getLastName() != null) {
-    //         this.lastName = patientRecord.getLastName();
-    //     }
-    //     if (patientRecord.getDateOfBirth() != null) {
-    //         this.dateOfBirth = patientRecord.getDateOfBirth();
-    //     }
-    //     if (patientRecord.getEmail() != null) {
-    //         this.email = patientRecord.getEmail();
-    //     }
-    //     if (patientRecord.getInsuranceProvider() != null) {
-    //         this.insuranceProvider = patientRecord.getInsuranceProvider();
-    //     }
-    //     if (patientRecord.getAllergies() != null) {
-    //         this.allergies = patientRecord.getAllergies();
-    //     }
-    //     if (patientRecord.getConditions() != null) {
-    //         this.conditions = patientRecord.getConditions();
-    //     }
-        
-    // }
 }

@@ -1,6 +1,7 @@
 package dev.pia.mediconnect.dtos;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import dev.pia.mediconnect.entities.Message;
 import lombok.*;
@@ -13,7 +14,9 @@ public class MessageDto implements Serializable {
     //fields
     private Long id;
     private String body;
+    private Date datePosted;
     private String reply;
+    private Date dateReplied;
     private PatientDto patient;
 
     //custom constructor
@@ -25,6 +28,5 @@ public class MessageDto implements Serializable {
             this.body = message.getBody();
         }
     }
-    
     
 }

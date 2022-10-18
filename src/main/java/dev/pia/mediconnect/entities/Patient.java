@@ -1,5 +1,7 @@
 package dev.pia.mediconnect.entities;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +10,6 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import dev.pia.mediconnect.dtos.PatientDto;
-// import dev.pia.mediconnect.dtos.ProviderDto;
 import lombok.*;
 
 @Entity
@@ -29,34 +30,68 @@ public class Patient {
     @Column
     private String password;
 
-    /* provider relationship */
-    @OneToOne   // check this
-    // @JoinColumn(name = "provider_id", referencedColumnName = "id")
+    @Column(name = "first_name", length = 25, nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", length = 25, nullable = false)
+    private String lastName;
+
+    @Column(name = "date_of_birth", nullable = false)
+    private LocalDate dateOfBirth;
+
+    @Transient /* not stored in the database */
+    private int age;
+
+    @Column(name = "email", length = 30)
+    private String email;
+
+    @Column(name = "phone_number", length = 15, nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "address", length = 100, nullable = false)
+    private String address;
+
+    @Column(name = "city", length = 25, nullable = false)
+    private String city;
+
+    @Column(name = "state", length = 2, nullable = false)
+    private String state;
+
+    @Column(name = "zip_code", length = 5, nullable = false)
+    private String zipCode;
+
+    @Column(name = "insurance_provider", length = 500, nullable = false)
+    private String insuranceProvider;
+
+    @Column(name = "allergies", length = 2000)
+    private String allergies;
+
+    @Column(name = "conditions", length = 2000)
+    private String conditions;
+
+    @Column(name = "medications", length = 2000)
+    private String medications;
+
+
+    // getter and setter for age
+    public int getAge() {
+        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    /* provider relationship - many patients to one provider */
+    @ManyToOne
     @JsonBackReference
     private Provider provider;
-
-    /* patient info relationship */
-    @OneToOne
-    // @JoinColumn(name = "patient_info_id", referencedColumnName = "id")
-    @JsonBackReference
-    private PatientRecord patientInfo;
 
     
     /* message relationship - patient can have many messages */
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference
     private Set<Message> messageSet = new HashSet<>();
-
-
-    // custom constructor
-    // public Patient(ProviderDto providerDto) {
-    //     if (provider.getFirstName() != null) {
-    //         this.firstName = provider.getFirstName();
-    //     }
-    //     if (provider.getLastName() != null) {
-    //         this.lastName = provider.getLastName();
-    //     }
-    // }
 
 
     public Patient(PatientDto patientDto) {
@@ -68,68 +103,4 @@ public class Patient {
         }
     }
 
-
-
-    // public Patient() {
-    // }
-
-    // public Patient(int id, String username, String password, PatientInfo patientInfo, Provider provider) {
-    //     this.id = id;
-    //     this.username = username;
-    //     this.password = password;
-    //     this.patientInfo = patientInfo;
-    //     this.provider = provider;
-    // }
-
-    // getters and setters
-
-    // public int getId() {
-    //     return this.id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
-
-    // public String getUsername() {
-    //     return this.username;
-    // }
-
-    // public void setUsername(String username) {
-    //     this.username = username;
-    // }
-
-    // public String getPassword() {
-    //     return this.password;
-    // }
-
-    // public void setPassword(String password) {
-    //     this.password = password;
-    // }
-
-    // public Provider getProvider() {
-    //     return this.provider;
-    // }
-
-    // public void setProvider(Provider provider) {
-    //     this.provider = provider;
-    // }
-
-    // public PatientInfo getPatientInfo() {
-    //     return this.patientInfo;
-    // }
-
-    // public void setPatientInfo(PatientInfo patientInfo) {
-    //     this.patientInfo = patientInfo;
-    // }
-
-    // public Set<Message> getMessageSet() {
-    //     return this.messageSet;
-    // }
-
-    // public void setMessageSet(Set<Message> messageSet) {
-    //     this.messageSet = messageSet;
-    // }
-    
-    
 }
