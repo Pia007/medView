@@ -20,19 +20,19 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "provider_username")
+    @Column(name = "provider_username", nullable = false, unique = true)
     private String providerUsername;
 
-    @Column(name = "provider_password")
+    @Column(name = "provider_password", nullable = false)
     private String providerPassword;
 
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", length = 50)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
-    @Column(name = "specialty", length = 50)
+    @Column(name = "specialty", length = 50, nullable = false)
     private String specialty;
 
     // relationship with patient - one to many

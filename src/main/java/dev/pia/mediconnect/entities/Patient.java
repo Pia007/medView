@@ -24,10 +24,10 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "first_name", length = 25, nullable = false)
