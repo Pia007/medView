@@ -18,14 +18,14 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 50)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 50)
     private String lastName;
 
     // specialty
-    @Column(name = "specialty")
+    @Column(name = "specialty", length = 50)
     private String specialty;
 
     // relationships

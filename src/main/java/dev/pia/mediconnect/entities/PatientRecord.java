@@ -9,35 +9,35 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PatientInfo {
+public class PatientRecord {
 
     /* fields */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 25, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 25, nullable = false)
     private String lastName;
 
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", length = 25, nullable = false)
     private String dateOfBirth;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 30)
     private String email;
 
-    @Column(name = "insurance_provider")
+    @Column(name = "insurance_provider", length = 500, nullable = false)
     private String insuranceProvider;
 
-    @Column(name = "allergies")
+    @Column(name = "allergies", length = 2000)
     private String allergies;
 
-    @Column(name = "conditions")
+    @Column(name = "conditions", length = 2000)
     private String conditions;
 
-    @Column(name = "medications")
+    @Column(name = "medications", length = 2000)
     private String medications;
 
     /* relationship: owning side*/

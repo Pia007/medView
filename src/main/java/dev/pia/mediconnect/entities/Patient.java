@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import dev.pia.mediconnect.dtos.PatientDto;
+// import dev.pia.mediconnect.dtos.ProviderDto;
 import lombok.*;
 
 @Entity
@@ -19,7 +21,7 @@ public class Patient {
     // fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true)
     private String username;
@@ -37,7 +39,7 @@ public class Patient {
     @OneToOne
     // @JoinColumn(name = "patient_info_id", referencedColumnName = "id")
     @JsonBackReference
-    private PatientInfo patientInfo;
+    private PatientRecord patientInfo;
 
     
     /* message relationship - patient can have many messages */
@@ -46,7 +48,28 @@ public class Patient {
     private Set<Message> messageSet = new HashSet<>();
 
 
-    // constructors
+    // custom constructor
+    // public Patient(ProviderDto providerDto) {
+    //     if (provider.getFirstName() != null) {
+    //         this.firstName = provider.getFirstName();
+    //     }
+    //     if (provider.getLastName() != null) {
+    //         this.lastName = provider.getLastName();
+    //     }
+    // }
+
+
+    public Patient(PatientDto patientDto) {
+        if (patientDto.getUsername() != null) {
+            this.username = patientDto.getUsername();
+        }
+        if (patientDto.getPassword() != null) {
+            this.password = patientDto.getPassword();
+        }
+    }
+
+
+
     // public Patient() {
     // }
 
