@@ -15,7 +15,7 @@ public class ProviderDto implements Serializable {
     private Long id;
     private String providerUsername;
     private String providerPassword;
-    private String firsName;
+    private String firstName;
     private String lastName;
     private String specialty;
     private Set<PatientDto> patientDtoSet = new HashSet<>();
@@ -30,6 +30,15 @@ public class ProviderDto implements Serializable {
         }
         if (provider.getProviderPassword() != null) {
             this.providerPassword = provider.getProviderPassword();
+        }
+        if (provider.getFirstName() != null) {
+            this.firstName = provider.getFirstName();
+        }
+        if (provider.getLastName() != null) {
+            this.lastName = provider.getLastName();
+        }
+        if (provider.getSpecialty() != null) {
+            this.specialty = provider.getSpecialty();
         }
     }   
 }

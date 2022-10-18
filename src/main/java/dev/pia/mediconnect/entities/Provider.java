@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import dev.pia.mediconnect.dtos.ProviderDto;
 import lombok.*;
 
 @Entity
@@ -44,5 +45,26 @@ public class Provider {
     @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference
     private Set<Message> messageSet = new HashSet<>();
+
+
+    /* custom constructor */
+    public Provider(ProviderDto providerDto) {
+        
+        if (providerDto.getProviderUsername() != null) {
+            this.providerUsername = providerDto.getProviderUsername();
+        }
+        if (providerDto.getProviderPassword() != null) {
+            this.providerPassword = providerDto.getProviderPassword();
+        }
+        if (providerDto.getFirstName() != null) {
+            this.firstName = providerDto.getFirstName();
+        }
+        if (providerDto.getLastName() != null) {
+            this.lastName = providerDto.getLastName();
+        }
+        if (providerDto.getSpecialty() != null) {
+            this.specialty = providerDto.getSpecialty();
+        }
+    }
 
 }

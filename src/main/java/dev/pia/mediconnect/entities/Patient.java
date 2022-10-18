@@ -61,7 +61,7 @@ public class Patient {
     private String zipCode;
 
     @Column(name = "insurance_provider", length = 500, nullable = false)
-    private String insuranceProvider;
+    private String insurance;
 
     @Column(name = "allergies", length = 2000)
     private String allergies;
@@ -100,6 +100,45 @@ public class Patient {
         }
         if (patientDto.getPassword() != null) {
             this.password = patientDto.getPassword();
+        }
+        if (patientDto.getFirstName() != null) {
+            this.firstName = patientDto.getFirstName();
+        }
+        if (patientDto.getLastName() != null) {
+            this.lastName = patientDto.getLastName();
+        }
+        if (patientDto.getDateOfBirth() != null) {
+            this.dateOfBirth = patientDto.getDateOfBirth();
+        }
+        if (patientDto.getEmail() != null) {
+            this.email = patientDto.getEmail();
+        }
+        if (patientDto.getPhoneNumber() != null) {
+            this.phoneNumber = patientDto.getPhoneNumber();
+        }
+        if (patientDto.getAddress() != null) {
+            this.address = patientDto.getAddress();
+        }
+        if (patientDto.getCity() != null) {
+            this.city = patientDto.getCity();
+        }
+        if (patientDto.getState() != null) {
+            this.state = patientDto.getState();
+        }
+        if (patientDto.getZipCode() != null) {
+            this.zipCode = patientDto.getZipCode();
+        }
+        if (patientDto.getInsurance() != null) {
+            this.insurance = patientDto.getInsurance();
+        }
+        if (patientDto.getAllergies() != null) {
+            this.allergies = patientDto.getAllergies();
+        }
+        if (patientDto.getConditions() != null) {
+            this.conditions = patientDto.getConditions();
+        }
+        if (patientDto.getMedications() != null) {
+            this.medications = patientDto.getMedications();
         }
     }
 
