@@ -22,6 +22,10 @@ public class Admin {
     @Column(name = "admin_password")
     private String adminPassword;
 
+
+
+
+
     //constructors
     // public Admin() {
     // }
