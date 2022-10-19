@@ -52,4 +52,19 @@ public class Message {
         }
     }
 
+    public void setReplyDate(java.util.Date date) {
+    }
+
+    public void setPostDate(java.util.Date date) {
+    }
+
+    public void setProvider(Patient patient2) {
+    }
+
+    public void setProvider(com.fasterxml.jackson.databind.introspect.AccessorNamingStrategy.Provider provider2) {
+    }
+
+    public void setProvider(Provider provider2) {
+    }
+
 }

@@ -67,4 +67,9 @@ public class Provider {
         }
     }
 
+
+    public Long getProviderId() {
+        return null;
+    }
+
 }
