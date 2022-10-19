@@ -9,13 +9,6 @@ import dev.pia.mediconnect.dtos.MessageDto;
 
 public interface MessageService {
 
-//     // add a message 
-//     // @Transactional
-//     // void addMessage(MessageDto messageDto, Long id);
-
-//     // delete a message
-//     @Transactional
-//     void deleteMessage(Long messageId);
 
     // get message by id
     @Transactional
@@ -34,7 +27,6 @@ public interface MessageService {
     @Transactional
     void postMessageToProvider(MessageDto messageDto, Long providerId);
 
-
     /* provider replies to message from patient by updating reply column*/
     @Transactional
     void replyToMessage(MessageDto messageDto, Long messageId);
@@ -47,13 +39,8 @@ public interface MessageService {
     @Transactional
     void replyToMessageFromProvider(MessageDto messageDto, Long messageId);
 
-//     // get all messages 
-//     @Transactional
-//     List<MessageDto> getAllMessages();
-
-//     // get all messages
-//     // @Transactional
-//     // List<MessageDto> getAllMessagesByProvider(Long providerId);
-
+    // get all messages 
+    @Transactional
+    List<MessageDto> getAllMessages();
 
 }

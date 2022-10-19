@@ -113,32 +113,11 @@ public class MessageServiceImpl implements MessageService {
         }    
     }
 
-    /* patient replies to message from provider by updating reply column*/
+    /* get all messages */
+    @Override
+    public List<MessageDto> getAllMessages() {
+        List<Message> messageList = messageRepository.findAll();
+        return messageList.stream().map(MessageDto::new).collect(Collectors.toList());
+    }
 
-
-
-
-//     @Override
-//     public void deleteMessage(Long messageId) {
-//         // TODO Auto-generated method stub
-        
-//     }
-
-    
-
-//     @Override
-//     public List<MessageDto> getAllMessages() {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     // @Override
-//     // public void addMessage(MessageDto messageDto, Long id) {
-//     //     if (Optional<Provider> optionalProvider = providerRepository.findById(id)) {
-//     //         Message message = new Message(messageDto);
-//     //         message.setProvider(provider);
-//     //         messageRepo.saveAndFlush(message);
-//     //     }
-        
-//     // }    
 }

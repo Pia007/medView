@@ -115,66 +115,37 @@ public class ProviderServiceImpl implements ProviderService {
     //     return Collections.emptyList();
     // }
 
-//     /* get all message based on provider */
-//     @Override
-//     @Transactional
-//     public List<MessageDto> getAllMessagesByProviderId(Long providerId) {
-//         Optional<Provider> optionalProvider = providerRepository.findById(providerId);
-//         if(optionalProvider.isPresent()) {
-//             List<Message> messageList = messageRepository.findAllByProviderEquals(optionalProvider.get());
-//             return messageList.stream().map(message -> new MessageDto(message)).collect(Collectors.toList());
+    /* provider updates patient allergies, conditions, medications*/
+    @Override
+    public List<String> updatePatient(PatientDto patientDto) {
+        List<String> response = new ArrayList<>();
+        Optional<Patient> optionalPatient = patientRepository.findById(patientDto.getId());
+        if (optionalPatient.isPresent()) {
+            Patient patient = optionalPatient.get();
+            // patient.setFirstName(patientDto.getFirstName());
+            // patient.setLastName(patientDto.getLastName());
+            // patient.setAge(patientDto.getAge());
+            // patient.setGender(patientDto.getGender());
+            // patient.setAddress(patientDto.getAddress());
+            // patient.setCity(patientDto.getCity());
+            // patient.setState(patientDto.getState());
+            // patient.setZip(patientDto.getZip());
+            patient.setAllergies(patientDto.getAllergies());
+            patient.setConditions(patientDto.getConditions());
+            patient.setMedications(patientDto.getMedications());
+            // patient.setPhone(patientDto.getPhone());
+            // patient.setProviderId(patientDto.getProviderId());
+            response.add("Patient updated successfully");
+        } else {
+            response.add("Invalid Patient Id");
+        }
+        return response;
+    }
 
-//         }
-//         return Collections.emptyList();
-//     }
+    @Override
+    public List<ProviderDto> getAllProviders() {
+        List<Provider> providers = providerRepository.findAll();
+        return providers.stream().map(provider -> new ProviderDto(provider)).collect(Collectors.toList());
+    }
 
-//     /* update patients allergies, conditions, medications */
-//     @Override
-//     @Transactional
-//     public void updatePatient(Long patientId, String allergies, String conditions, String medications) {
-//         Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-//         if(optionalPatient.isPresent()) {
-//             Patient patient = optionalPatient.get();
-//             patient.setAllergies(allergies);
-//             patient.setConditions(conditions);
-//             patient.setMedications(medications);
-//         }        
-//     }
-
-
-
-
-//     /* Reply to a message */
-//     @Override
-//     @Transactional
-//     public void replyToMessage(MessageDto messageDto, Long messageId) {
-//         Optional<Message> optionalMessage = messageRepository.findById(messageId);
-//         optionalMessage.ifPresent(message -> {
-//             message.setReply(messageDto.getReply());
-//             message.setReplyDate(new Date());
-//             messageRepository.saveAndFlush(message);
-//         });
-        
-//     }
-
-//     /* send a new message to patient */
-//     @Override
-//     @Transactional
-//     public void sendMessageToPatient(MessageDto messageDto, Long patientId) {
-//         Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-//         optionalPatient.ifPresent(patient -> {
-//             Message message = new Message(messageDto);
-//             message.setPatient(patient);
-//             message.setPostDate(new Date());
-//             messageRepository.saveAndFlush(message);
-//         });
-//     }
-
-
-
-//     // @Override
-//     // public List<String> updateProvider(ProviderDto providerDto) {
-//     //     // TODO Auto-generated method stub
-//     //     return null;
-//     // }
 }

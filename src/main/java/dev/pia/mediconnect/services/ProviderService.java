@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import dev.pia.mediconnect.dtos.MessageDto;
 import dev.pia.mediconnect.dtos.PatientDto;
 import dev.pia.mediconnect.dtos.ProviderDto;
 
@@ -25,25 +24,15 @@ public interface ProviderService {
     @Transactional
     List<String> updateProvider(ProviderDto providerDto);
 
-    // get all patients where provider id is the same as the provider id
+    /* get all patients where provider id is the same as the provider id */
     @Transactional
     List<PatientDto> getAllPatientsByProviderId(Long providerId);
 
-//     // update patient allergies, conditions, or medications
-//     @Transactional 
-//     void updatePatient(Long patientId, String allergies, String conditions, String medications);
+    /* provider updates patient */
+    @Transactional
+    List<String> updatePatient(PatientDto patientDto);
 
-//     // get all messages by provider     
-//     @Transactional
-//     List<MessageDto> getAllMessagesByProviderId(Long providerId);
-
-//     // send message to a patient
-//     @Transactional
-//     void sendMessageToPatient(MessageDto messageDto, Long patientId);
-
-//     // reply to messages
-//     @Transactional
-//     void replyToMessage(MessageDto messageDto, Long messageId);
-
-    
+    /* get all providers */
+    @Transactional
+    List<ProviderDto> getAllProviders();
 }

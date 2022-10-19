@@ -93,7 +93,7 @@ public class Patient {
     @JsonBackReference
     private Set<Message> messageSet = new HashSet<>();
 
-
+    /* custom constructor */
     public Patient(PatientDto patientDto) {
         if (patientDto.getUsername() != null) {
             this.username = patientDto.getUsername();

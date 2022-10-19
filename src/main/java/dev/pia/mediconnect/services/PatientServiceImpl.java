@@ -105,60 +105,36 @@ public class PatientServiceImpl implements PatientService {
         return null;
     }
 
-//     // add/send message to provider
-//     @Override
-//     @Transactional
-//     public void sendMessageToProvider(MessageDto messageDto, Long providerId) {
-//         Optional<Provider> optionalProvider = providerRepository.findById(providerId);
-//         optionalProvider.ifPresent(provider -> {
-//             Message message = new Message(messageDto);
-//             message.setProvider(provider);
-//             message.setPostDate(new Date());
-//             messageRepository.saveAndFlush(message);
-//         });
-//     }
+    /* get patient's provider name */
+    @Override
+    @Transactional
+    public String getPatientProviderName(Long patientId) {
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+        if (optionalPatient.isPresent()) {
+            Patient patient = optionalPatient.get();
+            return patient.getProvider().getFirstName() + " " + patient.getProvider().getLastName();
+        }
+        return null;
+    }
 
+    /* get patient's provider id */
+    @Override
+    public Long getPatientProviderId(Long patientId) {
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+        if (optionalPatient.isPresent()) {
+            Patient patient = optionalPatient.get();
+            return patient.getProvider().getId();
+        }
+        return null;
+    }
 
-
-//     /* get patient's provider */
-//     @Override
-//     @Transactional
-//     public List<ProviderDto> getAllProvidersByPatient(Long patientId) {
-//         Optional<Provider> optionalProvider = providerRepository.findById(patientId);
-//         if (optionalProvider.isPresent()) {
-//             List<Provider> providerList = providerRepository.findAllByProviderEquals(optionalProvider.get());
-//             return providerList.stream().map(provider -> new ProviderDto(provider)).collect(Collectors.toList());
-//         }
-//         return Collections.emptyList();
-//     }
-
-//     /* get patient's messages */
-//     // @Override
-//     // public List<MessageDto> getAllMessagesByPatientId(Long patientId) {
-//     //     Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-//     //     if(optionalPatient.isPresent()){
-//     //         List<Message> messageList = messageRepository.findAllByPatientEquals(optionalPatient.get());
-//     //         return messageList.stream().map(MessageDto::new).collect(Collectors.toList());
-//     //     }
-//     //     return Collections.emptyList();
-//     // }
-
-
-//     /* reply to message*/
-//     @Override
-//     public void replyToMessage(MessageDto messageDto, Long messageId) {
-//         Optional<Message> optionalMessage = messageRepository.findById(messageId);
-//         optionalMessage.ifPresent(message -> {
-//             message.setReply(messageDto.getReply());
-//             message.setReplyDate(new Date());
-//             messageRepository.saveAndFlush(message);
-//         });
-//     }
-
-//     @Override
-//     public List<MessageDto> getAllMessagesByPatientId(Long patientId) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+    /* get all patients */
+    @Override
+    public List<PatientDto> getAllPatients() {
+        List<Patient> patients = patientRepository.findAll();
+        List<PatientDto> patientDtos = patients.stream().map(patient -> new PatientDto(patient))
+                .collect(Collectors.toList());
+        return patientDtos;
+    }
 
 }

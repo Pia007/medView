@@ -27,7 +27,18 @@ public interface PatientService {
     @Transactional
     public List<String> updatePatient(PatientDto patientDto);
 
-//     /*  get patient's provider */
+    /*  get patient's provider name*/
+    @Transactional
+    public String getPatientProviderName(Long patientId);
+
+    /* get patient's provider */
+    @Transactional
+    public Long getPatientProviderId(Long patientId);
+
+    /* get all patients */
+    @Transactional
+    public List<PatientDto> getAllPatients();
+    
 //     @Transactional
 //     List<ProviderDto> getAllProvidersByPatient(Long patientId);
 
