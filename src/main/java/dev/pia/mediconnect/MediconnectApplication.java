@@ -15,7 +15,7 @@ public class MediconnectApplication {
 
 	@GetMapping("/hello")
 	public String hello() {
-		return "Hello World!";
+		return "Hello! From My WORLD!";
 	}
 
 }

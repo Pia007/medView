@@ -7,6 +7,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import dev.pia.mediconnect.dtos.MessageDto;
+import dev.pia.mediconnect.dtos.PatientDto;
 import lombok.*;
 
 @Entity
@@ -65,6 +66,12 @@ public class Message {
     }
 
     public void setProvider(Provider provider2) {
+    }
+
+    public void setPatient(Patient patient2) {
+    }
+
+    public void setPatient(PatientDto patient2) {
     }
 
 }

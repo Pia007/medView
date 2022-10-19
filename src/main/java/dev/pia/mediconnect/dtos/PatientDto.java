@@ -22,7 +22,7 @@ public class PatientDto implements Serializable {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-    private int age;
+    // private int age;
     private String email;
     private String phoneNumber;
     private String address;
@@ -56,9 +56,9 @@ public class PatientDto implements Serializable {
         if (patient.getDateOfBirth() != null) {
             this.dateOfBirth = patient.getDateOfBirth();
         }
-        if (patient.getAge() != 0) {
-            this.age = patient.getAge();
-        }
+        // if (patient.getAge() != 0) {
+        //     this.age = patient.getAge();
+        // }
         if (patient.getEmail() != null) {
             this.email = patient.getEmail();
         }

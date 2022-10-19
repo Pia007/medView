@@ -13,7 +13,7 @@ public interface ProviderRepository extends JpaRepository<Provider, Long> {
 
     Optional<Provider> findByProviderUsername(String providerUsername);
 
-    List<Provider> findAllByProviderEquals(Provider provider);
+    // List<Provider> findAllByProviderEquals(Provider provider);
 
 }
     

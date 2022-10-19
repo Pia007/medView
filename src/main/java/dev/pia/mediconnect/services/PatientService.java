@@ -4,9 +4,9 @@ import java.util.*;
 
 import javax.transaction.Transactional;
 
-import dev.pia.mediconnect.dtos.MessageDto;
+// import dev.pia.mediconnect.dtos.MessageDto;
 import dev.pia.mediconnect.dtos.PatientDto;
-import dev.pia.mediconnect.dtos.ProviderDto;
+// import dev.pia.mediconnect.dtos.ProviderDto;
 
 /* create Patient Service interface */
 public interface PatientService {
@@ -27,21 +27,21 @@ public interface PatientService {
     @Transactional
     public List<String> updatePatient(PatientDto patientDto);
 
-    /*  get patient's provider */
-    @Transactional
-    List<ProviderDto> getAllProvidersByPatient(Long patientId);
+//     /*  get patient's provider */
+//     @Transactional
+//     List<ProviderDto> getAllProvidersByPatient(Long patientId);
 
-    /* get all messages by patient */
-    @Transactional
-    public List<MessageDto> getAllMessagesByPatientId(Long patientId);
+//     /* get all messages by patient */
+//     @Transactional
+//     public List<MessageDto> getAllMessagesByPatientId(Long patientId);
 
-    /* add/ send message to provider */
-    @Transactional
-    void sendMessageToProvider(MessageDto messageDto, Long providerId);
+//     /* add/ send message to provider */
+//     @Transactional
+//     void sendMessageToProvider(MessageDto messageDto, Long providerId);
 
-    /* reply to message */
-    @Transactional 
-    void replyToMessage(MessageDto messageDto, Long messageId);
+//     /* reply to message */
+//     @Transactional 
+//     void replyToMessage(MessageDto messageDto, Long messageId);
 
 
 }

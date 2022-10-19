@@ -1,7 +1,7 @@
 package dev.pia.mediconnect.entities;
 
 import java.time.LocalDate;
-import java.time.Period;
+// import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,8 +39,8 @@ public class Patient {
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @Transient /* not stored in the database */
-    private int age;
+    // @Transient /* not stored in the database */
+    // private int age;
 
     @Column(name = "email", length = 30)
     private String email;
@@ -74,13 +74,13 @@ public class Patient {
 
 
     // getter and setter for age
-    public int getAge() {
-        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
-    }
+    // public int getAge() {
+    //     return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+    // }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+    // public void setAge(int age) {
+    //     this.age = age;
+    // }
 
     /* provider relationship - many patients to one provider */
     @ManyToOne

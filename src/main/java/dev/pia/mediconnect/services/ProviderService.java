@@ -22,28 +22,28 @@ public interface ProviderService {
     Optional<ProviderDto> getProviderById(Long providerId);
 
     /* Provider Upate */
-    // @Transactional
-    // List<String> updateProvider(ProviderDto providerDto);
-
-    // get all patients by provider
     @Transactional
-    List<PatientDto> getAllPatientsByProvider(Long providerId);
+    List<String> updateProvider(ProviderDto providerDto);
 
-    // update patient allergies, conditions, or medications
-    @Transactional 
-    void updatePatient(Long patientId, String allergies, String conditions, String medications);
-
-    // get all messages by provider     
+    // get all patients where provider id is the same as the provider id
     @Transactional
-    List<MessageDto> getAllMessagesByProviderId(Long providerId);
+    List<PatientDto> getAllPatientsByProviderId(Long providerId);
 
-    // send message to a patient
-    @Transactional
-    void sendMessageToPatient(MessageDto messageDto, Long patientId);
+//     // update patient allergies, conditions, or medications
+//     @Transactional 
+//     void updatePatient(Long patientId, String allergies, String conditions, String medications);
 
-    // reply to messages
-    @Transactional
-    void replyToMessage(MessageDto messageDto, Long messageId);
+//     // get all messages by provider     
+//     @Transactional
+//     List<MessageDto> getAllMessagesByProviderId(Long providerId);
+
+//     // send message to a patient
+//     @Transactional
+//     void sendMessageToPatient(MessageDto messageDto, Long patientId);
+
+//     // reply to messages
+//     @Transactional
+//     void replyToMessage(MessageDto messageDto, Long messageId);
 
     
 }

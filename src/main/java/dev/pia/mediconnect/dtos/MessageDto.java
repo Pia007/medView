@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import dev.pia.mediconnect.entities.Message;
+import dev.pia.mediconnect.entities.Patient;
 import lombok.*;
 
 @Data
@@ -28,5 +29,21 @@ public class MessageDto implements Serializable {
             this.body = message.getBody();
         }
     }
+
+    public Patient getProvider() {
+        return null;
+    }
+
+    // public String getBody() {
+    //     return null;
+    // }
+
+    // public Patient getPatient() {
+    //     return null;
+    // }
+
+    // public Long getId() {
+    //     return null;
+    // }
     
 }
