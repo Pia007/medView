@@ -39,8 +39,12 @@ public interface MessageService {
     @Transactional
     void replyToMessageFromProvider(MessageDto messageDto, Long messageId);
 
-    // get all messages 
+    /*get all messages */
     @Transactional
     List<MessageDto> getAllMessages();
+
+    /* delete a message */
+    @Transactional
+    void deleteMessage(Long messageId);
 
 }

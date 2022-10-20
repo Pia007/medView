@@ -120,4 +120,11 @@ public class MessageServiceImpl implements MessageService {
         return messageList.stream().map(MessageDto::new).collect(Collectors.toList());
     }
 
+
+    @Override
+    public void deleteMessage(Long messageId) {
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
+        optionalMessage.ifPresent(message -> messageRepository.delete(message));
+    }
+
 }
