@@ -6,7 +6,7 @@ import dev.pia.mediconnect.dtos.AdminDto;
 import lombok.*;
 
 @Entity
-@Table
+@Table(name = "Admins")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,11 +25,11 @@ public class Admin {
 
     /* custom constructor */
     public Admin(AdminDto adminDto) {
-        if (adminDto.getId() != null) {
-            this.id = adminDto.getId();
-        }
         if (adminDto.getUsername() != null) {
             this.adminUsername = adminDto.getAdminUsername();
+        }
+        if (adminDto.getAdminPassword() != null) {
+            this.adminPassword = adminDto.getAdminPassword();
         }
     }
 }

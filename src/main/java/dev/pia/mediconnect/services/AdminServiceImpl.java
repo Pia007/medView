@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
         Optional<Admin> optionalAdmin = adminRepository.findByAdminUsername(adminDto.getAdminUsername());
 
         if (optionalAdmin.isPresent()) {
-            if (encoder.matches(adminDto.getPassword(), optionalAdmin.get().getAdminPassword())) {
+            if (encoder.matches(adminDto.getAdminPassword(), optionalAdmin.get().getAdminPassword())) {
                 response.add("Admin logged in successfully");
                 response.add(String.valueOf(optionalAdmin.get().getId()));
             } else {

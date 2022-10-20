@@ -3,12 +3,18 @@ package dev.pia.mediconnect.dtos;
 import java.io.Serializable;
 
 import dev.pia.mediconnect.entities.Admin;
+import lombok.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdminDto implements Serializable{
 
     /* fields */
     private Long id;
-    private String username;
+    private String adminUsername;
+    private String adminPassword;
+
     public Long getId() {
         return null;
     }
@@ -22,17 +28,11 @@ public class AdminDto implements Serializable{
             this.id = admin.getId();
         }
         if (admin.getAdminUsername() != null) {
-            this.username = admin.getAdminUsername();
+            this.adminUsername = admin.getAdminUsername();
         }
-    }
-    public CharSequence getAdminPassword() {
-        return null;
-    }
-    public CharSequence getPassword() {
-        return null;
-    }
-    public String getAdminUsername() {
-        return null;
+        if (admin.getAdminPassword() != null) {
+            this.adminPassword = admin.getAdminPassword();
+        }
     }
     
 }
