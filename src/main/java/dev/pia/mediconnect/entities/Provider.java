@@ -37,9 +37,9 @@ public class Provider {
     private String specialty;
 
     // relationship with patient - one to many
-    // @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    // @JsonBackReference
-    // private Set<Patient> patientSet = new HashSet<>();
+    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonBackReference
+    private Set<Patient> patientSet = new HashSet<>();
 
     // /* relationship with messages - one to many */
     // @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -49,7 +49,9 @@ public class Provider {
 
     /* custom constructor */
     public Provider(ProviderDto providerDto) {
-        
+        if (providerDto.getId() != null) {
+            this.id = providerDto.getId();
+        }
         if (providerDto.getUsername() != null) {
             this.username = providerDto.getUsername();
         }
@@ -73,6 +75,15 @@ public class Provider {
     public String toString() {
         return "Provider [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
                 + ", lastName=" + lastName + ", specialty=" + specialty + "]";
+    }
+
+
+    public Object getProviderId() {
+        return this.id;
+    }
+
+
+    public void setId(Object providerId) {
     }
 
 }

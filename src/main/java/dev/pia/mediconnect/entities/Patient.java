@@ -81,23 +81,21 @@ public class Patient {
         return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
     }
 
-    // public void setAge(int age) {
-    //     this.age = age;
-    // }
 
     /*
      relationship to patient - a record can only belong to one patient and vice
      versa
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "info_id")
-    @JsonBackReference
-    private Info info;
-
-    /* provider relationship - many patients to one provider */
     // @ManyToOne
+    // @JoinColumn(name = "info_id")
     // @JsonBackReference
     // private Provider provider;
+
+    /* provider relationship - many patients to one provider */
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    @JsonBackReference
+    private Provider provider;
 
     
     /* message relationship - patient can have many messages */
@@ -107,7 +105,7 @@ public class Patient {
 
     /* custom constructor */
     public Patient(PatientDto patientDto) {
-
+        
         if (patientDto.getUsername() != null) {
             this.username = patientDto.getUsername();
         }
@@ -153,6 +151,14 @@ public class Patient {
         if (patientDto.getMedications() != null) {
             this.medications = patientDto.getMedications();
         }
+        if (patientDto.getProvider() != null) {
+            this.provider = patientDto.getProvider();
+        }
+        if (patientDto.getProviderId() != null) {
+            Provider provider = new Provider();
+            provider.setId(patientDto.getProviderId());
+            this.provider = provider;
+        }
     }
 
     /*  toString */
@@ -163,6 +169,13 @@ public class Patient {
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
                 + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions
                 + ", medications=" + medications + "]";
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProviderId(int providerIdInt) {
     }
 
 

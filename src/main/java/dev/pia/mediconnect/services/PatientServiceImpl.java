@@ -2,6 +2,7 @@ package dev.pia.mediconnect.services;
 
 import java.util.*;
 // import java.util.stream.Collectors;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -9,64 +10,148 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.pia.mediconnect.dtos.InfoDto;
 // import dev.pia.mediconnect.dtos.MessageDto;
 import dev.pia.mediconnect.dtos.PatientDto;
+import dev.pia.mediconnect.dtos.ProviderDto;
 // import dev.pia.mediconnect.dtos.ProviderDto;
 // import dev.pia.mediconnect.entities.Message;
 import dev.pia.mediconnect.entities.Patient;
+import dev.pia.mediconnect.entities.Provider;
 // import dev.pia.mediconnect.entities.Provider;
 // import dev.pia.mediconnect.repositories.MessageRepository;
 import dev.pia.mediconnect.repositories.PatientRepository;
 // import dev.pia.mediconnect.repositories.ProviderRepository;
+import dev.pia.mediconnect.repositories.ProviderRepository;
 
 
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    @Autowired
+    
     private PatientRepository patientRepository;
+    private PasswordEncoder passwordEncoder;
+    private ProviderRepository providerRepository;
 
-//     @Autowired
-//     private MessageRepository messageRepository;
-
-//     @Autowired
-//     private ProviderRepository providerRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
+    /* constructor injection */
+    public PatientServiceImpl(PatientRepository patientRepository, PasswordEncoder passwordEncoder, ProviderRepository providerRepository) {
+        this.patientRepository = patientRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.providerRepository = providerRepository;
+    }
 
 
-    /* use patientDto to register a patient */
+
+    /* provider registers a patient with username an password*/
     @Override
     @Transactional
-    public List<String> registerPatient(PatientDto patientDto) {
+    public List<String> registerPatient(PatientDto patientDto, Long providerId) {
         List<String> response = new ArrayList<>();
-        Patient patient = new Patient(patientDto);
-        patientRepository.saveAndFlush(patient);
-        response.add("Patient registered successfully");
+        Optional<Provider> optionalProvider = providerRepository.findById(providerId);
+        // if provider exists get provider id
+        if (optionalProvider.isPresent()) {
+
+            Provider provider = optionalProvider.get();
+            Optional<Patient> optionalPatient = patientRepository.findByUsername(patientDto.getUsername());
+            if (optionalPatient.isPresent()) {
+                return Arrays.asList("Patient already exists");
+            } else {
+                Patient patient = new Patient();
+                patient.setUsername(patientDto.getUsername());
+                patient.setPassword(passwordEncoder.encode(patientDto.getPassword()));
+                patient.setProvider(provider);
+                patientRepository.saveAndFlush(patient);
+                response.add("Patient registered");
+            }
+            // } else {
+            //     return Arrays.asList("Invalid password");
+            // }
+        } else {
+            response.add("Invalid provider");
+        }
+    // public List<String> registerPatient(PatientDto patientDto) {
+        
+    //     List<String> response = new ArrayList<>();
+
+    //     Patient patient = new Patient(patientDto);
+    //     patientRepository.saveAndFlush(patient);
+    //     response.add("Patient registered bsuccessfully by provider");
         return response;
     }
 
-    /* use patientDto to login patient */
+    /* get all patients by provider id */
+    @Override
+    @Transactional
+    public List<PatientDto> getAllPatientsByProviderId(Long providerId) {
+        Optional<Provider> optionalProvider = providerRepository.findById(providerId);
+        if (optionalProvider.isPresent()) {
+            // Provider provider = optionalProvider.get();
+            List<Patient> patientList = patientRepository.findAllByProviderEquals(optionalProvider.get());
+            return patientList.stream().map(PatientDto::new).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
 
+
+
+    /* login patient */
     @Override
     @Transactional
     public List<String> loginPatient(PatientDto patientDto) {
         List<String> response = new ArrayList<>();
         Optional<Patient> optionalPatient = patientRepository.findByUsername(patientDto.getUsername());
 
+        // if optionalPatient is present
         if (optionalPatient.isPresent()) {
-            if (encoder.matches(patientDto.getPassword(), optionalPatient.get().getPassword())) {
-                response.add("Patient logged in successfully");
+            System.out.println("patientDto.getUsername() " + patientDto.getUsername() + " does exist in the database");
+        } else {
+            System.out.println("patientDto.getUsername() " + patientDto.getUsername() + " patient does not exist the database");
+        }
+
+        if (optionalPatient.isPresent()) {
+            if (passwordEncoder.matches(patientDto.getPassword(), optionalPatient.get().getPassword())) {
+                response.add("Patient logged in");
                 response.add(String.valueOf(optionalPatient.get().getId()));
             } else {
                 response.add("Invalid password");
+                // return response;
             }
         } else {
-            response.add("Invalid Patient username or password");
+            response.add("Invalid patient");
+            
         }
+
         return response;
+        //     if (optionalPatient.isPresent()) {
+        //         System.out.println("patientDto.getUsername() " + patientDto.getUsername());
+        //         if (passwordEncoder.matches(patientDto.getPassword(), optionalPatient.get().getPassword())) {
+        //             response.add("Patient logged in successfully");
+        //             response.add(String.valueOf(optionalPatient.get().getId()));
+        //         } else {
+        //             response.add("Username or password is incorrect");
+        //         }
+        //     } else {
+        //         response.add("Username or password is incorrect");
+        //     }
+        // return response;
+        // } else {
+        //     return Arrays.asList("Invalid provider");
+        // }
+        // List<String> response = new ArrayList<>();
+        // Optional<Patient> optionalPatient = patientRepository.findByUsername(patientDto.getUsername());
+        // System.out.println("patientDto.getUsername() " + patientDto.getUsername());
+        // if (optionalPatient.isPresent()) {
+        //     if (passwordEncoder.matches(patientDto.getPassword(), optionalPatient.get().getPassword())) {
+        //         System.out.println("optionalPatient.get().getPassword(): " + optionalPatient.get().getPassword());
+        //         System.out.println("patientDto.getPassword(): " + patientDto.getPassword());
+        //         response.add("Patient logged in successfully");
+        //         response.add(String.valueOf(optionalPatient.get().getId()));
+        //     } else {
+        //         response.add("Invalid password");
+        //     }
+        // } else {
+        //     response.add("Invalid Patient username or password");
+        // }
+        // return response;
     }
 
     /* get patient by patient id */
@@ -136,6 +221,27 @@ public class PatientServiceImpl implements PatientService {
             patientDtos.add(new PatientDto(patient));
         }
         return patientDtos;
+    }
+
+    /* provider adds a patient */
+    @Override
+    @Transactional
+    public List<String> addPatient(PatientDto patientDto, Long providerId) {
+        Optional<Provider> optionalProvider = providerRepository.findById(providerId);
+        if (optionalProvider.isPresent()) {
+            Provider provider = optionalProvider.get();
+            Patient patient = new Patient(patientDto);
+            // patient.setProvider(provider);
+            patientRepository.saveAndFlush(patient);
+            return Arrays.asList("Patient added successfully");
+        }
+        return Arrays.asList("Provider not found");
+
+        // List<String> response = new ArrayList<>();
+        // Patient patient = new Patient(patientDto);
+        // patientRepository.saveAndFlush(patient);
+        // response.add("Patient added successfully");
+        // return response;
     }
 
     // @Override

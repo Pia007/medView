@@ -34,7 +34,7 @@ public class PatientDto implements Serializable {
     private String insurance;
     private String conditions;
     private String medications;
-    // private Provider provider;
+    private Provider provider;
     // private Set<MessageDto> messageDtoSet = new HashSet<>();
 
 
@@ -50,6 +50,10 @@ public class PatientDto implements Serializable {
     
     /* custom constructor */
     public PatientDto(Patient patient) {
+        // CHECK HERE IF IT DOESN'T WORK
+        if (patient.getProvider() != null) {
+            this.provider = patient.getProvider();
+        }
         
         if (patient.getId() != null) {
             this.id = patient.getId();
@@ -69,9 +73,9 @@ public class PatientDto implements Serializable {
         if (patient.getDateOfBirth() != null) {
             this.dateOfBirth = patient.getDateOfBirth();
         }
-        // if (patient.getAge() != 0) {
-        //     this.age = patient.getAge();
-        // }
+        if (patient.getAge() != 0) {
+            this.age = patient.getAge();
+        }
         if (patient.getEmail() != null) {
             this.email = patient.getEmail();
         }
@@ -90,9 +94,6 @@ public class PatientDto implements Serializable {
         if (patient.getZip() != null) {
             this.zip = patient.getZip();
         }
-        // if (patient.getProvider() != null) {
-        //     this.provider = patient.getProvider();
-        // }
         if (patient.getInsurance() != null) {
             this.insurance = patient.getInsurance();
         }
@@ -105,7 +106,23 @@ public class PatientDto implements Serializable {
         if (patient.getMedications() != null) {
             this.medications = patient.getMedications();
         }
+        if (patient.getProvider() != null) {
+            this.provider = patient.getProvider();
+        }
     }
+
+
+
+    public Object getProviderId() {
+        return null;
+    }
+
+    //patientDtoSet
+    // private Set<PatientDto> patientDtoSet = new HashSet<>();
+
+    // public Long getProviderId() {
+    //     return null;
+    // }
 
     // public String getInsuranceProvider() {
     //     return null;

@@ -13,26 +13,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.pia.mediconnect.dtos.PatientDto;
+import dev.pia.mediconnect.dtos.ProviderDto;
 import dev.pia.mediconnect.services.PatientService;
 
 @RestController
 @RequestMapping("api/v1/patients")
 public class PatientController {
 
-    @Autowired
+    
     private PatientService patientService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
-    public List<String> registerPatient(@RequestBody PatientDto patientDto) {
-        patientDto.setPassword(passwordEncoder.encode(patientDto.getPassword()));
-        return patientService.registerPatient(patientDto);
+    @Autowired
+    public PatientController(PatientService patientService, PasswordEncoder passwordEncoder) {
+        this.patientService = patientService;
+        this.passwordEncoder = passwordEncoder;
     }
+
+    /* provider registers patient */
+
+    @PostMapping("/register/{providerId}")
+    public List<String> registerPatient(@RequestBody PatientDto patientDto, @PathVariable Long providerId) {
+        patientDto.setPassword(passwordEncoder.encode(patientDto.getPassword()));
+        return patientService.registerPatient(patientDto, providerId);
+    }
+    
+    /* patient registers  */
+    // @PostMapping("/register")
+    // public List<String> registerPatient(@RequestBody PatientDto patientDto) {
+    //     patientDto.setPassword(passwordEncoder.encode(patientDto.getPassword()));
+    //     return patientService.registerPatient(patientDto);
+    // }
 
     @PostMapping("/login")
     public List<String> loginPatient(@RequestBody PatientDto patientDto) {
+       
         return patientService.loginPatient(patientDto);
     }
 
@@ -58,6 +73,18 @@ public class PatientController {
     @GetMapping
     public List<PatientDto> getAllPatients() {
         return patientService.getAllPatients();
+    }
+
+    /* provider adds a patient */
+    @PostMapping("/provider/{providerId}")
+    public List<String> addPatient(@RequestBody PatientDto patientDto, @PathVariable Long providerId) {
+        return patientService.addPatient(patientDto, providerId);
+    }
+
+    /* get all patients by provider id */
+    @GetMapping("/provider/{providerId}")
+    public List<PatientDto> getAllPatientsByProviderId(@PathVariable Long providerId) {
+        return patientService.getAllPatientsByProviderId(providerId);
     }
 
     

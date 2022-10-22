@@ -20,7 +20,6 @@ public interface ProviderService {
     @Transactional
     ProviderDto getProviderById(Long providerId);
 
-
     /* update provider */
     @Transactional
     List<String> updateProvider(ProviderDto providerDto);

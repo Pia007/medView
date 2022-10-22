@@ -37,12 +37,6 @@ public class ProviderController {
         return providerService.registerProvider(providerDto);
     }
 
-
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
-
     @PostMapping("/login")
     public List<String> loginProvider(@RequestBody ProviderDto providerDto) {
         return providerService.loginProvider(providerDto);
@@ -64,5 +58,12 @@ public class ProviderController {
     public List<String> updateProvider(@RequestBody ProviderDto providerDto) {
         return providerService.updateProvider(providerDto);
     }
+
+    // /* provider adds a patient */
+    // @PostMapping("/addPatient")
+    // public List<String> addPatient(@RequestBody ProviderDto providerDto) {
+    //     return providerService.addPatient(providerDto);
+    // }
+
     
 }
