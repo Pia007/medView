@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.transaction.Transactional;
 
+import dev.pia.mediconnect.dtos.InfoDto;
 // import dev.pia.mediconnect.dtos.MessageDto;
 import dev.pia.mediconnect.dtos.PatientDto;
 // import dev.pia.mediconnect.dtos.ProviderDto;
@@ -11,33 +12,42 @@ import dev.pia.mediconnect.dtos.PatientDto;
 /* create Patient Service interface */
 public interface PatientService {
 
-    /* use patientDto to register a patient */
+    /* use patientDto to register a patient and add the id  */
     @Transactional
+
     public List<String> registerPatient(PatientDto patientDto);
 
     /* use patientDto to login patient */
     @Transactional
     public List<String> loginPatient(PatientDto patientDto);
 
-    /* patient by id */
+    /* patient by patient id */
     @Transactional
-    public Optional<PatientDto> getPatientById(Long patientId);
+    public PatientDto getPatientById(Long patientId);
 
-    /* use patientDto to update patient email, address, phone number, or insurance */
+    /* update patient */
     @Transactional
     public List<String> updatePatient(PatientDto patientDto);
-
-    /*  get patient's provider name*/
+   
+    /* update patient name only */
     @Transactional
-    public String getPatientProviderName(Long patientId);
-
-    /* get patient's provider */
-    @Transactional
-    public Long getPatientProviderId(Long patientId);
-
+    public List<String> updatePatientName(PatientDto patientDto);
+        
     /* get all patients */
     @Transactional
     public List<PatientDto> getAllPatients();
+    
+    /*  get patient's provider name*/
+    // @Transactional
+    // public String getPatientProviderName(Long patientId);
+
+    /* get patient's provider */
+    // @Transactional
+    // public Long getPatientProviderId(Long patientId);
+
+    /* get all patients */
+    // @Transactional
+    // public List<PatientDto> getAllPatients();
     
 //     @Transactional
 //     List<ProviderDto> getAllProvidersByPatient(Long patientId);

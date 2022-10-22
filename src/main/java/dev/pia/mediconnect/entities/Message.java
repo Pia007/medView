@@ -37,14 +37,14 @@ public class Message {
     private Date dateReplied;
 
     /* relationship to patient */
-    @ManyToOne
-    @JsonBackReference
-    private Patient patient;
+    // @ManyToOne
+    // @JsonBackReference
+    // private Patient patient;
 
     /* relationship to provider */ 
-    @ManyToOne
-    @JsonBackReference
-    private Provider provider;
+    // @ManyToOne
+    // @JsonBackReference
+    // private Provider provider;
 
     /* custom constructor */
     public Message(MessageDto messageDto) {
@@ -59,14 +59,14 @@ public class Message {
     public void setPostDate(java.util.Date date) {
     }
 
-    public void setProvider(Patient patient2) {
-    }
+    // public void setProvider(PatientDto patientDto) {
+    // }
 
-    public void setProvider(com.fasterxml.jackson.databind.introspect.AccessorNamingStrategy.Provider provider2) {
-    }
+    // public void setProvider(com.fasterxml.jackson.databind.introspect.AccessorNamingStrategy.Provider provider2) {
+    // }
 
-    public void setProvider(Provider provider2) {
-    }
+    // public void setProvider(Provider provider2) {
+    // }
 
     public void setPatient(Patient patient2) {
     }

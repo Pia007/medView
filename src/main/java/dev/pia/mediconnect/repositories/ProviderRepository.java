@@ -10,8 +10,13 @@ import dev.pia.mediconnect.entities.Provider;
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
 
-    Optional<Provider> findByProviderUsername(String providerUsername);
+    Optional<Provider> findByUsername(String username);
 
+    // get provider by provider id
+    Optional<Provider> findById(Long id);
+
+    // update provider
+    
     // List<Provider> findAllByProviderEquals(Provider provider);
 
 }

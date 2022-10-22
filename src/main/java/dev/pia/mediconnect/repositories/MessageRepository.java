@@ -13,8 +13,8 @@ import dev.pia.mediconnect.entities.Provider;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    List<Message> findAllByPatientEquals(Patient patient);
+    // List<Message> findAllByPatientEquals(Patient patient);
 
-    List<Message> findAllByProviderEquals(Provider provider);
+    // List<Message> findAllByProviderEquals(Provider provider);
 
 }

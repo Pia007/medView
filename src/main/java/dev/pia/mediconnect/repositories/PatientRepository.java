@@ -3,6 +3,8 @@ package dev.pia.mediconnect.repositories;
 import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import dev.pia.mediconnect.entities.Patient;
@@ -13,7 +15,13 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
      Optional<Patient> findByUsername(String username);
 
-    List<Patient> findAllByProviderId(Long providerId);
+     // get patient by patient id
+     Optional<Patient> findById(Long id);
+
+     
+
+
+//     List<Patient> findAllByProviderId(Long providerId);
 
 //     List<Patient> findAllByProviderEquals(Provider provider);
 

@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+
 public class PatientDto implements Serializable {
 
     /*fields */
@@ -22,22 +23,34 @@ public class PatientDto implements Serializable {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-    // private int age;
+    private int age;
     private String email;
-    private String phoneNumber;
+    private String phone;
     private String address;
     private String city;
     private String state;
-    private String zipCode;
+    private String zip;
     private String allergies;
     private String insurance;
     private String conditions;
     private String medications;
-    private Provider provider;
-    private Set<MessageDto> messageDtoSet = new HashSet<>();
+    // private Provider provider;
+    // private Set<MessageDto> messageDtoSet = new HashSet<>();
+
+
+
+    // public Set<MessageDto> getMessageDtoSet() {
+    //     return this.messageDtoSet;
+    // }
+
+    // public void setMessageDtoSet(Set<MessageDto> messageDtoSet) {
+    //     this.messageDtoSet = messageDtoSet;
+    // }
+    
     
     /* custom constructor */
     public PatientDto(Patient patient) {
+        
         if (patient.getId() != null) {
             this.id = patient.getId();
         }
@@ -62,8 +75,8 @@ public class PatientDto implements Serializable {
         if (patient.getEmail() != null) {
             this.email = patient.getEmail();
         }
-        if (patient.getPhoneNumber() != null) {
-            this.phoneNumber = patient.getPhoneNumber();
+        if (patient.getPhone() != null) {
+            this.phone = patient.getPhone();
         }
         if (patient.getAddress() != null) {
             this.address = patient.getAddress();
@@ -74,12 +87,12 @@ public class PatientDto implements Serializable {
         if (patient.getState() != null) {
             this.state = patient.getState();
         }
-        if (patient.getZipCode() != null) {
-            this.zipCode = patient.getZipCode();
+        if (patient.getZip() != null) {
+            this.zip = patient.getZip();
         }
-        if (patient.getProvider() != null) {
-            this.provider = patient.getProvider();
-        }
+        // if (patient.getProvider() != null) {
+        //     this.provider = patient.getProvider();
+        // }
         if (patient.getInsurance() != null) {
             this.insurance = patient.getInsurance();
         }
@@ -94,8 +107,8 @@ public class PatientDto implements Serializable {
         }
     }
 
-    public String getInsuranceProvider() {
-        return null;
-    }
+    // public String getInsuranceProvider() {
+    //     return null;
+    // }
 
 }

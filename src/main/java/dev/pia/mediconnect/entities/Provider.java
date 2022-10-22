@@ -21,40 +21,40 @@ public class Provider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "provider_username", nullable = false, unique = true)
-    private String providerUsername;
+    @Column(unique = true)
+    private String username;
 
-    @Column(name = "provider_password", nullable = false)
-    private String providerPassword;
+    @Column
+    private String password;
 
-    @Column(name = "first_name", length = 50, nullable = false)
+    @Column(name = "first_name", length = 50)
     private String firstName;
 
-    @Column(name = "last_name", length = 50, nullable = false)
+    @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Column(name = "specialty", length = 50, nullable = false)
+    @Column(name = "specialty", length = 50)
     private String specialty;
 
     // relationship with patient - one to many
-    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference
-    private Set<Patient> patientSet = new HashSet<>();
+    // @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    // @JsonBackReference
+    // private Set<Patient> patientSet = new HashSet<>();
 
-    /* relationship with messages - one to many */
-    @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonBackReference
-    private Set<Message> messageSet = new HashSet<>();
+    // /* relationship with messages - one to many */
+    // @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    // @JsonBackReference
+    // private Set<Message> messageSet = new HashSet<>();
 
 
     /* custom constructor */
     public Provider(ProviderDto providerDto) {
         
-        if (providerDto.getProviderUsername() != null) {
-            this.providerUsername = providerDto.getProviderUsername();
+        if (providerDto.getUsername() != null) {
+            this.username = providerDto.getUsername();
         }
-        if (providerDto.getProviderPassword() != null) {
-            this.providerPassword = providerDto.getProviderPassword();
+        if (providerDto.getPassword() != null) {
+            this.password = providerDto.getPassword();
         }
         if (providerDto.getFirstName() != null) {
             this.firstName = providerDto.getFirstName();
@@ -68,8 +68,11 @@ public class Provider {
     }
 
 
-    public Long getProviderId() {
-        return null;
+    /* toString */
+    @Override
+    public String toString() {
+        return "Provider [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+                + ", lastName=" + lastName + ", specialty=" + specialty + "]";
     }
 
 }

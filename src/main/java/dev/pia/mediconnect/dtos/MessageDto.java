@@ -18,7 +18,7 @@ public class MessageDto implements Serializable {
     private Date datePosted;
     private String reply;
     private Date dateReplied;
-    private PatientDto patient;
+    // private PatientDto patient;
 
     //custom constructor
     public MessageDto(Message message) {
@@ -30,9 +30,11 @@ public class MessageDto implements Serializable {
         }
     }
 
-    public Patient getProvider() {
-        return null;
-    }
+    // public PatientDto getProvider() {
+    //     this.patient = new PatientDto();
+    //     return this.patient;
+
+    // }
 
     // public String getBody() {
     //     return null;
