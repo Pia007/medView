@@ -26,7 +26,11 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
      List<Patient> findAllByProviderEquals(Provider provider);
      
-     // provider registers a patient
+     // provider edits patient
+     // @Modifying
+     // @Query("UPDATE Patient p SET p.firstName = ?1, p.lastName = ?2, p.dob = ?3, p.email = ?4, p.phone = ?5, p.address = ?6, p.city = ?7, p.state = ?8, p.zip = ?9 WHERE p.id = ?10")
+     // void updatePatient(String firstName, String lastName, LocalDate dob, String email, String phone, String address, String city, String state, String zip, Long id);
+     
 
 
      

@@ -15,7 +15,7 @@ public interface ProviderRepository extends JpaRepository<Provider, Long> {
     // get provider by provider id
     Optional<Provider> findById(Long id);
 
-    // update provider
+    // provider edits patient
     
     // List<Provider> findAllByProviderEquals(Provider provider);
 

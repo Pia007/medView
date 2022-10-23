@@ -207,6 +207,23 @@ public class PatientServiceImpl implements PatientService {
         return patientDtos;
     }
 
+    /* get patient's providers */
+    // @Override
+    // @Transactional
+    // public ProviderDto getPatientProvider(Long patientId) {
+    //     Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+    //     if (optionalPatient.isPresent()) {
+    //         Patient patient = optionalPatient.get();
+    //         List<Provider> providers = patient.getProvider();
+    //         List<ProviderDto> providerDtos = new ArrayList<>();
+    //         for (Provider provider : providers) {
+    //             providerDtos.add(new ProviderDto(provider));
+    //         }
+    //         return providerDtos;
+    //     }
+    //     return null;
+    // }
+
 
     // @Override
     // @Transactional

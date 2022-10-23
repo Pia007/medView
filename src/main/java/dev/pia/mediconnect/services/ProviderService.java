@@ -27,6 +27,9 @@ public interface ProviderService {
     /* get all providers */
     List<ProviderDto> getAllProviders();
 
+   
+
+
     // /* get all patients where provider id is the same as the provider id */
     // @Transactional
     // List<PatientDto> getAllPatientsByProviderId(Long providerId);

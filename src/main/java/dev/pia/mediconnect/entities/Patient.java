@@ -89,14 +89,14 @@ public class Patient {
     // private Provider provider;
 
     /* provider relationship - many patients to one provider */
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY,  cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "provider_id")
     @JsonBackReference
     private Provider provider;
 
     @OneToOne
     @JsonBackReference
-    private Records records;
+    private MedicalRecord medicalRecord;
 
     // getter and setter for age
     public int getAge() {
@@ -179,6 +179,9 @@ public class Patient {
     public Provider getProvider() {
         return provider;
     }
+
+	public void addMedicalRecord(MedicalRecord medicalRecord) {
+	}
 
     // public void setProviderId(int providerIdInt) {
     // }

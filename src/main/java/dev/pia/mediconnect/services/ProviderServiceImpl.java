@@ -97,6 +97,13 @@ public class ProviderServiceImpl implements ProviderService {
         return providers.stream().map(provider -> new ProviderDto(provider)).collect(Collectors.toList());
     }
 
+    
+
+    // /* provider updates patient */
+    // @Override
+    // @Transactional
+    
+
     // @Override
     // @Transactional
     // public List<String> updateProvider(ProviderDto providerDto) {
