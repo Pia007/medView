@@ -6,9 +6,7 @@ import java.util.*;
 
 import dev.pia.mediconnect.entities.Patient;
 import dev.pia.mediconnect.entities.Provider;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +20,7 @@ public class PatientDto implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    private LocalDate dob;
     private int age;
     private String email;
     private String phone;
@@ -51,9 +49,9 @@ public class PatientDto implements Serializable {
     /* custom constructor */
     public PatientDto(Patient patient) {
         // CHECK HERE IF IT DOESN'T WORK
-        if (patient.getProvider() != null) {
-            this.provider = patient.getProvider();
-        }
+        // if (patient.getProvider() != null) {
+        //     this.provider = patient.getProvider();
+        // }
         
         if (patient.getId() != null) {
             this.id = patient.getId();
@@ -70,8 +68,8 @@ public class PatientDto implements Serializable {
         if (patient.getLastName() != null) {
             this.lastName = patient.getLastName();
         }
-        if (patient.getDateOfBirth() != null) {
-            this.dateOfBirth = patient.getDateOfBirth();
+        if (patient.getDob() != null) {
+            this.dob = patient.getDob();
         }
         if (patient.getAge() != 0) {
             this.age = patient.getAge();
@@ -113,9 +111,9 @@ public class PatientDto implements Serializable {
 
 
 
-    public Object getProviderId() {
-        return null;
-    }
+    // public Object getProviderId() {
+    //     return null;
+    // }
 
     //patientDtoSet
     // private Set<PatientDto> patientDtoSet = new HashSet<>();

@@ -38,9 +38,9 @@ public class Patient {
     @Column(name = "last_name", length = 25)
     private String lastName;
 
-    @Column(name = "date_of_birth")
+    @Column(name = "dob")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dateOfBirth;
+    private LocalDate dob;
 
     @Transient /* not stored in the database */
     private int age;
@@ -76,10 +76,7 @@ public class Patient {
     private String medications;
 
 
-    // getter and setter for age
-    public int getAge() {
-        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
-    }
+   
 
 
     /*
@@ -92,12 +89,20 @@ public class Patient {
     // private Provider provider;
 
     /* provider relationship - many patients to one provider */
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "provider_id")
     @JsonBackReference
     private Provider provider;
 
-    
+    @OneToOne
+    @JsonBackReference
+    private Records records;
+
+    // getter and setter for age
+    public int getAge() {
+        return Period.between(this.dob, LocalDate.now()).getYears();
+    }
+
     /* message relationship - patient can have many messages */
     // @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     // @JsonBackReference
@@ -118,8 +123,8 @@ public class Patient {
         if (patientDto.getLastName() != null) {
             this.lastName = patientDto.getLastName();
         }
-        if (patientDto.getDateOfBirth() != null) {
-            this.dateOfBirth = patientDto.getDateOfBirth();
+        if (patientDto.getDob() != null) {
+            this.dob = patientDto.getDob();
         }
         if (patientDto.getEmail() != null) {
             this.email = patientDto.getEmail();
@@ -154,18 +159,18 @@ public class Patient {
         if (patientDto.getProvider() != null) {
             this.provider = patientDto.getProvider();
         }
-        if (patientDto.getProviderId() != null) {
-            Provider provider = new Provider();
-            provider.setId(patientDto.getProviderId());
-            this.provider = provider;
-        }
+        // if (patientDto.getProviderId() != null) {
+        //     Provider provider = new Provider();
+        //     provider.setId(patientDto.getProviderId());
+        //     this.provider = provider;
+        // }
     }
 
     /*  toString */
     @Override
     public String toString() {
         return "Patient [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", age=" + age + ", email=" + email
+                + ", lastName=" + lastName + ", dob=" + dob + ", age=" + age + ", email=" + email
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
                 + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions
                 + ", medications=" + medications + "]";
@@ -175,8 +180,8 @@ public class Patient {
         return provider;
     }
 
-    public void setProviderId(int providerIdInt) {
-    }
+    // public void setProviderId(int providerIdInt) {
+    // }
 
 
 }

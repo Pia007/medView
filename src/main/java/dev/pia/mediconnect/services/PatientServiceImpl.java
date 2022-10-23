@@ -1,7 +1,6 @@
 package dev.pia.mediconnect.services;
 
 import java.util.*;
-// import java.util.stream.Collectors;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -13,14 +12,9 @@ import org.springframework.stereotype.Service;
 // import dev.pia.mediconnect.dtos.MessageDto;
 import dev.pia.mediconnect.dtos.PatientDto;
 import dev.pia.mediconnect.dtos.ProviderDto;
-// import dev.pia.mediconnect.dtos.ProviderDto;
-// import dev.pia.mediconnect.entities.Message;
 import dev.pia.mediconnect.entities.Patient;
 import dev.pia.mediconnect.entities.Provider;
-// import dev.pia.mediconnect.entities.Provider;
-// import dev.pia.mediconnect.repositories.MessageRepository;
 import dev.pia.mediconnect.repositories.PatientRepository;
-// import dev.pia.mediconnect.repositories.ProviderRepository;
 import dev.pia.mediconnect.repositories.ProviderRepository;
 
 
@@ -40,7 +34,6 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-
     /* provider registers a patient with username an password*/
     @Override
     @Transactional
@@ -58,23 +51,17 @@ public class PatientServiceImpl implements PatientService {
                 Patient patient = new Patient();
                 patient.setUsername(patientDto.getUsername());
                 patient.setPassword(passwordEncoder.encode(patientDto.getPassword()));
+                patient.setFirstName(patientDto.getFirstName());
+                patient.setLastName(patientDto.getLastName());
+                patient.setDob(patientDto.getDob());
                 patient.setProvider(provider);
                 patientRepository.saveAndFlush(patient);
                 response.add("Patient registered");
             }
-            // } else {
-            //     return Arrays.asList("Invalid password");
-            // }
         } else {
             response.add("Invalid provider");
         }
-    // public List<String> registerPatient(PatientDto patientDto) {
-        
-    //     List<String> response = new ArrayList<>();
 
-    //     Patient patient = new Patient(patientDto);
-    //     patientRepository.saveAndFlush(patient);
-    //     response.add("Patient registered bsuccessfully by provider");
         return response;
     }
 
@@ -84,14 +71,11 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientDto> getAllPatientsByProviderId(Long providerId) {
         Optional<Provider> optionalProvider = providerRepository.findById(providerId);
         if (optionalProvider.isPresent()) {
-            // Provider provider = optionalProvider.get();
             List<Patient> patientList = patientRepository.findAllByProviderEquals(optionalProvider.get());
             return patientList.stream().map(PatientDto::new).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }
-
-
 
     /* login patient */
     @Override
@@ -185,7 +169,7 @@ public class PatientServiceImpl implements PatientService {
             patient.setAllergies(patientDto.getAllergies());
             patient.setInsurance(patientDto.getInsurance());
             patient.setMedications(patientDto.getMedications());
-            patient.setDateOfBirth(patientDto.getDateOfBirth());
+            patient.setDob(patientDto.getDob());
             patientRepository.saveAndFlush(patient);
             response.add("Patient updated successfully");
         } else {
@@ -204,7 +188,7 @@ public class PatientServiceImpl implements PatientService {
             patient.setFirstName(patientDto.getFirstName());
             patient.setLastName(patientDto.getLastName());
             patientRepository.saveAndFlush(patient);
-            response.add("Patient first name updated successfully");
+            response.add("Patient first name and last name updated successfully");
         } else {
             response.add("Patient not found");
         }
@@ -223,26 +207,6 @@ public class PatientServiceImpl implements PatientService {
         return patientDtos;
     }
 
-    /* provider adds a patient */
-    @Override
-    @Transactional
-    public List<String> addPatient(PatientDto patientDto, Long providerId) {
-        Optional<Provider> optionalProvider = providerRepository.findById(providerId);
-        if (optionalProvider.isPresent()) {
-            Provider provider = optionalProvider.get();
-            Patient patient = new Patient(patientDto);
-            // patient.setProvider(provider);
-            patientRepository.saveAndFlush(patient);
-            return Arrays.asList("Patient added successfully");
-        }
-        return Arrays.asList("Provider not found");
-
-        // List<String> response = new ArrayList<>();
-        // Patient patient = new Patient(patientDto);
-        // patientRepository.saveAndFlush(patient);
-        // response.add("Patient added successfully");
-        // return response;
-    }
 
     // @Override
     // @Transactional

@@ -46,9 +46,6 @@ public interface PatientService {
     public List<PatientDto> getAllPatients();
 
 
-    /* provider adds a patient*/
-    @Transactional
-    public List<String> addPatient(PatientDto patientDto, Long providerId);
     
     /*  get patient's provider name*/
     // @Transactional

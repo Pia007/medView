@@ -75,11 +75,6 @@ public class PatientController {
         return patientService.getAllPatients();
     }
 
-    /* provider adds a patient */
-    @PostMapping("/provider/{providerId}")
-    public List<String> addPatient(@RequestBody PatientDto patientDto, @PathVariable Long providerId) {
-        return patientService.addPatient(patientDto, providerId);
-    }
 
     /* get all patients by provider id */
     @GetMapping("/provider/{providerId}")
