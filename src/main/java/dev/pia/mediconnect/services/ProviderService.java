@@ -1,12 +1,12 @@
 package dev.pia.mediconnect.services;
 
-import java.util.List;
+import java.util.*;
 // import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 // import dev.pia.mediconnect.dtos.PatientDto;
-import dev.pia.mediconnect.dtos.ProviderDto;
+import dev.pia.mediconnect.dtos.*;
 
 public interface ProviderService {
 
@@ -27,18 +27,8 @@ public interface ProviderService {
     /* get all providers */
     List<ProviderDto> getAllProviders();
 
-   
-
-
-    // /* get all patients where provider id is the same as the provider id */
+    // /* get all provider patient's */
     // @Transactional
-    // List<PatientDto> getAllPatientsByProviderId(Long providerId);
+    // List<ProviderDto> getAllProviderPatients(Long providerId);
 
-    // /* provider updates patient */
-    // @Transactional
-    // List<String> updatePatient(PatientDto patientDto);
-
-    // /* get all providers */
-    // @Transactional
-    // List<ProviderDto> getAllProviders();
 }

@@ -4,9 +4,9 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
-import dev.pia.mediconnect.dtos.ProviderDto;
+import dev.pia.mediconnect.dtos.*;
 import lombok.*;
 
 @Entity

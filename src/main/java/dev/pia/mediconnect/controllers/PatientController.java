@@ -1,20 +1,12 @@
 package dev.pia.mediconnect.controllers;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import dev.pia.mediconnect.dtos.PatientDto;
-import dev.pia.mediconnect.dtos.ProviderDto;
-import dev.pia.mediconnect.services.PatientService;
+import dev.pia.mediconnect.dtos.*;
+import dev.pia.mediconnect.services.*;
 
 @RestController
 @RequestMapping("api/v1/patients")
@@ -22,34 +14,22 @@ public class PatientController {
 
     
     private PatientService patientService;
-    private PasswordEncoder passwordEncoder;
+    // private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PatientController(PatientService patientService, PasswordEncoder passwordEncoder) {
+    public PatientController(PatientService patientService) {
         this.patientService = patientService;
-        this.passwordEncoder = passwordEncoder;
+        // this.passwordEncoder = passwordEncoder;
     }
 
     /* provider registers patient */
 
-    @PostMapping("/register/{providerId}")
+    @PostMapping("/provider/{providerId}")
     public List<String> registerPatient(@RequestBody PatientDto patientDto, @PathVariable Long providerId) {
-        patientDto.setPassword(passwordEncoder.encode(patientDto.getPassword()));
-        return patientService.registerPatient(patientDto, providerId);
+        // patientDto.setPassword(passwordEncoder.encode(patientDto.getPassword()));
+        return patientService.addPatient(patientDto, providerId);
     }
     
-    /* patient registers  */
-    // @PostMapping("/register")
-    // public List<String> registerPatient(@RequestBody PatientDto patientDto) {
-    //     patientDto.setPassword(passwordEncoder.encode(patientDto.getPassword()));
-    //     return patientService.registerPatient(patientDto);
-    // }
-
-    @PostMapping("/login")
-    public List<String> loginPatient(@RequestBody PatientDto patientDto) {
-       
-        return patientService.loginPatient(patientDto);
-    }
 
     // get patient by id
     @GetMapping("/{patientId}")
@@ -81,6 +61,25 @@ public class PatientController {
     public List<PatientDto> getAllPatientsByProviderId(@PathVariable Long providerId) {
         return patientService.getAllPatientsByProviderId(providerId);
     }
+
+    /* get all patients with last name */
+    @GetMapping("/patient/lastName/{lastName}")
+    public List<PatientDto> getAllPatientsByLastName(@PathVariable String lastName) {
+        return patientService.getAllPatientsByLastName(lastName);
+    }
+
+    /* get all patients with first name */
+    @GetMapping("/patient/firstName/{firstName}")
+    public List<PatientDto> getAllPatientsByFirstName(@PathVariable String firstName) {
+        return patientService.getAllPatientsByFirstName(firstName);
+    }
+
+    /* get all patients with same insurance */
+
+    @GetMapping("/patient/insurance/{insurance}")
+    public List<PatientDto> getAllPatientsByInsurance(@PathVariable String insurance) {
+        return patientService.getAllPatientsByInsurance(insurance);
+    } /* research how to add space in pathvariable on frontend */
 
     
 }

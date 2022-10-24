@@ -4,37 +4,33 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
-import dev.pia.mediconnect.dtos.MessageDto;
-import dev.pia.mediconnect.dtos.PatientDto;
+import dev.pia.mediconnect.dtos.*;
 import lombok.*;
 
 @Entity
-@Table(name="Messages")
+@Table(name="Patient_Note")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor 
-public class Message {
+public class PatientNote {
 
     /* fields */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT", length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String body;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
     // date posted
-    @Column(name = "date_posted")
-    private Date datePosted;
+    @Column(name = "created_at")
+    private Date createdAt;
 
-    @Column(columnDefinition = "TEXT", length = 1000)
-    private String reply;
-
-    // date replied
-    @Column(name = "date_replied")
-    private Date dateReplied;
 
     /* relationship to patient */
     // @ManyToOne
@@ -47,16 +43,17 @@ public class Message {
     // private Provider provider;
 
     /* custom constructor */
-    public Message(MessageDto messageDto) {
-        if (messageDto.getId() != null) {
-            this.id = messageDto.getId();
-        }
-    }
+    // public PatientNote(PatientNoteDto patientNoteDto) {
+    //     if (patientNoteDto.getId() != null) {
+    //         this.id = patientNoteDto.getId();
+    //     }
+    //     if (patientNoteDto.getBody() != null) {
+    //         this.body = patientNoteDto.getBody();
+    //     }
 
-    public void setReplyDate(java.util.Date date) {
-    }
+    // }
 
-    public void setPostDate(java.util.Date date) {
+    public void setCreatedAt(java.util.Date date) {
     }
 
     // public void setProvider(PatientDto patientDto) {

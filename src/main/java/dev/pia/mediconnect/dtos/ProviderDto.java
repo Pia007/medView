@@ -3,10 +3,8 @@ package dev.pia.mediconnect.dtos;
 import java.io.Serializable;
 import java.util.*;
 
-import dev.pia.mediconnect.entities.Provider;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import dev.pia.mediconnect.entities.*;
+import lombok.*;
 
 @Data
 @NoArgsConstructor

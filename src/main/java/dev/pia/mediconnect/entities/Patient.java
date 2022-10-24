@@ -1,17 +1,13 @@
 package dev.pia.mediconnect.entities;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.time.*;
 // import java.time.Period;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import dev.pia.mediconnect.dtos.PatientDto;
+import com.fasterxml.jackson.annotation.*;
+import dev.pia.mediconnect.dtos.*;
 import lombok.*;
 
 @Entity
@@ -29,8 +25,8 @@ public class Patient {
     @Column(unique = true)
     private String username;
 
-    @Column
-    private String password;
+    // @Column
+    // private String password;
 
     @Column(name = "first_name", length = 25)
     private String firstName;
@@ -76,27 +72,14 @@ public class Patient {
     private String medications;
 
 
-   
-
-
-    /*
-     relationship to patient - a record can only belong to one patient and vice
-     versa
-     */
-    // @ManyToOne
-    // @JoinColumn(name = "info_id")
-    // @JsonBackReference
-    // private Provider provider;
-
     /* provider relationship - many patients to one provider */
-    @ManyToOne(fetch = FetchType.LAZY,  cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    // lazy loading - only load does causes issues when getting patients
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "provider_id")
     @JsonBackReference
     private Provider provider;
 
-    @OneToOne
-    @JsonBackReference
-    private MedicalRecord medicalRecord;
+   
 
     // getter and setter for age
     public int getAge() {
@@ -114,9 +97,9 @@ public class Patient {
         if (patientDto.getUsername() != null) {
             this.username = patientDto.getUsername();
         }
-        if (patientDto.getPassword() != null) {
-            this.password = patientDto.getPassword();
-        }
+        // if (patientDto.getPassword() != null) {
+        //     this.password = patientDto.getPassword();
+        // }
         if (patientDto.getFirstName() != null) {
             this.firstName = patientDto.getFirstName();
         }
@@ -169,7 +152,7 @@ public class Patient {
     /*  toString */
     @Override
     public String toString() {
-        return "Patient [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+        return "Patient [id=" + id + ", username=" + username + ", +  firstName=" + firstName
                 + ", lastName=" + lastName + ", dob=" + dob + ", age=" + age + ", email=" + email
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
                 + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions
@@ -180,8 +163,8 @@ public class Patient {
         return provider;
     }
 
-	public void addMedicalRecord(MedicalRecord medicalRecord) {
-	}
+	// public void addMedicalRecord(MedicalRecord medicalRecord) {
+	// }
 
     // public void setProviderId(int providerIdInt) {
     // }

@@ -3,12 +3,9 @@ package dev.pia.mediconnect.repositories;
 import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-// import org.springframework.data.jpa.repository.Modifying;
-// import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import dev.pia.mediconnect.entities.Patient;
-import dev.pia.mediconnect.entities.Provider;
+import dev.pia.mediconnect.entities.*;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
@@ -25,6 +22,12 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
      List<Patient> findAllByProvider(Provider provider);
 
      List<Patient> findAllByProviderEquals(Provider provider);
+
+     List<Patient> findAllByLastName(String lastName);
+
+    List<Patient> findAllByInsurance(String insurance);
+
+    List<Patient> findAllByFirstName(String firstName);
      
      // provider edits patient
      // @Modifying

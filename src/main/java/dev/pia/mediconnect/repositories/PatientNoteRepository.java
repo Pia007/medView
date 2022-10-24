@@ -5,13 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import dev.pia.mediconnect.entities.Message;
-import dev.pia.mediconnect.entities.Patient;
-// import dev.pia.mediconnect.entities.Provider;
-import dev.pia.mediconnect.entities.Provider;
+import dev.pia.mediconnect.entities.*;
 
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Long> {
+public interface PatientNoteRepository extends JpaRepository<PatientNote, Long> {
 
     // List<Message> findAllByPatientEquals(Patient patient);
 

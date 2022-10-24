@@ -3,30 +3,31 @@ package dev.pia.mediconnect.dtos;
 import java.io.Serializable;
 import java.util.Date;
 
-import dev.pia.mediconnect.entities.Message;
-import dev.pia.mediconnect.entities.Patient;
+import dev.pia.mediconnect.entities.*;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageDto implements Serializable {
+public class PatientNoteDto implements Serializable {
 
     //fields
     private Long id;
     private String body;
-    private Date datePosted;
-    private String reply;
-    private Date dateReplied;
+    private String createdBy;
+    private Date createdAt;
     // private PatientDto patient;
 
     //custom constructor
-    public MessageDto(Message message) {
-        if(message.getId() != null) {
-            this.id = message.getId();
+    public PatientNoteDto(PatientNote patientNote) {
+        if(patientNote.getId() != null) {
+            this.id = patientNote.getId();
         }
-        if (message.getBody() != null) {
-            this.body = message.getBody();
+        if (patientNote.getBody() != null) {
+            this.body = patientNote.getBody();
+        }
+        if (patientNote.getCreatedBy() != null) {
+            this.createdBy = patientNote.getCreatedBy();
         }
     }
 

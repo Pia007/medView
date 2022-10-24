@@ -1,19 +1,13 @@
 package dev.pia.mediconnect.controllers;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import dev.pia.mediconnect.dtos.ProviderDto;
-import dev.pia.mediconnect.services.ProviderService;
+import dev.pia.mediconnect.dtos.*;
+import dev.pia.mediconnect.services.*;
 
 @RestController
 @RequestMapping("api/v1/providers")

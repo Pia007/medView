@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-import dev.pia.mediconnect.entities.Patient;
-import dev.pia.mediconnect.entities.Provider;
+import dev.pia.mediconnect.entities.*;
 import lombok.*;
 
 @Data
@@ -17,7 +16,7 @@ public class PatientDto implements Serializable {
     /*fields */
     private Long id;
     private String username;
-    private String password;
+    // private String password;
     private String firstName;
     private String lastName;
     private LocalDate dob;
@@ -59,9 +58,9 @@ public class PatientDto implements Serializable {
         if (patient.getUsername() != null) {
             this.username = patient.getUsername();
         }
-        if (patient.getPassword() != null) {
-            this.password = patient.getPassword();
-        }
+        // if (patient.getPassword() != null) {
+        //     this.password = patient.getPassword();
+        // }
         if (patient.getFirstName() != null) {
             this.firstName = patient.getFirstName();
         }

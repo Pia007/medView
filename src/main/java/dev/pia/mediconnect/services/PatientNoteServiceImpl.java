@@ -1,39 +1,36 @@
 package dev.pia.mediconnect.services;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.pia.mediconnect.dtos.MessageDto;
-import dev.pia.mediconnect.entities.Message;
-import dev.pia.mediconnect.entities.Patient;
-import dev.pia.mediconnect.entities.Provider;
-import dev.pia.mediconnect.repositories.MessageRepository;
-import dev.pia.mediconnect.repositories.PatientRepository;
-import dev.pia.mediconnect.repositories.ProviderRepository;
+import dev.pia.mediconnect.dtos.*;
+import dev.pia.mediconnect.entities.*;
+import dev.pia.mediconnect.repositories.*;
 
 @Service
-public class MessageServiceImpl implements MessageService {
+public class PatientNoteServiceImpl implements PatientNoteService {
 
-    @Autowired
+   
     private ProviderRepository providerRepository;
-
-    @Autowired
     private PatientRepository patientRepository;
+    private PatientNoteRepository patientNoteRepository;
 
     @Autowired
-    private MessageRepository messageRepository;
+    public PatientNoteServiceImpl(ProviderRepository providerRepository, PatientRepository patientRepository, PatientNoteRepository patientNoteRepository) {
+        this.providerRepository = providerRepository;
+        this.patientRepository = patientRepository;
+        this.patientNoteRepository = patientNoteRepository;
+    }
+
 
     /* get message by id */
     @Override
-    public Optional<MessageDto> getMessageById(Long messageId) {
-        Optional<Message> optionalMessage = messageRepository.findById(messageId);
-        if (optionalMessage.isPresent()) {
-            return Optional.of(new MessageDto(optionalMessage.get()));
+    public Optional<PatientNoteDto> getPatientNoteById(Long patientNoteId) {
+        Optional<PatientNote> optionalPatientNote = patientNoteRepository.findById(patientNoteId);
+        if (optionalPatientNote.isPresent()) {
+            return Optional.of(new PatientNoteDto(optionalPatientNote.get()));
         }
         return Optional.empty();
     }
@@ -121,10 +118,10 @@ public class MessageServiceImpl implements MessageService {
     // }
 
 
-    @Override
-    public void deleteMessage(Long messageId) {
-        Optional<Message> optionalMessage = messageRepository.findById(messageId);
-        optionalMessage.ifPresent(message -> messageRepository.delete(message));
-    }
+    // @Override
+    // public void deleteMessage(Long messageId) {
+    //     Optional<Message> optionalMessage = messageRepository.findById(messageId);
+    //     optionalMessage.ifPresent(message -> messageRepository.delete(message));
+    // }
 
 }
