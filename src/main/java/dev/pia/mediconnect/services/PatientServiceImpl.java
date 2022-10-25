@@ -28,7 +28,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-    /* provider registers a patient with username an password*/
+    /* provider adds a patient with username */
     @Override
     @Transactional
     public List<String> addPatient(PatientDto patientDto, Long providerId) {
@@ -86,6 +86,8 @@ public class PatientServiceImpl implements PatientService {
     public PatientDto getPatientById(Long patientId) {
         Optional<Patient> optionalPatient = patientRepository.findById(patientId);
         if (optionalPatient.isPresent()) {
+            //print optional patient
+            System.out.println(optionalPatient);
             return new PatientDto(optionalPatient.get());
         }
         return null;
@@ -154,7 +156,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public List<PatientDto> getAllPatientsByLastName(String lastName) {
-        List<Patient> patients = patientRepository.findAllByLastName(lastName);
+        List<Patient> patients = patientRepository.findAllByLastNameIgnoreCase(lastName);
         List<PatientDto> patientDtos = new ArrayList<>();
         for (Patient patient : patients) {
             patientDtos.add(new PatientDto(patient));
@@ -166,7 +168,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public List<PatientDto> getAllPatientsByFirstName(String firstName) {
-        List<Patient> patients = patientRepository.findAllByFirstName(firstName);
+        List<Patient> patients = patientRepository.findAllByFirstNameIgnoreCase(firstName);
         List<PatientDto> patientDtos = new ArrayList<>();
         for (Patient patient : patients) {
             patientDtos.add(new PatientDto(patient));
@@ -174,18 +176,16 @@ public class PatientServiceImpl implements PatientService {
         return patientDtos;
     }
 
-    /* get patients with same insurance */
+    /* get patients with same insurance and ignore case*/
     @Override
     @Transactional
     public List<PatientDto> getAllPatientsByInsurance(String insurance) {
-        List<Patient> patients = patientRepository.findAllByInsurance(insurance);
+
+        List<Patient> patients = patientRepository.findAllByInsuranceIgnoreCase(insurance);
         List<PatientDto> patientDtos = new ArrayList<>();
         for (Patient patient : patients) {
             patientDtos.add(new PatientDto(patient));
         }
         return patientDtos;
     }
-
-    
-
 }

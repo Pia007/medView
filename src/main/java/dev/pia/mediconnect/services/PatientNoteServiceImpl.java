@@ -1,6 +1,9 @@
 package dev.pia.mediconnect.services;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,116 +15,79 @@ import dev.pia.mediconnect.repositories.*;
 @Service
 public class PatientNoteServiceImpl implements PatientNoteService {
 
-   
-    private ProviderRepository providerRepository;
     private PatientRepository patientRepository;
     private PatientNoteRepository patientNoteRepository;
 
     @Autowired
-    public PatientNoteServiceImpl(ProviderRepository providerRepository, PatientRepository patientRepository, PatientNoteRepository patientNoteRepository) {
-        this.providerRepository = providerRepository;
+    public PatientNoteServiceImpl(PatientRepository patientRepository, PatientNoteRepository patientNoteRepository) {
         this.patientRepository = patientRepository;
         this.patientNoteRepository = patientNoteRepository;
     }
 
 
-    /* get message by id */
+    /* provider adds a patient note to a patient*/
     @Override
-    public Optional<PatientNoteDto> getPatientNoteById(Long patientNoteId) {
-        Optional<PatientNote> optionalPatientNote = patientNoteRepository.findById(patientNoteId);
-        if (optionalPatientNote.isPresent()) {
-            return Optional.of(new PatientNoteDto(optionalPatientNote.get()));
-        }
-        return Optional.empty();
+    @Transactional
+    public List<String> addPatientNote(PatientNoteDto patientNoteDto, Long patientId) {
+        List<String> response = new ArrayList<>();
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+        
+        PatientNote patientNote = new PatientNote();
+        optionalPatient.ifPresent(patient -> {
+            patientNote.setPatient(patient);
+            patientNote.setBody(patientNoteDto.getBody());
+            patientNote.setDateCreated(patientNoteDto.getDateCreated());
+            patientNoteRepository.saveAndFlush(patientNote);
+            response.add("Patient note added successfully");
+        });
+        return response;
     }
 
+    /* get all notes */
+    @Override
+    @Transactional
+    public List<PatientNoteDto> getAllNotes() {
+        List<PatientNote> patientNotes = patientNoteRepository.findAll();
+        List<PatientNoteDto> patientNoteDtos = new ArrayList<>();
+        for (PatientNote patientNote : patientNotes) {
+            patientNoteDtos.add(new PatientNoteDto(patientNote));
+        }  
+        return patientNoteDtos; 
+    }
 
-    /* get all messages by certain patient id*/
-    // @Override
-    // public List<MessageDto> getAllMessagesByPatientId(Long patientId) {
-    //     Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-    //     if (optionalPatient.isPresent()) {
-    //         List<Message> messageList = messageRepository.findAllByPatientEquals(optionalPatient.get());
-    //         return messageList.stream().map(MessageDto::new).collect(Collectors.toList());
-    //     }
-    //     return Collections.emptyList();
-    // }
+    /* provider gets all patient notes for a patient*/
+    @Override
+    @Transactional
+    public List<PatientNoteDto> getAllNotesByPatientId(Long patientId) {
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+        if (optionalPatient.isPresent()) {
+            List<PatientNote> patientNoteList = patientNoteRepository.findAllByPatientEquals(optionalPatient.get());
+            return patientNoteList.stream().map(patientNote -> (new PatientNoteDto(patientNote))).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
 
-    /* get all messages by certain provider id */
-    // @Override
-    // public List<MessageDto> getAllMessagesByProviderId(Long providerId) {
-    //     Optional<Provider> optionalProvider = providerRepository.findById(providerId);
-    //     if (optionalProvider.isPresent()) {
-    //         List<Message> messageList = messageRepository.findAllByProviderEquals(optionalProvider.get());
-    //         return messageList.stream().map(MessageDto::new).collect(Collectors.toList());
-    //     }
-    //     return Collections.emptyList();
-    // }
-    
-    /* patient post message to provider, reply is null */
-    // @Override
-    // public void postMessageToProvider(MessageDto messageDto, Long providerId) {
-    //     Optional<Provider> optionalProvider = providerRepository.findById(providerId);
-    //     if (optionalProvider.isPresent()) {
-    //         Message message = new Message();
-    //         // message.setProvider(optionalProvider.get());
-    //         message.setPatient(messageDto.getPatient());
-    //         message.setBody(messageDto.getBody());
-    //         message.setReply(null);
-    //         messageRepository.saveAndFlush(message);
-    //     }
-        
-    // }
+    /* get patient note by id */
+    @Override
+    @Transactional
+    public PatientNoteDto getPatientNoteById(Long patientNoteId) {
+        Optional<PatientNote> optionalPatientNote = patientNoteRepository.findById(patientNoteId);
+        if (optionalPatientNote.isPresent()) {
+            return new PatientNoteDto(optionalPatientNote.get());
+        }
+        return null;
+    }
 
-    /* provider replies to message from patient by updating reply column*/
-    // @Override
-    // public void replyToMessage(MessageDto messageDto, Long messageId) {
-    //     Optional<Message> optionalMessage = messageRepository.findById(messageId);
-    //     if (optionalMessage.isPresent()) {
-    //         Message message = optionalMessage.get();
-    //         message.setReply(messageDto.getReply());
-    //         messageRepository.saveAndFlush(message);
-    //     }    
-    // }
-
-
-    /* provider post message to a patient */
-    // @Override
-    // public void postMessageToPatient(MessageDto messageDto, Long patientId) {
-    //     Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-    //     if (optionalPatient.isPresent()) {
-    //         Message message = new Message();
-    //         message.setPatient(optionalPatient.get());
-    //         // message.setProvider(messageDto.getProvider());
-    //         message.setBody(messageDto.getBody());
-    //         message.setReply(null);
-    //         messageRepository.saveAndFlush(message);
-    //     } 
-    // }
-
-    /* patient replies to message from provider by updating reply column*/
-    // @Override
-    // public void replyToMessageFromProvider(MessageDto messageDto, Long messageId) {
-    //     Optional<Message> optionalMessage = messageRepository.findById(messageId);
-    //     if (optionalMessage.isPresent()) {
-    //         Message message = optionalMessage.get();
-    //         message.setReply(messageDto.getReply());
-    //         messageRepository.saveAndFlush(message);
-    //     }    
-    // }
-
-    /* get all messages */
-    // @Override
-    // public List<MessageDto> getAllMessages() {
-    //     List<Message> messageList = messageRepository.findAll();
-    //     return messageList.stream().map(MessageDto::new).collect(Collectors.toList());
-    // }
-
-
-    // @Override
-    // public void deleteMessage(Long messageId) {
-    //     Optional<Message> optionalMessage = messageRepository.findById(messageId);
-    //     optionalMessage.ifPresent(message -> messageRepository.delete(message));
-    // }
-
+    /* delete patient note by id */
+    @Override
+    @Transactional
+    public List<String> deletePatientNoteById(Long patientNoteId) {
+        List<String> response = new ArrayList<>();
+        Optional<PatientNote> optionalPatientNote = patientNoteRepository.findById(patientNoteId);
+        optionalPatientNote.ifPresent(patientNote -> {
+            patientNoteRepository.delete(patientNote);
+            response.add("Patient note deleted successfully");
+        });
+        return response;
+    }
 }

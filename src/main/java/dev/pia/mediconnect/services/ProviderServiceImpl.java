@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import dev.pia.mediconnect.dtos.*;
 import dev.pia.mediconnect.entities.*;
 import dev.pia.mediconnect.repositories.*;
-// import dev.pia.mediconnect.repositories.PatientRepository;
-// import dev.pia.mediconnect.repositories.ProviderRepository;
 
 @Service
 public class ProviderServiceImpl implements ProviderService {
@@ -92,7 +90,4 @@ public class ProviderServiceImpl implements ProviderService {
         List<Provider> providers = providerRepository.findAll();
         return providers.stream().map(provider -> new ProviderDto(provider)).collect(Collectors.toList());
     }
-
-    
-
 }

@@ -52,12 +52,4 @@ public class ProviderController {
     public List<String> updateProvider(@RequestBody ProviderDto providerDto) {
         return providerService.updateProvider(providerDto);
     }
-
-    // /* provider adds a patient */
-    // @PostMapping("/addPatient")
-    // public List<String> addPatient(@RequestBody ProviderDto providerDto) {
-    //     return providerService.addPatient(providerDto);
-    // }
-
-    
 }

@@ -2,7 +2,6 @@ package dev.pia.mediconnect.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
 
 import dev.pia.mediconnect.entities.*;
 import lombok.*;
@@ -16,7 +15,6 @@ public class PatientDto implements Serializable {
     /*fields */
     private Long id;
     private String username;
-    // private String password;
     private String firstName;
     private String lastName;
     private LocalDate dob;
@@ -32,25 +30,11 @@ public class PatientDto implements Serializable {
     private String conditions;
     private String medications;
     private Provider provider;
-    // private Set<MessageDto> messageDtoSet = new HashSet<>();
 
 
-
-    // public Set<MessageDto> getMessageDtoSet() {
-    //     return this.messageDtoSet;
-    // }
-
-    // public void setMessageDtoSet(Set<MessageDto> messageDtoSet) {
-    //     this.messageDtoSet = messageDtoSet;
-    // }
-    
     
     /* custom constructor */
     public PatientDto(Patient patient) {
-        // CHECK HERE IF IT DOESN'T WORK
-        // if (patient.getProvider() != null) {
-        //     this.provider = patient.getProvider();
-        // }
         
         if (patient.getId() != null) {
             this.id = patient.getId();
@@ -58,9 +42,6 @@ public class PatientDto implements Serializable {
         if (patient.getUsername() != null) {
             this.username = patient.getUsername();
         }
-        // if (patient.getPassword() != null) {
-        //     this.password = patient.getPassword();
-        // }
         if (patient.getFirstName() != null) {
             this.firstName = patient.getFirstName();
         }
@@ -107,22 +88,4 @@ public class PatientDto implements Serializable {
             this.provider = patient.getProvider();
         }
     }
-
-
-
-    // public Object getProviderId() {
-    //     return null;
-    // }
-
-    //patientDtoSet
-    // private Set<PatientDto> patientDtoSet = new HashSet<>();
-
-    // public Long getProviderId() {
-    //     return null;
-    // }
-
-    // public String getInsuranceProvider() {
-    //     return null;
-    // }
-
 }

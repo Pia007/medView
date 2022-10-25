@@ -40,13 +40,7 @@ public class Provider {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "provider_id")
     @JsonBackReference
-    private Set<Patient> patientSet;
-
-    // /* relationship with messages - one to many */
-    // @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    // @JsonBackReference
-    // private Set<Message> messageSet = new HashSet<>();
-
+    private Set<Patient> patientSet = new HashSet<>();
 
     /* custom constructor */
     public Provider(ProviderDto providerDto) {
@@ -78,11 +72,9 @@ public class Provider {
                 + ", lastName=" + lastName + ", specialty=" + specialty + "]";
     }
 
-
     public Object getProviderId() {
         return this.id;
     }
-
 
     public void setId(Object providerId) {
     }

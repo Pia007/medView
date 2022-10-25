@@ -27,8 +27,4 @@ public interface ProviderService {
     /* get all providers */
     List<ProviderDto> getAllProviders();
 
-    // /* get all provider patient's */
-    // @Transactional
-    // List<ProviderDto> getAllProviderPatients(Long providerId);
-
 }

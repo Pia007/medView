@@ -1,7 +1,7 @@
 package dev.pia.mediconnect.dtos;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import dev.pia.mediconnect.entities.*;
 import lombok.*;
@@ -14,11 +14,11 @@ public class PatientNoteDto implements Serializable {
     //fields
     private Long id;
     private String body;
-    private String createdBy;
-    private Date createdAt;
-    // private PatientDto patient;
+    private LocalDate dateCreated;
+    private PatientDto patientDto;
 
-    //custom constructor
+    /* custom constructor */
+    
     public PatientNoteDto(PatientNote patientNote) {
         if(patientNote.getId() != null) {
             this.id = patientNote.getId();
@@ -26,27 +26,22 @@ public class PatientNoteDto implements Serializable {
         if (patientNote.getBody() != null) {
             this.body = patientNote.getBody();
         }
-        if (patientNote.getCreatedBy() != null) {
-            this.createdBy = patientNote.getCreatedBy();
+        if (patientNote.getDateCreated() != null) {
+            this.dateCreated = patientNote.getDateCreated();
+        }
+        if (patientNote.getPatient() != null) {
+            this.patientDto = new PatientDto(patientNote.getPatient());
         }
     }
 
-    // public PatientDto getProvider() {
-    //     this.patient = new PatientDto();
-    //     return this.patient;
+    /* set dateCreate */
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-    // }
-
-    // public String getBody() {
-    //     return null;
-    // }
-
-    // public Patient getPatient() {
-    //     return null;
-    // }
-
-    // public Long getId() {
-    //     return null;
-    // }
+    /* get dateCreated */
+    public LocalDate getDateCreated() {
+        return this.dateCreated;
+    }
     
 }

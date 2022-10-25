@@ -10,8 +10,6 @@ import dev.pia.mediconnect.entities.*;
 @Repository
 public interface PatientNoteRepository extends JpaRepository<PatientNote, Long> {
 
-    // List<Message> findAllByPatientEquals(Patient patient);
-
-    // List<Message> findAllByProviderEquals(Provider provider);
+    List<PatientNote> findAllByPatientEquals(Patient patient);
 
 }

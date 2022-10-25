@@ -18,8 +18,7 @@ public class ProviderDto implements Serializable {
     private String firstName;
     private String lastName;
     private String specialty;
-    private Set<PatientDto> patientDtoSet = new HashSet<>();
-    // private Set<MessageDto> messageDtoSet = new HashSet<>();
+    private Set<PatientDto> patientDtoSet = new HashSet<>();;
 
     public ProviderDto(Provider provider) {
         if (provider.getId() != null) {

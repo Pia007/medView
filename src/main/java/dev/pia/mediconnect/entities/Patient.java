@@ -1,7 +1,6 @@
 package dev.pia.mediconnect.entities;
 
 import java.time.*;
-// import java.time.Period;
 import java.util.*;
 
 import javax.persistence.*;
@@ -25,8 +24,6 @@ public class Patient {
     @Column(unique = true)
     private String username;
 
-    // @Column
-    // private String password;
 
     @Column(name = "first_name", length = 25)
     private String firstName;
@@ -73,23 +70,22 @@ public class Patient {
 
 
     /* provider relationship - many patients to one provider */
-    // lazy loading - only load does causes issues when getting patients
+    // lazy loading - causes issues when getting patients
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "provider_id")
     @JsonBackReference
     private Provider provider;
 
-   
+    /* patient relationship with patient notes */
+    @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<PatientNote> patientNoteSet = new HashSet<>();
 
-    // getter and setter for age
+    /* dynamically generate age */
     public int getAge() {
         return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
-    /* message relationship - patient can have many messages */
-    // @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    // @JsonBackReference
-    // private Set<Message> messageSet = new HashSet<>();
 
     /* custom constructor */
     public Patient(PatientDto patientDto) {
@@ -97,9 +93,6 @@ public class Patient {
         if (patientDto.getUsername() != null) {
             this.username = patientDto.getUsername();
         }
-        // if (patientDto.getPassword() != null) {
-        //     this.password = patientDto.getPassword();
-        // }
         if (patientDto.getFirstName() != null) {
             this.firstName = patientDto.getFirstName();
         }
@@ -142,11 +135,6 @@ public class Patient {
         if (patientDto.getProvider() != null) {
             this.provider = patientDto.getProvider();
         }
-        // if (patientDto.getProviderId() != null) {
-        //     Provider provider = new Provider();
-        //     provider.setId(patientDto.getProviderId());
-        //     this.provider = provider;
-        // }
     }
 
     /*  toString */
@@ -162,12 +150,4 @@ public class Patient {
     public Provider getProvider() {
         return provider;
     }
-
-	// public void addMedicalRecord(MedicalRecord medicalRecord) {
-	// }
-
-    // public void setProviderId(int providerIdInt) {
-    // }
-
-
 }
