@@ -17,12 +17,13 @@ import dev.pia.mediconnect.repositories.*;
 public class ProviderServiceImpl implements ProviderService {
 
     private ProviderRepository providerRepository;
-    private PasswordEncoder encoder;
+    private PasswordEncoder passwordEncoder;
 
     /* constructor injection */
     @Autowired
-    public ProviderServiceImpl(ProviderRepository providerRepository) {
+    public ProviderServiceImpl(ProviderRepository providerRepository, PasswordEncoder passwordEncoder) {
         this.providerRepository = providerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /* use providerDto to register a provider */
@@ -44,7 +45,7 @@ public class ProviderServiceImpl implements ProviderService {
         Optional<Provider> optionalProvider = providerRepository.findByUsername(providerDto.getUsername());
 
         if (optionalProvider.isPresent()) {
-            if (encoder.matches(providerDto.getPassword(), optionalProvider.get().getPassword())) {
+            if (passwordEncoder.matches(providerDto.getPassword(), optionalProvider.get().getPassword())) {
                 response.add("Provider logged in successfully");
                 response.add(String.valueOf(optionalProvider.get().getId()));
             } else {

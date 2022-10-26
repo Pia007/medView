@@ -29,9 +29,10 @@ public class PatientNote {
     private LocalDate dateCreated;
 
     /* relationship to patient */
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn
-    @JsonManagedReference
+    // @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
+    // @JoinColumn
+    // @JsonManagedReference
     private Patient patient;
 
 

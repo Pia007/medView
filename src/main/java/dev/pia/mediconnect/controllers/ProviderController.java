@@ -11,6 +11,7 @@ import dev.pia.mediconnect.services.*;
 
 @RestController
 @RequestMapping("api/v1/providers")
+@CrossOrigin(origins = "*")
 public class ProviderController {
 
     private ProviderService providerService;

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dev.pia</groupId>
-	<artifactId>mediconnect</artifactId>
+	<artifactId>medview</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mediconnect</name>
+	<name>medview</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>18</java.version>

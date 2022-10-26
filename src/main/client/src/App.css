@@ -1,3 +1,20 @@
+:root {
+  --opt-orange: #ff612b;
+  --opt-skyblue: #d9f6fa;
+  --opt-warmwhite: #fbf9f4;
+  --opt-darkblue: #002677;
+  --opt-darkgray: #5a5a5a;
+
+  --opt-success: #007000;
+  --opt-alert: #c40000;
+  --opt-callout: #f5b700;
+}
+
+
+
+
+
+
 .App {
   text-align: center;
 }

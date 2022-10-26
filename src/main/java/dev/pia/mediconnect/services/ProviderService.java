@@ -5,7 +5,6 @@ import java.util.*;
 
 import javax.transaction.Transactional;
 
-// import dev.pia.mediconnect.dtos.PatientDto;
 import dev.pia.mediconnect.dtos.*;
 
 public interface ProviderService {

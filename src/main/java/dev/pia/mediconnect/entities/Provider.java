@@ -37,8 +37,8 @@ public class Provider {
     private String specialty;
 
     // relationship with patient - one to many
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "provider_id")
+    @OneToMany(mappedBy="provider",  fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    // @JoinColumn(name = "provider_id")
     @JsonBackReference
     private Set<Patient> patientSet = new HashSet<>();
 

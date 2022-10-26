@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
+
 import dev.pia.mediconnect.dtos.*;
 import lombok.*;
 
@@ -70,13 +71,16 @@ public class Patient {
 
 
     /* provider relationship - many patients to one provider */
+    @ManyToOne
+    // @JoinColumn
+    // @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    // @JoinColumn(name = "provider_id")
     // lazy loading - causes issues when getting patients
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "provider_id")
-    @JsonBackReference
+    // @JsonBackReference
     private Provider provider;
 
     /* patient relationship with patient notes */
+    // @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JsonBackReference
     private Set<PatientNote> patientNoteSet = new HashSet<>();

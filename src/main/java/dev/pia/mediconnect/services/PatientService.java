@@ -4,8 +4,6 @@ import java.util.*;
 
 import javax.transaction.Transactional;
 
-// import org.springframework.data.jpa.repository.Query;
-
 import dev.pia.mediconnect.dtos.*;
 
 /* create Patient Service interface */
