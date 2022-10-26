@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <HelmetProvider>
         <div className="App">
-          <Main />
+          <Main style={{maxWidth: '100vw', paddingX: '10'}}/>
         </div>
       </HelmetProvider>
     </BrowserRouter>

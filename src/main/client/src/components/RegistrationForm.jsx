@@ -31,6 +31,7 @@ const RegistrationForm = () => {
     // when the username and password have been set by the user
     
     const handleSubmit = (e) => {
+
         e.preventDefault();
         axios.post('http://localhost:8080/api/v1/providers/register', {
             username,
@@ -41,6 +42,13 @@ const RegistrationForm = () => {
         })
         .then(response => {
             console.log(response)
+            // if registration is successful, set submitted to true and redirect to login page
+            // if (response.data) {
+            //     setSubmitted(true)
+                window.location.href = '/login';
+            // } else {
+            //     console.log('Registration failed')
+            // }
             // reset form
             // setUsername('')
             // setPassword('')
@@ -48,9 +56,11 @@ const RegistrationForm = () => {
             // setLastName('')
             // setSpecialty('')
             setSubmitted(true)
+            console.log('Registration successful')
         })
         .catch(error => {
-            console.log("registration error", error)
+            console.log("registration error", error);
+            console.log('Registration failed')
         })
         
     }

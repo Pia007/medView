@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
+// import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Row } from 'reactstrap';
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    // const { register, handleSubmit, reset, errors } = useForm();
+    const [username, setUsername] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [providerId, setProviderId] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 
     const resetForm = () => {
-        setUsername('')
-        setPassword('')
+        setUsername(null)
+        setPassword(null)
+        console.log('Form reset');
     }
 
       // clear the form when the user clicks the submit button
     useEffect(() => {
         if (loggedIn) {
-            resetForm()
+            // resetForm()
+            // redirect to provider page
+
+
         }
     }, [loggedIn])
 
@@ -26,8 +33,32 @@ const LoginForm = () => {
             password
         })
         .then(response => {
-            console.log(response)
-            setLoggedIn(true)
+            if (response.data) {
+                const data = response.data
+                console.log(response.data)
+                const providerId = data[1]
+                setProviderId(providerId)
+                console.log(providerId)
+            
+                    setLoggedIn(true)
+                    resetForm()
+                    // redirect to provider page
+                    window.location.href = `/provider/${providerId}`
+            } else {
+                console.log('Login failed')
+            }
+            // const data = response.data
+            // const providerId = data[1]
+            // console.log(providerId)
+            // console.log(providerId)
+            // console.log('This is the response', response)
+            // setTimeout(() => {
+            //     setLoggedIn(true)
+            //     resetForm()
+            // }, 1000)
+            
+            // setLoggedIn(true)
+
         })
         .catch(error => {
             console.log("login error", error)
@@ -50,9 +81,19 @@ const LoginForm = () => {
                                 placeholder="Username"
                                 className="form-control"
                                 aria-label='username'
+                                required
                                 onChange={e => setUsername(e.target.value)}
+
+                                // {...register('username', {
+                                //     required: {
+                                //         value: true,
+                                //         message: 'Username is required'
+                                //     }
+                                // })}
                             />
                         </div>
+                        {/* {errors.username && <span className='text-danger text-small d-block mb-2'>{errors.username.message}</span>} */}
+
                         <div className='form-group col-12 p-2'>
                             <input
                                 type="password"
@@ -61,12 +102,21 @@ const LoginForm = () => {
                                 placeholder="Password"
                                 className="form-control"
                                 aria-label='password'
+                                required
                                 onChange={e => setPassword(e.target.value)}
+
+                                // {...register('password', {
+                                //     required: {
+                                //         value: true,
+                                //         message: 'Password is required'
+                                //     }
+                                // })}
                             />
                         </div>
+                        {/* {errors.password && <span className='text-danger text-small d-block mb-2'>{errors.password.message}</span>} */}
                     </div>
                     <div className="form-group col-12 p-2">
-                        <button type="submit" className="btn btn-primary" >Register</button>
+                        <button type="submit" className="btn btn-primary" >Login</button>
                     </div>
                 </form>
             </Row>

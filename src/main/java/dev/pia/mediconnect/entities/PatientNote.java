@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.*;
+// import com.fasterxml.jackson.annotation.*;
 
 import dev.pia.mediconnect.dtos.*;
 import lombok.*;
