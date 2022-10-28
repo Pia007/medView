@@ -20,12 +20,12 @@ const Header = () => {
 
     return (
         <React.Fragment>
-            <Navbar className='navbar navbar-expand-lg p-1 d-flex justify-content-between sticky-top text-light bg-dark' style={{zIndex: '5', border: '2px solid blue'}}>
-                <div className='d-flex'>
+            <Navbar className='navbar navbar-expand-md p-1 d-flex justify-content-between sticky-top text-light bg-dark' style={{zIndex: '5', border: '2px solid blue'}}>
+                <div className='container-fluid'>
                     {/* <Zoom> */}
                         <NavLink tag='link' to='/' 
                             onClick={() => (navigation ? setNavigation(!navigation): setNavigation(navigation))}>
-                                {/* <img src={myLogo}  alt='logo' className='text-primary mt-1' /> */}
+                                
                         </NavLink>
                     {/* </Zoom> */}
                 </div>
@@ -42,7 +42,7 @@ const Header = () => {
                     
                         <MenuItem to='/register' linkName='Register' />
 
-                        <MenuItem to='/provider' linkName='Provider' />
+                        {/* <MenuItem to='/provider' linkName='Provider' /> */}
                     </Nav>
                     
                 </Collapse>

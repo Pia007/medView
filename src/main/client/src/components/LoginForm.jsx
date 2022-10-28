@@ -1,126 +1,113 @@
-import React, { useState, useEffect } from 'react';
-// import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { Row } from 'reactstrap';
+import React, { useRef, useState, useEffect } from 'react';
+import axios from '../api/AxiosApi';
+// import axios from 'axios';
+import { Row, Card } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+const LOGIN_URL = '/providers/login'
 
 const LoginForm = () => {
+    const usernameRef = useRef();
+    const errorRef = useRef();
+
     // const { register, handleSubmit, reset, errors } = useForm();
-    const [username, setUsername] = useState(null)
-    const [password, setPassword] = useState(null)
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
     const [providerId, setProviderId] = useState(null)
     const [loggedIn, setLoggedIn] = useState(false)
 
-    const resetForm = () => {
-        setUsername(null)
-        setPassword(null)
-        console.log('Form reset');
-    }
-
-      // clear the form when the user clicks the submit button
     useEffect(() => {
-        if (loggedIn) {
-            // resetForm()
-            // redirect to provider page
+        usernameRef.current.focus();  
+    }, [])
+
+    useEffect(() => {
+        setError('');
+    }, [username, password])
 
 
-        }
-    }, [loggedIn])
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/api/v1/providers/login', {
-            username,
-            password
-        })
-        .then(response => {
-            if (response.data) {
-                const data = response.data
-                console.log(response.data)
-                const providerId = data[1]
-                setProviderId(providerId)
-                console.log(providerId)
-            
-                    setLoggedIn(true)
-                    resetForm()
-                    // redirect to provider page
-                    window.location.href = `/provider/${providerId}`
+
+        try {
+            const login = await axios.post(LOGIN_URL, {
+                username,
+                password,
+            });
+            console.log(login.data);
+            console.log(JSON.stringify(login.data));
+                console.log(login.data)
+                const id = login.data[1];
+                
+                    window.location.href = '/provider/' + id;
+
+                setUsername('');
+                setPassword('');
+                setLoggedIn(true)
+        } catch ( error ) {
+            if (!error?.response) {
+                setError('Network error');
+            } else if (error.response?.status === 400) {
+                setError('Invalid username or password');
+            } else if (error.response?.status === 401) {
+                setError('Not authorized');
             } else {
-                console.log('Login failed')
+                setError('Login failed');
             }
-            // const data = response.data
-            // const providerId = data[1]
-            // console.log(providerId)
-            // console.log(providerId)
-            // console.log('This is the response', response)
-            // setTimeout(() => {
-            //     setLoggedIn(true)
-            //     resetForm()
-            // }, 1000)
-            
-            // setLoggedIn(true)
-
-        })
-        .catch(error => {
-            console.log("login error", error)
-        })
-
+            errorRef.current.focus();
+        }
     }
-
+    
 
     return (
-        <div className='container'>
-            <h1>Provider Login</h1>
-            <Row className='p-3' style={{border: '2px solid green'}}>
-                <form action="" onSubmit={handleSubmit} className='p-3' style={{border: '2px solid green'}}>
-                    <div className="row">
-                        <div className='form-group col-12 p-2'>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                placeholder="Username"
-                                className="form-control"
-                                aria-label='username'
-                                required
-                                onChange={e => setUsername(e.target.value)}
-
-                                // {...register('username', {
-                                //     required: {
-                                //         value: true,
-                                //         message: 'Username is required'
-                                //     }
-                                // })}
-                            />
+        <>
+            <section>
+                <p ref={errorRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
+                
+                <h1>Login</h1>
+                <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
+                    <form onSubmit={handleSubmit} className='p-3'>
+                        <Row>
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='username'>Username:</label>
+                                <input
+                                    type='text'
+                                    // name='username'
+                                    id='username'
+                                    ref={usernameRef}
+                                    value={username}
+                                    className='form-control'
+                                    aria-label='username'
+                                    required
+                                    autoComplete='off'
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </div>
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='password'>Password:</label>
+                                <input
+                                    type='password'
+                                    id='password'
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                    className='form-control'
+                                    required
+                                    autoComplete='off'
+                                />
+                            </div>
+                        </Row>
+                        <div className='form-group col-12 p-2 text-center'>
+                            <button type='submit' className='btn btn-primary' >Login</button>
+                            {/* disabled={!validUsername || !validPassword || !validMatch || !validFirstName || !validLastName || !validSpecialty ? true: false}   */}
                         </div>
-                        {/* {errors.username && <span className='text-danger text-small d-block mb-2'>{errors.username.message}</span>} */}
-
-                        <div className='form-group col-12 p-2'>
-                            <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                placeholder="Password"
-                                className="form-control"
-                                aria-label='password'
-                                required
-                                onChange={e => setPassword(e.target.value)}
-
-                                // {...register('password', {
-                                //     required: {
-                                //         value: true,
-                                //         message: 'Password is required'
-                                //     }
-                                // })}
-                            />
-                        </div>
-                        {/* {errors.password && <span className='text-danger text-small d-block mb-2'>{errors.password.message}</span>} */}
-                    </div>
-                    <div className="form-group col-12 p-2">
-                        <button type="submit" className="btn btn-primary" >Login</button>
-                    </div>
-                </form>
-            </Row>
-        </div>
+                        <p className='text-center'>
+                            Don't have an account? <Link to='/register'> Register here.</Link>
+                        </p>
+                    </form>
+                </Card>
+            </section>
+        </>
     )
 }
 
