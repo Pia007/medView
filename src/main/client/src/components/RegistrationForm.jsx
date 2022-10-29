@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
-import { Row, Card, CardBody } from 'reactstrap';
+import { Row, Card } from 'reactstrap';
 
 
 const REGISTER_URL = '/providers/register';
@@ -35,7 +35,7 @@ const RegistrationForm = () => {
     // boolean to check if the username is valid
     const [validUsername, setValidUsername] = useState(false);
     // boolean if userfield is focused or not
-    const [userFocus, setUserFocus] = useState(false);
+    const [usernameFocus, setUsernameFocus] = useState(false);
 
 
     // password state
@@ -117,7 +117,6 @@ const RegistrationForm = () => {
         const result = SPECIALTY_REGEX.test(specialty);
         console.log(result);
         console.log(specialty);
-        // setValidName(USER_REGEX.test(user)); all in one line without the console.log
         setValidSpecialty(result);
     }, [specialty]);
 
@@ -140,14 +139,13 @@ const RegistrationForm = () => {
                 lastName,
                 specialty
             });
-            console.log(registration.data);
+            // console.log(registration.data);
             console.log(JSON.stringify(registration.data));
             // setSuccess(true);
 
-            // redirect to login page after 3 seconds after successful registration
-            // setTimeout(() => {
-                window.location.href = '/login';
-            // }, 3000);
+            
+            window.location.href = '/login';
+
 
             // clear the form
             setUsername('');
@@ -200,16 +198,14 @@ const RegistrationForm = () => {
                                         className='form-control'
                                         required
                                         value={username}
-                                        // set to true when the component loads
                                         aria-invalid={validUsername ? 'false' : 'true'}
-                                        // note for screen reader
                                         aria-describedby='uidnote'
                                         autoComplete='off'
                                         onChange={(e) => setUsername(e.target.value)}
-                                        onFocus={() => setUserFocus(true)}
-                                        onBlur={() => setUserFocus(false)}
+                                        onFocus={() => setUsernameFocus(true)}
+                                        onBlur={() => setUsernameFocus(false)}
                                     />
-                                    <p id='uidnote' className={userFocus && username && !validUsername ? 'instructions' : 'offscreen'}>
+                                    <p id='uidnote' className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'}>
                                         <FontAwesomeIcon icon={faInfoCircle} />
                                         4 to 10 characters.<br />
                                         Must begin with a letter.<br />
@@ -350,7 +346,6 @@ const RegistrationForm = () => {
                             </Row>
                             <div className='form-group col-12 p-2 text-center'>
                                 <button type='submit' className='btn btn-primary' >Register</button>
-                                {/* disabled={!validUsername || !validPassword || !validMatch || !validFirstName || !validLastName || !validSpecialty ? true: false}   */}
                             </div>
                             <p className='text-center'>
                                 Already have an account? <Link to='/login'> Login here.</Link>

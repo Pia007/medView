@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import Registration from './Registration';
 import Login from './Login';
 import Provider from './Provider';
+import AddPatientForm from '../components/AddPatientForm';
 
 const Main = () => {
 
@@ -12,14 +13,15 @@ const Main = () => {
     return (
         <div>
             <Header />
-            <div className='d-flex' style={{width: 'calc(100%-10%'}}>
-                {/* <h1>Hello from my app</h1> */}
+            <div className='d-flex bg-light' style={{width: '100%', height: 'auto'}}>
+                
                 <Routes>
                     <Route path='/' element={<Home/>} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Registration />} />
-                    {/* define provider route based on id */}
-                    <Route path='/provider/:id' element={<Provider />} />
+                    <Route path='login' element={<Login />} />
+                    <Route path='register' element={<Registration />} />
+                    
+                    <Route path='provider/:id' element={<Provider />} />
+                    <Route path='provider/:id/addPatient' element={<AddPatientForm />} />
                 </Routes>
             </div>
         </div>

@@ -71,7 +71,7 @@ public class PatientServiceImpl implements PatientService {
     /* get all patients by provider id */
     @Override
     @Transactional
-    public List<PatientDto> getAllPatientsByProviderId(Long providerId) {
+    public List<PatientDto> getAllPatientsByProviderId(Long providerId) { 
         Optional<Provider> optionalProvider = providerRepository.findById(providerId);
         if (optionalProvider.isPresent()) {
             List<Patient> patientList = patientRepository.findAllByProviderEquals(optionalProvider.get());
@@ -93,15 +93,14 @@ public class PatientServiceImpl implements PatientService {
         return null;
     }
 
-    /* update patient*/
+    /* update patient by id */
     @Override
     @Transactional
-    public List<String> updatePatient(PatientDto patientDto) {
+    public List<String> updatePatient(Long patientId, PatientDto patientDto) {
         List<String> response = new ArrayList<>();
-        Optional<Patient> optionalPatient = patientRepository.findById(patientDto.getId());
+        Optional<Patient> optionalPatient = patientRepository.findById(patientId);
         if (optionalPatient.isPresent()) {
             Patient patient = optionalPatient.get();
-            patient.setUsername(patientDto.getUsername());
             patient.setFirstName(patientDto.getFirstName());
             patient.setLastName(patientDto.getLastName());
             patient.setAddress(patientDto.getAddress());
@@ -118,10 +117,36 @@ public class PatientServiceImpl implements PatientService {
             patientRepository.saveAndFlush(patient);
             response.add("Patient updated successfully");
         } else {
-            response.add("Patient not found");
+            response.add("Invalid patient");
         }
         return response;
     }
+    // public List<String> updatePatient(PatientDto patientDto) {
+    //     List<String> response = new ArrayList<>();
+    //     Optional<Patient> optionalPatient = patientRepository.findById(patientDto.getId());
+    //     if (optionalPatient.isPresent()) {
+    //         Patient patient = optionalPatient.get();
+    //         patient.setUsername(patientDto.getUsername());
+    //         patient.setFirstName(patientDto.getFirstName());
+    //         patient.setLastName(patientDto.getLastName());
+    //         patient.setAddress(patientDto.getAddress());
+    //         patient.setCity(patientDto.getCity());
+    //         patient.setState(patientDto.getState());
+    //         patient.setZip(patientDto.getZip());
+    //         patient.setPhone(patientDto.getPhone());
+    //         patient.setEmail(patientDto.getEmail());
+    //         patient.setConditions(patientDto.getConditions());
+    //         patient.setAllergies(patientDto.getAllergies());
+    //         patient.setInsurance(patientDto.getInsurance());
+    //         patient.setMedications(patientDto.getMedications());
+    //         patient.setDob(patientDto.getDob());
+    //         patientRepository.saveAndFlush(patient);
+    //         response.add("Patient updated successfully");
+    //     } else {
+    //         response.add("Patient not found");
+    //     }
+    //     return response;
+    // }
 
     /* update patient first name */
     @Transactional

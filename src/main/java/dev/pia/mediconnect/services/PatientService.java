@@ -21,9 +21,10 @@ public interface PatientService {
     @Transactional
     public PatientDto getPatientById(Long patientId);
 
-    /* update patient */
+    /* update patient by id*/
     @Transactional
-    public List<String> updatePatient(PatientDto patientDto);
+    public List<String> updatePatient(Long patientId, PatientDto patientDto);
+    // public List<String> updatePatient(PatientDto patientDto);
 
     /* update patient name only */
     @Transactional

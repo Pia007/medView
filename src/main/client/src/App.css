@@ -1,4 +1,9 @@
 :root {
+
+  --open-sans: 'Open Sans', sans-serif;
+  --lato: 'Lato', sans-serif;
+  --mullish: 'Mullish', sans-serif;
+
   --opt-orange: #ff612b;
   --opt-skyblue: #d9f6fa;
   --opt-warmwhite: #fbf9f4;
@@ -10,36 +15,30 @@
   --opt-callout: #f5b700;
 }
 
-
-
-
-
-
-.App {
-  /* text-align: center; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html,
+body {
+    background: var(--opt-warmwhite);
+    height: 100vh;
+    width: 100%;
+    font-family: var(--open-sans);
+    font-size: 1em;
+    color: var(--color-primary);
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    /* prevent shift right on modal load */
+    padding-right: 0px !important; 
+    position: relative!important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+
 
 .App-link {
   color: #61dafb;
@@ -86,4 +85,30 @@
     font-weight: bold;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+
+/* provider */
+.provider-icon-button {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: var(--opt-skyblue);
+    /* fill: var(--opt-skyblue); */
+    border-radius: 50%;
+    padding: 0.25rem;
+    margin: 0.25rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border:none;
+    box-shadow: 0px 0px 2px 2px rgb(52, 51, 51);
+    background: #fbf9f4;
+    box-shadow:  5px 5px 24px #696966,
+      -5px -5px 24px #ffffff;
+}
+
+.provider-icon {
+    width: 2rem;
+    height: 2rem;
+    color: var(--opt-darkblue);
+    /* margin-left: 0..25rem; */
 }

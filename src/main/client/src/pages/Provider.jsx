@@ -1,11 +1,15 @@
 import React, { useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { faCheck, faTimes, faInfoCircle, faUserPen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProviderModal from '../components/ProviderModal';
+// import AddPatientForm from '../components/AddPatientForm';
 import axios from '../api/AxiosApi';
 
 const PROVIDER_URL = '/providers';
 const PATIENT_URL = '/patients';
 
-const Provider = () => {
+const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChangeTwo, onChangeThree}) => {
     const { id } = useParams();
 
     const [provider, setProvider] = useState('')
@@ -15,6 +19,8 @@ const Provider = () => {
     const [patients, setPatients] = useState('')
     const [ message, setMessage ] = useState('')
 
+    const [modal, setModal] = useState(false);
+    const toggleModal = () => setModal(!modal);
 
     useEffect (() => {
         const getProvider = async () => {
@@ -64,6 +70,22 @@ const Provider = () => {
         setError('');
     }, [provider, patients, message])
 
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const update = await axios.put(`${PROVIDER_URL}/${id}`, {
+                firstName: provider.firstName,
+                lastName: provider.lastName,
+                specialty: provider.specialty,
+            });
+            console.log(update.data);
+            toggleModal();
+        } catch (error) {
+            setError(error);
+        }
+    }
 
 
     if (loading) {
@@ -73,25 +95,37 @@ const Provider = () => {
     return (
         <div>
             <div className='text-center p-3'>
-                <div className='p-3' style={{border: '2px solid green', width: '60px', borderRadius: '50%'}}>
-                    <span className='w-20'>{providerInitials}</span>
-                </div>
+                <button className='p-1 text-center provider-icon-button' onClick={toggleModal}>
+                    <FontAwesomeIcon icon={faUserPen} className='icon provider-icon' />
+                </button>
             </div>
             <h1>Provider</h1>
             <h2>{provider.firstName} {provider.lastName}</h2>
             <h2>{provider.specialty}</h2>
 
-            {/* if not patients then display message */}
+            {/* center the modal */}
+            <ProviderModal 
+                isOpen={modal}
+                toggle={toggleModal}
+                onSubmit={handleSubmit}
+                valueOne={provider.firstName}
+                valueTwo={provider.lastName}
+                valueThree={provider.specialty}
+                onChangeOne={(e) => setProvider({...provider, firstName: e.target.value})}
+                onChangeTwo={(e) => setProvider({...provider, lastName: e.target.value})}
+                onChangeThree={(e) => setProvider({...provider, specialty: e.target.value})}
+            />
+            
             <>
-                
                 {!patients ? (
                     <h3>{message} <br/>
                         Would you like to add a patient to your service? <br/>
-                        <button>Add A Patient</button>
+                        <Link to={`/provider/${id}/addPatient`}>Add A Patient</Link>
                     </h3>
                 ) : (
                     <div>
                         <h2>Patients</h2>
+                        <Link to={`/provider/${id}/addPatient`}>Add A Patient</Link>
                     
                         {patients.map((patient) => (
                             <div key={patient.id}>
@@ -105,6 +139,9 @@ const Provider = () => {
                     </div>
                 )} 
             </>
+
+            
+
         </div>
     )
 }

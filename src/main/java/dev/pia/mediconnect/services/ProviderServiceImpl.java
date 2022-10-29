@@ -31,13 +31,20 @@ public class ProviderServiceImpl implements ProviderService {
     @Transactional
     public List<String> registerProvider(ProviderDto providerDto) {
         List<String> response = new ArrayList<>();
-        Provider provider = new Provider(providerDto);
-        providerRepository.saveAndFlush(provider);
-        response.add("Provider registered successfully");
+        Optional<Provider> optionalProvider = providerRepository.findByUsername(providerDto.getUsername());
+
+        if (!optionalProvider.isPresent()) {
+            Provider provider = new Provider(providerDto);
+            providerRepository.saveAndFlush(provider);
+            response.add("Provider registered successfully");
+            
+        } else {
+            response.add("Username already exists");
+        };
         return response;
     }
 
-    /* use providerDto to login provider */
+    /* use providerDto to login provider only if provider is logged in*/
     @Override
     @Transactional
     public List<String> loginProvider(ProviderDto providerDto) {
@@ -69,12 +76,17 @@ public class ProviderServiceImpl implements ProviderService {
         return null;
     }
 
-    /* update provider */
+    /* update provider by */
     @Override
     @Transactional
-    public List<String> updateProvider(ProviderDto providerDto) {
+    public List<String> updateProvider(Long id, ProviderDto providerDto) {
         List<String> response = new ArrayList<>();
-        Optional<Provider> optionalProvider = providerRepository.findById(providerDto.getId());
+        Optional<Provider> optionalProvider = providerRepository.findById(id);
+
+
+
+        // List<String> response = new ArrayList<>();
+        // Optional<Provider> optionalProvider = providerRepository.findById(providerDto.getId());
         if (optionalProvider.isPresent()) {
             Provider provider = optionalProvider.get();
             provider.setFirstName(providerDto.getFirstName());

@@ -13,6 +13,10 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
      // Optional<Patient> findByUsername(String username);
      Optional<Patient> findByUsername(String username);
 
+     // us a Query to find patient by first name and last name
+
+     // List<Patient> findByFirstNameAndLastName(String firstName, String lastName);
+
      // get patient by patient id
      Optional<Patient> findById(Long id);
 

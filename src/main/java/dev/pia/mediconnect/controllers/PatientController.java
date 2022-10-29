@@ -10,6 +10,7 @@ import dev.pia.mediconnect.services.*;
 
 @RestController
 @RequestMapping("api/v1/patients")
+@CrossOrigin
 public class PatientController {
 
     
@@ -33,11 +34,14 @@ public class PatientController {
         return patientService.getPatientById(patientId);
     }
 
-    /* update patient */
-    @PutMapping("/update")
-    public List<String> updatePatient(@RequestBody PatientDto patientDto) {
-        return patientService.updatePatient(patientDto);
+    /* update patient by id*/
+    @PutMapping("/{patientId}")
+    public List<String> updatePatient(@PathVariable Long patientId, @RequestBody PatientDto patientDto) {
+        return patientService.updatePatient(patientId, patientDto);
     }
+    // public List<String> updatePatient(@RequestBody PatientDto patientDto) {
+    //     return patientService.updatePatient(patientDto);
+    // }
 
     /*  update patient name */
     @PutMapping("/update/name")

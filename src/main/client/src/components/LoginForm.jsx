@@ -99,7 +99,6 @@ const LoginForm = () => {
                         </Row>
                         <div className='form-group col-12 p-2 text-center'>
                             <button type='submit' className='btn btn-primary' >Login</button>
-                            {/* disabled={!validUsername || !validPassword || !validMatch || !validFirstName || !validLastName || !validSpecialty ? true: false}   */}
                         </div>
                         <p className='text-center'>
                             Don't have an account? <Link to='/register'> Register here.</Link>

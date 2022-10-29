@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { faCheck, faBars, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Navbar, NavbarToggler, Collapse, Nav, NavItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Header = () => {
     const [navigation, setNavigation] = useState(false);
@@ -13,7 +15,7 @@ const Header = () => {
     const MenuItem = ({ to, linkName }) => {
         return (
             <NavItem>
-                <NavLink className='nav-link' to={to} onClick={toggleNav}>{linkName}</NavLink>
+                <NavLink className='nav-link' to={to} >{linkName}</NavLink>
             </NavItem>
         );
     }
@@ -31,7 +33,7 @@ const Header = () => {
                 </div>
 
                 <NavbarToggler onClick={openNav} className='align-self-center justify-content-end px-0'>
-                        {/* <img src={menu}  alt='menu' className='text-success'/>  */}
+                        <FontAwesomeIcon icon={faBars} size='2x' className='text-light' />
                 </NavbarToggler>
 
                 <Collapse isOpen={navigation} navbar className='justify-content-end'>

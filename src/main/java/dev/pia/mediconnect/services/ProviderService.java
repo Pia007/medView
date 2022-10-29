@@ -19,9 +19,10 @@ public interface ProviderService {
     @Transactional
     ProviderDto getProviderById(Long providerId);
 
-    /* update provider */
+    /* update provider by id*/
     @Transactional
-    List<String> updateProvider(ProviderDto providerDto);
+    List<String> updateProvider(Long providerId, ProviderDto providerDto);
+
 
     /* get all providers */
     List<ProviderDto> getAllProviders();

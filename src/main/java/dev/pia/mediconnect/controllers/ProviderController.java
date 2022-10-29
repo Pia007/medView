@@ -48,9 +48,9 @@ public class ProviderController {
         return providerService.getProviderById(providerId);
     }
 
-    /* update provider */
-    @PutMapping("/update")
-    public List<String> updateProvider(@RequestBody ProviderDto providerDto) {
-        return providerService.updateProvider(providerDto);
+    /* update provider  by id*/
+    @PutMapping("/{providerId}")
+    public List<String> updateProvider(@PathVariable Long providerId, @RequestBody ProviderDto providerDto) {
+        return providerService.updateProvider(providerId, providerDto);
     }
 }
