@@ -19,6 +19,7 @@ const LASTNAME_REGEX = /^[A-z- ]{2,}$/;
 // dob format - must be in the format YYYY-MM-DD
 const DOB_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
+
 // email regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
 
@@ -51,40 +52,11 @@ const MEDICATIONS_REGEX = /^[A-z-, ]{2,}$/;
 
 
 
-const AddPatientForm = ({
-    onChangeUsername, 
-    onChangeFirstName, 
-    onChangeLastName,
-    onChangeEmail,
-    onChangePhone,
-    onChangeAddress,
-    onChangeCity,
-    onChangeState,
-    onChangeZip,
-    onChangeAllergies,
-    onChangeInsurance,
-    onChangeConditions,
-    onChangeMedications,
-    onSubmit,
-    valueUsername,
-    valueFirstName,
-    valueLastName,
-    valueEmail,
-    valuePhone,
-    valueAddress,
-    valueCity,
-    valueState,
-    valueZip,
-    valueAllergies,
-    valueInsurance,
-    valueConditions,
-    valueMedications,
-    usernameValid }) => {
+const AddPatientForm = () => {
 
     const { id } = useParams();
     const usernameRef = useRef();
     const errRef = useRef();
-
 
     const [username, setUsername] = useState('');
     const [validUsername, setValidUsername] = useState(false);
@@ -272,11 +244,11 @@ const AddPatientForm = ({
                                     className='form-control'
                                     id='username'
                                     name='username'
-                                    value={valueUsername}
+                                    value={username}
                                     aria-invalid={validUsername ? 'false' : 'true'}
-                                    aria-describedby='newpatintnote'
+                                    aria-describedby='newpatientnote'
                                     autoComplete='off'
-                                    onChange={onChangeUsername}
+                                    onChange={(e) => setUsername(e.target.value)}
                                     onFocus={() => setUsernameFocus('focus')}
                                     onBlur={() => setUsernameFocus('')}
                                 />
@@ -360,7 +332,7 @@ const AddPatientForm = ({
                                 />
                                 <p id='dobnote' className={dobFocus && !validDob ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be a valid date, YYYY-MM_DD.
+                                    Must be a valid date, YYYY-MM-DD.
                                 </p>
                             </div>
                             <div className="form-group">
@@ -538,25 +510,25 @@ const AddPatientForm = ({
                                 </p>
                             </div>
                             <div className="form-group">
-                                <label htmlFor='medications'>
-                                    Medications:
-                                    <FontAwesomeIcon icon={faCheck} className={validMedications ? 'valid' : 'hide'} />
-                                    <FontAwesomeIcon icon={faTimes} className={validMedications || !medications ? 'hide' : 'invalid'} />
+                                <label htmlFor='insurance'>
+                                    Insurance:
+                                    <FontAwesomeIcon icon={faCheck} className={validInsurance ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validInsurance || !insurance ? 'hide' : 'invalid'} />
                                 </label>
                                 <input
                                     type='text'
                                     className='form-control'
-                                    id='medications'
+                                    id='insurance'
                                     required
                                     autoComplete='off'
-                                    value={medications}
-                                    aria-invalid={validMedications ? 'false' : 'true'}
-                                    aria-describedby='medicationsnote'
-                                    onChange={(e) => setMedications(e.target.value)}
-                                    onFocus={() => setMedicationsFocus(true)}
-                                    onBlur={() => setMedicationsFocus(false)}
+                                    value={insurance}
+                                    aria-invalid={validInsurance ? 'false' : 'true'}
+                                    aria-describedby='insurancenote'
+                                    onChange={(e) => setInsurance(e.target.value)}
+                                    onFocus={() => setInsuranceFocus(true)}
+                                    onBlur={() => setInsuranceFocus(false)}
                                 />
-                                <p id='medicationsnote' className={medicationsFocus && !validMedications ? 'instructions' : 'offscreen'}>
+                                <p id='insurancenote' className={insuranceFocus && !validInsurance ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be at least 2 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
@@ -589,25 +561,25 @@ const AddPatientForm = ({
                                 </p>
                             </div>
                             <div className="form-group">
-                                <label htmlFor='insurance'>
-                                    Insurance:
-                                    <FontAwesomeIcon icon={faCheck} className={validInsurance ? 'valid' : 'hide'} />
-                                    <FontAwesomeIcon icon={faTimes} className={validInsurance || !insurance ? 'hide' : 'invalid'} />
+                                <label htmlFor='medications'>
+                                    Medications:
+                                    <FontAwesomeIcon icon={faCheck} className={validMedications ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validMedications || !medications ? 'hide' : 'invalid'} />
                                 </label>
                                 <input
                                     type='text'
                                     className='form-control'
-                                    id='insurance'
+                                    id='medications'
                                     required
                                     autoComplete='off'
-                                    value={insurance}
-                                    aria-invalid={validInsurance ? 'false' : 'true'}
-                                    aria-describedby='insurancenote'
-                                    onChange={(e) => setInsurance(e.target.value)}
-                                    onFocus={() => setInsuranceFocus(true)}
-                                    onBlur={() => setInsuranceFocus(false)}
+                                    value={medications}
+                                    aria-invalid={validMedications ? 'false' : 'true'}
+                                    aria-describedby='medicationsnote'
+                                    onChange={(e) => setMedications(e.target.value)}
+                                    onFocus={() => setMedicationsFocus(true)}
+                                    onBlur={() => setMedicationsFocus(false)}
                                 />
-                                <p id='insurancenote' className={insuranceFocus && !validInsurance ? 'instructions' : 'offscreen'}>
+                                <p id='medicationsnote' className={medicationsFocus && !validMedications ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be at least 2 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
