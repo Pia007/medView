@@ -229,8 +229,8 @@ const AddPatientForm = () => {
     }
 
     return (
-        <>
-            <section>
+        <div className='container'>
+            <section className='row p-3 justify-content-around' style={{border: '2px solid red'}}>
                 <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
                 <Card>
                     <form action="" onSubmit={handleSubmit} className='p-3'>
@@ -594,7 +594,7 @@ const AddPatientForm = () => {
                     </form>
                 </Card>
             </section>
-        </>
+        </div>
     )
 }
 

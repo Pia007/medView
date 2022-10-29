@@ -139,9 +139,6 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
                     </div>
                 )} 
             </>
-
-            
-
         </div>
     )
 }

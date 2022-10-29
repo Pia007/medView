@@ -5,7 +5,7 @@ import Home from '../pages/Home';
 import Registration from './Registration';
 import Login from './Login';
 import Provider from './Provider';
-import AddPatientForm from '../components/AddPatientForm';
+import AddPatient from './AddPatient';
 
 const Main = () => {
 
@@ -19,9 +19,8 @@ const Main = () => {
                     <Route path='/' element={<Home/>} />
                     <Route path='login' element={<Login />} />
                     <Route path='register' element={<Registration />} />
-                    
                     <Route path='provider/:id' element={<Provider />} />
-                    <Route path='provider/:id/addPatient' element={<AddPatientForm />} />
+                    <Route path='provider/:id/addPatient' element={<AddPatient />} />
                 </Routes>
             </div>
         </div>
