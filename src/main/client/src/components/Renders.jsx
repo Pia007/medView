@@ -25,82 +25,47 @@ export const RenderProvider = ({provider, onClick}) => {
     )
 }
 
-// ,  onClickInfo, onClickMeds, onClickEdit
 
 export const RenderPatientList = ({ patient, onClick}) => {
     return (
-        <>
-            {/* <Table hover>
-                <thead>
-                    <tr>
-                        <th>
-                            First Name
-                        </th>
-                        <th>
-                            Last Name
-                        </th>
-                        <th>
-                            Age
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Phone Number
-                        </th> 
-                        <th>
-                            Username
-                        </th>
-                        <th>
-                            Username
-                        </th>
-                    </tr>
-                </thead> */}
-                {/* <tbody> */}
-                    {/* <tr className='table-row' onClick={onClick}> */}
-                    
-                        <td>
-                            {patient.firstName}
-                        </td>
-                        <td>
-                            {patient.lastName}
-                        </td>
-                        <td>
-                            {patient.age}
-                        </td>
-                        {/* <td>
-                            {patient.email}
-                        </td>
-                        <td>
-                            {patient.phone}
-                        </td> */}
-                        <td>
-                            <button >
-                                <FontAwesomeIcon icon={faFileMedical} />
-                            </button>
-                        </td>
-                        <td>
-                            <button >
-                                <FontAwesomeIcon icon={faFilePrescription} />
-                            </button>
-                        </td>
-                        <td>
-                            <button>
-                                <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                        </td>
-                        <td>
-                            {/* <button   to={`/patients/${patId}`}> */}
-                             {/* <FontAwesomeIcon icon={faPenToSquare} /> */}
-                            <button onClick={onClick}>
-                                Info
-                               
-                            </button>
-                        </td>
-                    
-                    {/* </tr>
-                </tbody>
-            </Table> */}
+        <>     
+            <td>
+                {patient.firstName}
+            </td>
+            <td>
+                {patient.lastName}
+            </td>
+            <td>
+                {patient.age}
+            </td>
+            {/* <td>
+                {patient.email}
+            </td>
+            <td>
+                {patient.phone}
+            </td> */}
+            <td>
+                <button >
+                    <FontAwesomeIcon icon={faFileMedical} />
+                </button>
+            </td>
+            <td>
+                <button >
+                    <FontAwesomeIcon icon={faFilePrescription} />
+                </button>
+            </td>
+            <td>
+                <button>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+            </td>
+            <td>
+                {/* <button   to={`/patients/${patId}`}> */}
+                    {/* <FontAwesomeIcon icon={faPenToSquare} /> */}
+                <button onClick={onClick}>
+                    Info
+                </button>
+            </td>
         </>
     )
 }
@@ -108,7 +73,7 @@ export const RenderPatientList = ({ patient, onClick}) => {
 
 
 /* render patient */
-export const RenderPatient = ({singlePatient}) => {
+export const RenderPatient = ({singlePatient, handleClick}) => {
     return (
         <>
             <Row className='text-center p-3'>
@@ -118,9 +83,17 @@ export const RenderPatient = ({singlePatient}) => {
                     </button>
                 </Col> */}
                 <Col>
-                    <h2> {singlePatient.firstName} {singlePatient.lastName} </h2>
-                    <h3>{singlePatient.age}</h3>
-                    <h4>{singlePatient.address}, {singlePatient.city}, {singlePatient.state} {singlePatient.zip}</h4>
+                    <button className='p-1 text-center provider-icon-button' onClick={handleClick}>
+                        <FontAwesomeIcon icon={faPenToSquare} className='pat-edit-icon'/>
+                    </button>
+                    <h2>{singlePatient.firstName} {singlePatient.lastName} </h2>
+                    
+                    {/* <h3>{singlePatient.age}</h3> */}
+                    <p className='mb-1'>{singlePatient.address}, {singlePatient.city}, {singlePatient.state} {singlePatient.zip}</p>
+                    {/* <p className='mb-1'>{singlePatient.dob}</p> */}
+                    <p className='mb-1'>{singlePatient.email}</p>
+                    <p className='mb-1'>{singlePatient.phone}</p>
+                    {/* <FontAwesomeIcon icon={faPenToSquare} className='pat-edit-icon'/> */}
                 </Col>
 
             </Row>

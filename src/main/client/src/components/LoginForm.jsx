@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from '../api/AxiosApi';
-// import axios from 'axios';
 import { Row, Card } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +9,6 @@ const LoginForm = () => {
     const usernameRef = useRef();
     const errorRef = useRef();
 
-    // const { register, handleSubmit, reset, errors } = useForm();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -62,10 +60,10 @@ const LoginForm = () => {
 
     return (
         <>
-            <section>
+            <section className='row m-auto p-3 justify-content-around'>
                 <p ref={errorRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
                 
-                <h1>Login</h1>
+                <h1 className='text-center'>Login</h1>
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
                     <form onSubmit={handleSubmit} className='p-3'>
                         <Row>
@@ -73,7 +71,6 @@ const LoginForm = () => {
                                 <label htmlFor='username'>Username:</label>
                                 <input
                                     type='text'
-                                    // name='username'
                                     id='username'
                                     ref={usernameRef}
                                     value={username}

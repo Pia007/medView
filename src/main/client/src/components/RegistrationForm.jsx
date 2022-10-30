@@ -67,8 +67,6 @@ const RegistrationForm = () => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
-    // const [submitted, setSubmitted] = useState(false)
-
     // set the focus on username input when the component loads
     useEffect(() => {
         usernameRef.current.focus();
@@ -139,13 +137,10 @@ const RegistrationForm = () => {
                 lastName,
                 specialty
             });
-            // console.log(registration.data);
-            console.log(JSON.stringify(registration.data));
-            // setSuccess(true);
-
             
-            window.location.href = '/login';
+            console.log(JSON.stringify(registration.data));
 
+            window.location.href = '/login';
 
             // clear the form
             setUsername('');
@@ -170,190 +165,183 @@ const RegistrationForm = () => {
 
     return (
         <>
-            {/* check success*/}
-            {success ? (
-                <section>
-                    <h2>Registration successful</h2>
+            <section className='row p-3 justify-content-around' style={{border: '2px solid red'}}>
+                <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
 
-                </section>
-            ): (
-                <section className='row p-3 justify-content-around' style={{border: '2px solid red'}}>
-                    <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
-
-                    <h1 className='text-center'>Provider Registration</h1>
-                    <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
-                        <form onSubmit={handleSubmit} className='p-3' style={{border: ''}}>
-                            <Row className=''>
-                                <div className='form-group col-12 p-2'>
-                                    <label htmlFor='username' className=''>
-                                        Username:
-                                        <FontAwesomeIcon icon={faCheck} className={validUsername ? 'valid' : 'hide'} />
-                                        <FontAwesomeIcon icon={faTimes} className={validUsername || !username ? 'hide' : 'invalid'} />
-                                    </label>
-                                    <input 
-                                        type='text'
-                                        
-                                        id='username'
-                                        ref={usernameRef}
-                                        className='form-control'
-                                        required
-                                        value={username}
-                                        aria-invalid={validUsername ? 'false' : 'true'}
-                                        aria-describedby='uidnote'
-                                        autoComplete='off'
-                                        onChange={(e) => setUsername(e.target.value)}
-                                        onFocus={() => setUsernameFocus(true)}
-                                        onBlur={() => setUsernameFocus(false)}
-                                    />
-                                    <p id='uidnote' className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'}>
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                        4 to 10 characters.<br />
-                                        Must begin with a letter.<br />
-                                        Letters, numbers, underscores, hyphens allowed.
-                                    </p>
-                                </div>
-                                <div className='form-group col-12 p-2'>
-                                    <label htmlFor='password'>
-                                        Password:
-                                        <FontAwesomeIcon icon={faCheck} className={validPassword ? 'valid' : 'hide'} />
-                                        <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? 'hide' : 'invalid'} />
-                                    </label>
-                                    <input 
-                                        type='password'
-                                        className='form-control'
-                                        id='password'
-                                        required
-                                        autoComplete='off'
-                                        value={password}
-                                        aria-invalid={validPassword ? 'false' : 'true'}
-                                        aria-describedby='passwordnote'
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        onFocus={() => setPasswordFocus(true)}
-                                        onBlur={() => setPasswordFocus(false)}
-
-                                    />
-                                    <p id='passwordnote' className={passwordFocus && !validPassword ? 'instructions' : 'offscreen'}>
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                        4 to 10 characters.<br />
-                                        Must include uppercase and lowercase letters, a number and a special character.<br />
-                                        Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span> <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
-                                    </p>
-                                </div>
-
-                                <div className='form-group col-12 p-2'>
-                                    <label htmlFor='confirm_password'>
-                                        Confirm Password:
-                                        <FontAwesomeIcon icon={faCheck} className={validMatch && matchPassword ? 'valid' : 'hide'} />
-                                        <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPassword ? 'hide' : 'invalid'} />
-                                    </label>
-                                    <input
-                                        type='password'
-                                        className='form-control'
-                                        id='confirm_password'   
-                                        required
-                                        autoComplete='off'
-                                        value={matchPassword}
-                                        aria-invalid={validMatch ? 'false' : 'true'}
-                                        aria-describedby='matchnote'
-                                        onChange={(e) => setMatchPassword(e.target.value)}
-                                        onFocus={() => setPasswordMatchFocus(true)}
-                                        onBlur={() => setPasswordMatchFocus(false)}
-                                    />
-                                    <p id='matchnote' className={passwordMatchFocus && !validMatch ? 'instructions' : 'offscreen'}>
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                        Passwords must match.
-                                    </p>
-                                </div>
-
-                                <div className='form-group col-12 p-2'>
-                                    <label htmlFor='firstname'>
-                                        First Name:
-                                        <FontAwesomeIcon icon={faCheck} className={validFirstName ? 'valid' : 'hide'} />
-                                        <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? 'hide' : 'invalid'} />
-                                    </label>
-                                    <input 
-                                        type='text'
-                                        className='form-control'
-                                        id='firstname'
-                                        required
-                                        autoComplete='off'
-                                        value={firstName}
-                                        aria-invalid={validFirstName ? 'false' : 'true'}
-                                        aria-describedby='firstnamenote'
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        onFocus={() => setFirstNameFocus(true)}
-                                        onBlur={() => setFirstNameFocus(false)}
-                                    />
-                                    <p id='firstnamenote' className={firstNameFocus && !validFirstName ? 'instructions' : 'offscreen'}>
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                        Must be at least 2 characters.<br />
-                                        Letters, spaces, and hyphens allowed.
-                                    </p>
-                                </div>
-
-
-                                <div className='form-group col-12 p-2'>
-                                    <label htmlFor='lastname'>
-                                        Last Name:
-                                        <FontAwesomeIcon icon={faCheck} className={validLastName ? 'valid' : 'hide'} />
-                                        <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? 'hide' : 'invalid'} />
-                                    </label>
-                                    <input 
-                                        type='text'
-                                        className='form-control'
-                                        id='lastname'
-                                        required
-                                        autoComplete='off'
-                                        value={lastName}
-                                        aria-invalid={validLastName ? 'false' : 'true'}
-                                        aria-describedby='lastnamenote'
-                                        onChange={(e) => setLastName(e.target.value)}
-                                        onFocus={() => setLastNameFocus(true)}
-                                        onBlur={() => setLastNameFocus(false)}
-                                    />
-                                    <p id='lastnamenote' className={lastNameFocus && !validLastName ? 'instructions' : 'offscreen'}>
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                        Must be at least 2 characters.<br />
-                                        Letters, spaces, and hyphens allowed.
-                                    </p>
-                                </div>
-
-                                <div className='form-group col-12 p-2'>
-                                    <label htmlFor='specialty'>
-                                        Specialty:
-                                        <FontAwesomeIcon icon={faCheck} className={validSpecialty ? 'valid' : 'hide'} />
-                                        <FontAwesomeIcon icon={faTimes} className={validSpecialty || !specialty ? 'hide' : 'invalid'} />
-                                    </label>
-                                    <input 
-                                        type='text'
-                                        className='form-control'
-                                        id='specialty'
-                                        required
-                                        autoComplete='off'
-                                        value={specialty}
-                                        aria-invalid={validSpecialty ? 'false' : 'true'}
-                                        aria-describedby='specialtynote'
-                                        onChange={(e) => setSpecialty(e.target.value)}
-                                        onFocus={() => setSpecialtyFocus(true)}
-                                        onBlur={() => setSpecialtyFocus(false)}
-                                    />
-                                    <p id='specialtynote' className={specialtyFocus && !validSpecialty ? 'instructions' : 'offscreen'}>
-                                        <FontAwesomeIcon icon={faInfoCircle} />
-                                        Must be at least 8 characters.<br />
-                                        Letters, spaces, and hyphens allowed.
-                                    </p>
-                                </div>
-                            </Row>
-                            <div className='form-group col-12 p-2 text-center'>
-                                <button type='submit' className='btn btn-primary' >Register</button>
+                <h1 className='text-center'>Provider Registration</h1>
+                
+                <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
+                    <form onSubmit={handleSubmit} className='p-3' style={{border: ''}}>
+                        <Row className=''>
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='username' className=''>
+                                    Username:
+                                    <FontAwesomeIcon icon={faCheck} className={validUsername ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validUsername || !username ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='text'
+                                    
+                                    id='username'
+                                    ref={usernameRef}
+                                    className='form-control'
+                                    required
+                                    value={username}
+                                    aria-invalid={validUsername ? 'false' : 'true'}
+                                    aria-describedby='uidnote'
+                                    autoComplete='off'
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    onFocus={() => setUsernameFocus(true)}
+                                    onBlur={() => setUsernameFocus(false)}
+                                />
+                                <p id='uidnote' className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    4 to 10 characters.<br />
+                                    Must begin with a letter.<br />
+                                    Letters, numbers, underscores, hyphens allowed.
+                                </p>
                             </div>
-                            <p className='text-center'>
-                                Already have an account? <Link to='/login'> Login here.</Link>
-                            </p>
-                        </form>
-                    </Card>
-                </section>
-            )}
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='password'>
+                                    Password:
+                                    <FontAwesomeIcon icon={faCheck} className={validPassword ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='password'
+                                    className='form-control'
+                                    id='password'
+                                    required
+                                    autoComplete='off'
+                                    value={password}
+                                    aria-invalid={validPassword ? 'false' : 'true'}
+                                    aria-describedby='passwordnote'
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    onFocus={() => setPasswordFocus(true)}
+                                    onBlur={() => setPasswordFocus(false)}
+
+                                />
+                                <p id='passwordnote' className={passwordFocus && !validPassword ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    4 to 10 characters.<br />
+                                    Must include uppercase and lowercase letters, a number and a special character.<br />
+                                    Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span> <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
+                                </p>
+                            </div>
+
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='confirm_password'>
+                                    Confirm Password:
+                                    <FontAwesomeIcon icon={faCheck} className={validMatch && matchPassword ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPassword ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='password'
+                                    className='form-control'
+                                    id='confirm_password'   
+                                    required
+                                    autoComplete='off'
+                                    value={matchPassword}
+                                    aria-invalid={validMatch ? 'false' : 'true'}
+                                    aria-describedby='matchnote'
+                                    onChange={(e) => setMatchPassword(e.target.value)}
+                                    onFocus={() => setPasswordMatchFocus(true)}
+                                    onBlur={() => setPasswordMatchFocus(false)}
+                                />
+                                <p id='matchnote' className={passwordMatchFocus && !validMatch ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Passwords must match.
+                                </p>
+                            </div>
+
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='firstname'>
+                                    First Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validFirstName ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='text'
+                                    className='form-control'
+                                    id='firstname'
+                                    required
+                                    autoComplete='off'
+                                    value={firstName}
+                                    aria-invalid={validFirstName ? 'false' : 'true'}
+                                    aria-describedby='firstnamenote'
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    onFocus={() => setFirstNameFocus(true)}
+                                    onBlur={() => setFirstNameFocus(false)}
+                                />
+                                <p id='firstnamenote' className={firstNameFocus && !validFirstName ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </div>
+
+
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='lastname'>
+                                    Last Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validLastName ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='text'
+                                    className='form-control'
+                                    id='lastname'
+                                    required
+                                    autoComplete='off'
+                                    value={lastName}
+                                    aria-invalid={validLastName ? 'false' : 'true'}
+                                    aria-describedby='lastnamenote'
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    onFocus={() => setLastNameFocus(true)}
+                                    onBlur={() => setLastNameFocus(false)}
+                                />
+                                <p id='lastnamenote' className={lastNameFocus && !validLastName ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </div>
+
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='specialty'>
+                                    Specialty:
+                                    <FontAwesomeIcon icon={faCheck} className={validSpecialty ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validSpecialty || !specialty ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='text'
+                                    className='form-control'
+                                    id='specialty'
+                                    required
+                                    autoComplete='off'
+                                    value={specialty}
+                                    aria-invalid={validSpecialty ? 'false' : 'true'}
+                                    aria-describedby='specialtynote'
+                                    onChange={(e) => setSpecialty(e.target.value)}
+                                    onFocus={() => setSpecialtyFocus(true)}
+                                    onBlur={() => setSpecialtyFocus(false)}
+                                />
+                                <p id='specialtynote' className={specialtyFocus && !validSpecialty ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 8 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </div>
+                        </Row>
+                        <div className='form-group col-12 p-2 text-center'>
+                            <button type='submit' className='btn btn-primary' >Register</button>
+                        </div>
+                        <p className='text-center'>
+                            Already have an account? <Link to='/login'> Login here.</Link>
+                        </p>
+                    </form>
+                </Card>
+            </section>
         </>
     )
 }

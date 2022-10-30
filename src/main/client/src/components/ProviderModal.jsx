@@ -22,7 +22,6 @@ const ProviderModal = ({
                             <input 
                                 type="text" 
                                 className='form-control' 
-                                name='firstName' 
                                 id='firstName' 
                                 value={valueOne} 
                                 onChange={onChangeOne}
@@ -33,7 +32,6 @@ const ProviderModal = ({
                             <input 
                                 type="text" 
                                 className='form-control' 
-                                name='lastName' 
                                 id='lastName' 
                                 value={valueTwo}
                                 onChange={onChangeTwo}
@@ -43,8 +41,7 @@ const ProviderModal = ({
                             <label htmlFor="specialty">Specialty</label>
                             <input 
                                 type="text" 
-                                className='form-control' 
-                                name='specialty' 
+                                className='form-control'
                                 id='specialty' 
                                 value={valueThree} 
                                 onChange={onChangeThree}

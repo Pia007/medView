@@ -14,7 +14,7 @@ const Main = () => {
     return (
         <div>
             <Header />
-            <div className='d-flex bg-light' style={{width: '100%', height: 'auto'}}>
+            <div className='d-flex' style={{width: '100%', height: 'auto'}}>
                 
                 <Routes>
                     <Route path='/' element={<Home/>} />
