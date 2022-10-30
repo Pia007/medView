@@ -1,16 +1,21 @@
 import React, { useState, useEffect} from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle, faUserPen } from '@fortawesome/free-solid-svg-icons';
+import { Row, Col, Table, Card} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { RenderProvider } from '../components/Renders';
 import ProviderModal from '../components/ProviderModal';
+import { RenderPatientList } from '../components/Renders';
 // import AddPatientForm from '../components/AddPatientForm';
 import axios from '../api/AxiosApi';
 
 const PROVIDER_URL = '/providers';
 const PATIENT_URL = '/patients';
 
-const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChangeTwo, onChangeThree}) => {
+const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChangeTwo, onChangeThree, patId, onClick}) => {
     const { id } = useParams();
+
+    console.log("provider id: " + id);
 
     const [provider, setProvider] = useState('')
     const [ providerInitials, setProviderInitials ] = useState('')
@@ -18,6 +23,7 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
     const [error, setError] = useState('')
     const [patients, setPatients] = useState('')
     const [ message, setMessage ] = useState('')
+    const [ patientId, setPatientId ] = useState('')
 
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
@@ -27,7 +33,7 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
             try {
                 const response = await axios.get(`${PROVIDER_URL}/${id}`);
                 setProvider(response.data);
-                setLoading(false);
+                setLoading(true);
 
                 // get provider initials
                 const providerInitials = response.data.firstName.charAt(0) + response.data.lastName.charAt(0);
@@ -36,35 +42,50 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
             } catch (error) {
                 setError(error);
                 setLoading(false);
-                // setMessage('Error loading provider');
             }
         }
 
 
         const getPatients = async () => {
-        try {
-            const response = await axios.get(`${PATIENT_URL}/provider/${id}`);
+            try {
+                const response = await axios.get(`${PATIENT_URL}/provider/${id}`);
 
-            // check if there are any patients
-            if (response.data.length > 0) {
-        
-                setPatients(response.data);
-                console.log(response.data);
+                // check if there are any patients
+                if (response.data.length > 0) {
+            
+                    console.log(response.data);
+                    setPatients(response.data);
+                    console.log(patients);
+
+                    console.log("First patient: " + patients[0].id)
+
+                    // create an array of patient ids
+                    const patientIds = response.data.map(patient => patient.id);
+                    console.log("These are ids: " + patientIds);
+
+                    // get the id of the each patient
+                    patientIds.forEach (patientId => {
+                        const id = patientId;
+                        console.log("This is the id: " + id);
+                        // setPatientId(patientId);
+                        console.log(patientId);
+                    });
+
+                    setLoading(false);
+                } else {
+                    setPatients(null);
+                    setLoading(false);
+                    console.log('No patients');
+                    setMessage(' You do not have any patients yet');
+                }
+            } catch (error) {
+                setError(error);
                 setLoading(false);
-            } else {
-                setPatients(null);
-                setLoading(false);
-                console.log('No patients');
-                setMessage(' You do not have any patients yet');
             }
-        } catch (error) {
-            setError(error);
-            setLoading(false);
         }
-    }
-        getProvider();
-        getPatients();
-    }, []);
+            getProvider();
+            getPatients();
+        }, []);
 
     useEffect(() => {
         setError('');
@@ -87,23 +108,38 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
         }
     }
 
-
     if (loading) {
         return <div>Loading...</div>
     }
-    
-    return (
-        <div>
-            <div className='text-center p-3'>
-                <button className='p-1 text-center provider-icon-button' onClick={toggleModal}>
-                    <FontAwesomeIcon icon={faUserPen} className='icon provider-icon' />
-                </button>
-            </div>
-            <h1>Provider</h1>
-            <h2>{provider.firstName} {provider.lastName}</h2>
-            <h2>{provider.specialty}</h2>
 
-            {/* center the modal */}
+    
+
+    const patientList = patients.map(patient => {
+        return (
+            <tr key={patient.id} >
+                    <td>{patient.firstName}</td>
+                    <td>{patient.lastName}</td>
+                    <td>{patient.age}</td>
+                    <button
+                        onClick={
+                            () => {
+                                window.location.href = `/patient/${patient.id}`;
+                            }
+                        }
+                    >
+                        Info
+                    </button>
+            </tr>
+        )
+    })
+
+     
+    return (
+
+
+        <div className='container'>
+            <RenderProvider provider={provider} onClick={toggleModal} />
+
             <ProviderModal 
                 isOpen={modal}
                 toggle={toggleModal}
@@ -123,20 +159,51 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
                         <Link to={`/provider/${id}/addPatient`}>Add A Patient</Link>
                     </h3>
                 ) : (
-                    <div>
-                        <h2>Patients</h2>
+                    <Row>
+                        <h3>Patients</h3>
                         <Link to={`/provider/${id}/addPatient`}>Add A Patient</Link>
+                        {/* {patientList} */}
                     
-                        {patients.map((patient) => (
-                            <div key={patient.id}>
-                                <h3>{patient.firstName} {patient.lastName}</h3>
-                                <h3>{patient.email}</h3>
-                                <h3>{patient.phoneNumber}</h3>
-                                <h3>{patient.age}</h3>
-                                <h4>{patient.address}, {patient.city}, {patient.zip}</h4>
-                            </div>
-                        ))}
-                    </div>
+                        <Col>
+                        <Table hover striped>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        First Name
+                                    </th>
+                                    <th>
+                                        Last Name
+                                    </th>
+                                    <th>
+                                        Age
+                                    </th>
+                                    {/* <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Phone Number
+                                    </th> */}
+                                    {/* <th>
+                                        Username
+                                    </th>
+                                    <th>
+                                        Username
+                                    </th> */}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {patientList}
+                                {/* {patients.map((patient) => (
+                                    
+                                        <tr key={patient.id} md="12" >
+                                            <RenderPatientList  patient={patient}  onClick={handlePatientClick} />
+                                        </tr>
+                                    
+                                ))} */}
+                            </tbody>
+                        </Table>
+                        </Col>
+                    </Row>
                 )} 
             </>
         </div>

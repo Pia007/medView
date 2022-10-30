@@ -7,22 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Header = () => {
     const [navigation, setNavigation] = useState(false);
     const openNav = () => setNavigation(!navigation);
-    const toggleNav = () => {
-        (navigation) ? setNavigation(false) : setNavigation(true);
-    }
 
 
     const MenuItem = ({ to, linkName }) => {
         return (
             <NavItem>
-                <NavLink className='nav-link' to={to} >{linkName}</NavLink>
+                <NavLink className='nav-link' to={to} onClick={() => (navigation ? setNavigation(!navigation): setNavigation(navigation))}>{linkName}</NavLink>
             </NavItem>
         );
     }
 
     return (
         <React.Fragment>
-            <Navbar className='navbar navbar-expand-md p-1 d-flex justify-content-between sticky-top text-light bg-dark' style={{zIndex: '5', border: '2px solid blue'}}>
+            <Navbar className='navbar navbar-expand-md p-1 d-flex justify-content-between sticky-top  myNav' style={{zIndex: '5'}}>
                 <div className='container-fluid'>
                     {/* <Zoom> */}
                         <NavLink tag='link' to='/' 

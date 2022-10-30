@@ -6,6 +6,7 @@ import Registration from './Registration';
 import Login from './Login';
 import Provider from './Provider';
 import AddPatient from './AddPatient';
+import Patient from './Patient';
 
 const Main = () => {
 
@@ -21,6 +22,7 @@ const Main = () => {
                     <Route path='register' element={<Registration />} />
                     <Route path='provider/:id' element={<Provider />} />
                     <Route path='provider/:id/addPatient' element={<AddPatient />} />
+                    <Route path='patient/:id' element={<Patient />} />
                 </Routes>
             </div>
         </div>

@@ -37,6 +37,14 @@ body {
     position: relative!important;
 }
 
+/* header */
+.myNav {
+  border-bottom: 1px solid var(--opt-darkgray);
+  /* add a blur to border */
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  
+}
+
 
 
 
@@ -111,4 +119,9 @@ body {
     height: 2rem;
     color: var(--opt-darkblue);
     /* margin-left: 0..25rem; */
+}
+
+/* patients */
+.table-row {
+  background: var(--opt-skyblue);
 }
