@@ -1,9 +1,10 @@
 import React, {useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { Row, Col } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
 import { RenderNotes } from '../components/Renders';
+import moment from 'moment';
 import axios from '../api/AxiosApi';
 
 const PATIENT_URL = '/patients';
@@ -41,7 +42,14 @@ const Patient = ({
     onChangeMedications,
     onSubmit,
     closeModal,
-    patientNote }) => { 
+    patientNote,
+    onSubmitNote,
+    valueBody,
+    valueDateCreated,
+    onChangeBody,
+    onFocusBody,
+    onBlurBody,
+    onChangeDateCreated}) => { 
 
     const { id } = useParams();
 
@@ -53,8 +61,17 @@ const Patient = ({
     const [noteId, setNoteId] = useState('');
     const [message, setMessage] = useState('');
 
+    const [note , setNote] = useState('');
+    const [body, setBody] = useState('');
+    const [dateCreated, setDateCreated] = useState('');
+
+
+
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
+
+    const [noteModal, setNoteModal] = useState(false);
+    const toggleNoteModal = () => setNoteModal(!noteModal);
 
     // call the api to get the patient
     useEffect (() => {
@@ -87,6 +104,9 @@ const Patient = ({
                 // console.log(notes);
                 console.log(note.body);
                 console.log(note.dateCreated);
+                console.log(note.patientDto.provider.firstName);
+                console.log(note.patientDto.provider.lastName);
+                console.log("provider id: ", note.patientDto.provider.id);
                 // console.log(notes);
                 // console.log(notes.note.body);
                 // console.log(notes.note.dateCreated);
@@ -166,6 +186,22 @@ const Patient = ({
         }
     }
 
+    // const handleNoteSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     try {
+    //         const note = await axios.post(`${NOTES_URL}/patient/${id}`, {
+    //             body,
+    //             // set current date
+    //             dateCreated: moment(new Date().toLocaleDateString()).format('YYYY-MM-DD')
+    //         });
+    //         console.log(note);
+    //         toggleModal();
+    //     } catch (error) {
+    //         setError(error);
+    //     }
+    // }
+
     
     /* display the notes from the array of objects*/
     const displayNotes = () => {
@@ -173,11 +209,12 @@ const Patient = ({
             return notes.map((note) => {
                 return (
                     <div key={note.id}>
+                        <Link to={`/patient/${id}/addNote`} >add a note</Link>
                         <p>{note.body}</p>
-                        {/* convert the date to Month day year */}
-                        <p>{new Date(note.dateCreated).toLocaleDateString()}</p>
+                        {/* moment.js to convert the date to Month day year */}
+                        <p>{moment(note.dateCreated).format('MM/DD/YYYY')}</p>
+                        <p>{note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
                         <button>Edit</button>
-                        <button>Add</button>
                         <button>Delete</button>
                     </div>
                 )
@@ -185,7 +222,7 @@ const Patient = ({
         } else {
             return (
                 <div>
-                    <p>{message}. Would you like to add a note?</p>
+                    <p>{message}. Would you like to <Link to={`/patient/${id}/addNote`} >add a note</Link>?</p>
                 </div>
             )
         }
@@ -243,6 +280,16 @@ const Patient = ({
                 onSubmit={handleSubmit}
                 closeModal={() => toggleModal()}
             />
+            {/* < AddNoteModal
+                isOpen={noteModal}
+                toggle={() => toggleNoteModal()}
+                valueBody={note.body} 
+                onChangeBody={(e) => setNote({...note, body: e.target.value})}
+                valueDateCreated={note.dateCreated}
+                onChangeDateCreated={(e) => setNote({...note, dateCreated: e.target.value})}
+                onSubmitNote={handleNoteSubmit}
+
+            /> */}
 
             <Row>
                 <Col>

@@ -67,6 +67,9 @@ const PatientModal = ({
                                 id='dob'
                                 value={valueDob}
                                 onChange={onChangeDob}
+                                // convert date from MM/DD/YYYY to YYYY-MM-DD
+                                // value={valueDob.split('/').reverse().join('-')}
+
                             />
                         </div>
                         <div className='form-group'>

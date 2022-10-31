@@ -7,6 +7,7 @@ import Login from './Login';
 import Provider from './Provider';
 import AddPatient from './AddPatient';
 import Patient from './Patient';
+import AddNote from '../components/AddNote';
 
 const Main = () => {
 
@@ -23,6 +24,7 @@ const Main = () => {
                     <Route path='provider/:id' element={<Provider />} />
                     <Route path='provider/:id/addPatient' element={<AddPatient />} />
                     <Route path='patient/:id' element={<Patient />} />
+                    <Route path='patient/:id/addNote' element={<AddNote />} />
                 </Routes>
             </div>
         </div>

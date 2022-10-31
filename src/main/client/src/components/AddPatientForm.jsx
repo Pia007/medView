@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
 import axios from '../api/AxiosApi';
 import { Row, Card } from 'reactstrap'
 
@@ -16,9 +17,8 @@ const FIRSTNAME_REGEX = /^[A-z- ]{2,}$/;
 // lastname regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
 const LASTNAME_REGEX = /^[A-z- ]{2,}$/;
 
-// dob format - must be in the format YYYY-MM-DD
-const DOB_REGEX = /^\d{4}-\d{2}-\d{2}$/;
-
+// dob format - cannot be empty
+const DOB_REGEX = /^(?!\s*$).+/;
 
 // email regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
@@ -184,7 +184,9 @@ const AddPatientForm = () => {
                 username,
                 firstName,
                 lastName,
-                dob,
+                // convert dob to YYYY-MM-DD format
+                // 
+                dob: moment(dob).format('YYYY-MM-DD'),
                 email,
                 phone,
                 address,
@@ -317,13 +319,14 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faTimes} className={validDob || !dob ? 'hide' : 'invalid'} />
                                 </label>
                                 <input
-                                    type='text'
+                                    type='date'
                                     className='form-control'
                                     id='dob'
                                     required
                                     autoComplete='off'
-                                    placeholder='YYYY-MM-DD'
-                                    value={dob}
+                                    placeholder='MM/DD/YYYY'
+                                    // convert the date to format YYYY-MM-DD
+                                    value={dob.split('/').reverse().join('-')}
                                     aria-invalid={validDob ? 'false' : 'true'}
                                     aria-describedby='dobnote'
                                     onChange={(e) => setDob(e.target.value)}
@@ -332,7 +335,7 @@ const AddPatientForm = () => {
                                 />
                                 <p id='dobnote' className={dobFocus && !validDob ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be a valid date, YYYY-MM-DD.
+                                    Must enter a validate date, MM/DD/YYYY.
                                 </p>
                             </div>
                             <div className="form-group">
