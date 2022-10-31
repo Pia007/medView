@@ -38,28 +38,39 @@ public class PatientServiceImpl implements PatientService {
         if (optionalProvider.isPresent()) {
 
             Provider provider = optionalProvider.get();
+            // us first and last names to check if patient exists
+            // List<Patient> patients = patientRepository.findByFirstNameAndLastName(patientDto.getFirstName(), patientDto.getLastName());
+            // if patient exists
+            
+
             Optional<Patient> optionalPatient = patientRepository.findByUsername(patientDto.getUsername());
+        
             if (optionalPatient.isPresent()) {
                 return Arrays.asList("Patient already exists");
             } else {
-                Patient patient = new Patient();
-                patient.setUsername(patientDto.getUsername());
-                patient.setFirstName(patientDto.getFirstName());
-                patient.setLastName(patientDto.getLastName());
-                patient.setAddress(patientDto.getAddress());
-                patient.setCity(patientDto.getCity());
-                patient.setState(patientDto.getState());
-                patient.setZip(patientDto.getZip());
-                patient.setPhone(patientDto.getPhone());
-                patient.setEmail(patientDto.getEmail());
-                patient.setConditions(patientDto.getConditions());
-                patient.setAllergies(patientDto.getAllergies());
-                patient.setInsurance(patientDto.getInsurance());
-                patient.setMedications(patientDto.getMedications());
-                patient.setDob(patientDto.getDob());
+                Patient patient = new Patient(patientDto);
                 patient.setProvider(provider);
                 patientRepository.saveAndFlush(patient);
-                response.add("Patient added successfully");
+                response.add("Patient added");
+                return response;
+
+                // patient.setUsername(patientDto.getUsername());
+                // patient.setFirstName(patientDto.getFirstName());
+                // patient.setLastName(patientDto.getLastName());
+                // patient.setAddress(patientDto.getAddress());
+                // patient.setCity(patientDto.getCity());
+                // patient.setState(patientDto.getState());
+                // patient.setZip(patientDto.getZip());
+                // patient.setPhone(patientDto.getPhone());
+                // patient.setEmail(patientDto.getEmail());
+                // patient.setConditions(patientDto.getConditions());
+                // patient.setAllergies(patientDto.getAllergies());
+                // patient.setInsurance(patientDto.getInsurance());
+                // patient.setMedications(patientDto.getMedications());
+                // patient.setDob(patientDto.getDob());
+                // patient.setProvider(provider);
+                // patientRepository.saveAndFlush(patient);
+                // response.add("Patient added successfully");
             }
         } else {
             response.add("Invalid provider");

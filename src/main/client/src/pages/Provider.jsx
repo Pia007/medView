@@ -57,7 +57,7 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
                     setMessage(' You do not have any patients yet');
 
                     // create an array of patient ids
-                    const patientIds = response.data.map(patient => patient.id);
+                    const patientIds = patients.map(patient => patient.id);
                     console.log("These are ids: " + patientIds);
 
                     // get the id of the each patient
@@ -127,11 +127,11 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
         }
     }
 
+
     if (loading) {
         return <div>Loading...</div>
     }
 
-    
 
     const patientList = patients.map(patient => {
         return (
@@ -153,13 +153,13 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
             </tr>
         )
     })
+
     
     return (
 
         <div className='container'>
             
             <RenderProvider provider={provider} onClick={toggleModal} />
-            {/*  if there are no patients, show the message, otherwise hide it */}
             {patients.length > 0 ? <div></div> : <div>{message}</div>}
 
             <ProviderModal 
@@ -201,18 +201,6 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
                                     <th className='d-flex justify-content-end'>
                                         Files
                                     </th>
-                                    {/* <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Phone Number
-                                    </th> */}
-                                    {/* <th>
-                                        Username
-                                    </th>
-                                    <th>
-                                        Username
-                                    </th> */}
                                 </tr>
                             </thead>
                             <tbody>

@@ -44,7 +44,7 @@ public class ProviderServiceImpl implements ProviderService {
         return response;
     }
 
-    /* use providerDto to login provider only if provider is logged in*/
+    /* use providerDto to login provider only if provider exists*/
     @Override
     @Transactional
     public List<String> loginProvider(ProviderDto providerDto) {

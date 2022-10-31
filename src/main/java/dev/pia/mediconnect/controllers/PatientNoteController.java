@@ -10,6 +10,7 @@ import dev.pia.mediconnect.services.*;
 
 @RestController
 @RequestMapping("api/v1/notes")
+@CrossOrigin(origins = "*")
 public class PatientNoteController {
 
     private PatientNoteService patientNoteService;

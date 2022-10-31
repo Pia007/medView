@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom'
 import { Row, Col } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
+import { RenderNotes } from '../components/Renders';
 import axios from '../api/AxiosApi';
 
 const PATIENT_URL = '/patients';
+const NOTES_URL = '/notes';
 
 
 const Patient = ({
@@ -38,7 +40,8 @@ const Patient = ({
     onChangeConditions,
     onChangeMedications,
     onSubmit,
-    closeModal }) => { 
+    closeModal,
+    patientNote }) => { 
 
     const { id } = useParams();
 
@@ -46,14 +49,12 @@ const Patient = ({
 
     const [patient, setPatient] = useState('');
     const [error, setError] = useState('');
+    const [notes, setNotes] = useState('');
+    const [noteId, setNoteId] = useState('');
+    const [message, setMessage] = useState('');
 
     const [modal, setModal] = useState(false);
-    // ternary operator to set modal to true or false
     const toggleModal = () => setModal(!modal);
-    // if modal is open, set modal to false
-    // const close = () => {setModal(true);
-    // const closeModal = () => { setModal(!modal)}
-
 
     // call the api to get the patient
     useEffect (() => {
@@ -68,31 +69,95 @@ const Patient = ({
             }
         }
 
+        const getNotes = async (e) => {
+        // e.preventDefault();
+
+        try {
+            const response = await axios.get(`${NOTES_URL}/patient/${id}`);
+            console.log(response.data);
+            
+            if (response.data.length > 0 ) {
+                console.log(response.data[0].id);
+                console.log(response.data[0].body);
+                console.log(response.data[0].dateCreated);
+                setNotes(response.data);
+                console.log("Notes", notes);
+                const note = response.data[0];
+                console.log("Note", note);
+                // console.log(notes);
+                console.log(note.body);
+                console.log(note.dateCreated);
+                // console.log(notes);
+                // console.log(notes.note.body);
+                // console.log(notes.note.dateCreated);
+                
+                // if {notes.length > 0} {
+
+               
+
+                // create a new array of note id
+                const noteIds = notes.map((note) => note.id);
+                // console.log(noteIds);
+
+                // get the id of each note
+                noteIds.forEach (noteId => {
+                    const id = noteId;
+                    console.log('Note id: ' + id);
+                    setNoteId(id);
+                    console.log(id)
+                });
+            // } else if ( response.data.length > 0) {
+            //     // console.log(response.data);
+            //     setNotes(response.data);
+            //     // console.log(notes)
+
+            //     // create a new array of note id
+            //     const noteIds = notes.map((note) => note.id);
+            //     console.log(noteIds);
+
+            //     // get the id of each note
+            //     noteIds.forEach (noteId => {
+            //         const id = noteId;
+            //         console.log('Note id: ' + id);
+            //         setNoteId(id);
+            //         console.log(id)
+            //     });
+            } else {
+                setNotes('');
+                console.log("No notes found for this patient");
+                setMessage('No notes found for this patient');
+            }
+            
+        } catch (error) {
+            setError(error);
+        }
+    }
+
         getPatient();
+        getNotes();
     }, []);
 
-    // useEffect(() => {
-    //     setError('');
-    // }, []);
+    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const response = await axios.put(`${PATIENT_URL}/${id}`, {
-                firstName: patient.valueFirstName,
-                lastName: patient.valueLastName,
-                dob: patient.valueDob,
-                email: patient.valueEmail,
-                phone: patient.valuePhone,
-                address: patient.valueAddress,
-                city: patient.valueCity,
-                state: patient.valueState,
-                zip: patient.valueZip,
-                allergies: patient.valueAllergies,
-                insurance: patient.valueInsurance,
-                conditions: patient.valueConditions,
-                medications: patient.valueMedications
+                firstName: patient.firstName,
+                lastName: patient.lastName,
+                dob: patient.dob,
+                email: patient.email,
+                phone: patient.phone,
+                address: patient.address,
+                city: patient.city,
+                state: patient.state,
+                zip: patient.zip,
+                allergies: patient.allergies,
+                insurance: patient.insurance,
+                conditions: patient.conditions,
+                medications: patient.medications
             });
             console.log(response);
             toggleModal();
@@ -100,6 +165,46 @@ const Patient = ({
             setError(error);
         }
     }
+
+    
+    /* display the notes from the array of objects*/
+    const displayNotes = () => {
+        if (notes.length > 0) {
+            return notes.map((note) => {
+                return (
+                    <div key={note.id}>
+                        <p>{note.body}</p>
+                        {/* convert the date to Month day year */}
+                        <p>{new Date(note.dateCreated).toLocaleDateString()}</p>
+                        <button>Edit</button>
+                        <button>Add</button>
+                        <button>Delete</button>
+                    </div>
+                )
+            })
+        } else {
+            return (
+                <div>
+                    <p>{message}. Would you like to add a note?</p>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+    // const noteList = notes?.map((note, index) => {
+    //     return (
+    //         <Row key={note.id}>
+    //             <Col>
+    //                 <p>{note.body}</p>
+    //             </Col>
+                
+    //         </Row>
+    //     );
+    // });
     
 
     return (
@@ -156,12 +261,18 @@ const Patient = ({
                     </button>
                 </Col>
                 <Col>
-                    <button>
+                    <button >
                         Notes
                     </button>
                 </Col>
                 
             </Row>
+            {/* display the notes */}
+            <div>
+                {displayNotes()}
+            </div>                      
+
+            
             
         </div>
     );
