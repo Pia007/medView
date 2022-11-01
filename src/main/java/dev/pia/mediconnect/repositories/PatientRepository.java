@@ -10,8 +10,8 @@ import dev.pia.mediconnect.entities.*;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-     // Optional<Patient> findByUsername(String username);
-     Optional<Patient> findByUsername(String username);
+     // Optional<Patient> findByPatientCode(String patientCode);
+     Optional<Patient> findByPatientCode(String patientCode);
 
 
 

@@ -4,12 +4,12 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
-import { Row, Card } from 'reactstrap'
+import { Row,Col, Card } from 'reactstrap'
 
 const PROVIDER_URL = '/providers/';
 const ADD_PATIENT_URL = '/patients/provider/';
 
-const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,9}$/;
+const PATIENT_CODE_REGEX = /^[A-z][A-z0-9-_]{3,9}$/;
 
 // firstname regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
 const FIRSTNAME_REGEX = /^[A-z- ]{2,}$/;
@@ -19,6 +19,15 @@ const LASTNAME_REGEX = /^[A-z- ]{2,}$/;
 
 // dob format - cannot be empty
 const DOB_REGEX = /^(?!\s*$).+/;
+
+// gender format - must be at least 1 character long, can contain loweletters, hyphens or spaces
+const GENDER_REGEX = /^[A-z- ]{1,}$/;
+
+// ethnicity format - must be at least 2 character long, can contain loweletters, hyphens or spaces
+const ETHNICITY_REGEX = /^[A-z- ]{2,}$/;
+
+// social security number format - 9 digits and 2 hyphens
+const SSN_REGEX = /^\d{3}-\d{2}-\d{4}$/;
 
 // email regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
@@ -41,6 +50,9 @@ const ZIP_REGEX = /^[0-9- ]{5,}$/;
 // allergies regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
 const ALLERGIES_REGEX = /^[A-z-, ]{2,}$/;
 
+// blood type regex - must be at least 2 characters long, can contain loweletters, hypens, +,  spaces
+const BLOOD_TYPE_REGEX = /^[A-z-+ ]{2,}$/;
+
 // insurance regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
 const INSURANCE_REGEX = /^[A-z-, ]{2,}$/;
 
@@ -55,12 +67,12 @@ const MEDICATIONS_REGEX = /^[A-z-, ]{2,}$/;
 const AddPatientForm = () => {
 
     const { id } = useParams();
-    const usernameRef = useRef();
+    const patientCodeRef = useRef();
     const errRef = useRef();
 
-    const [username, setUsername] = useState('');
-    const [validUsername, setValidUsername] = useState(false);
-    const [usernameFocus, setUsernameFocus] = useState('');
+    const [patientCode, setPatientCode] = useState('');
+    const [validPatientCode, setValidPatientCode] = useState(false);
+    const [patientCodeFocus, setPatientCodeFocus] = useState('');
 
     const [firstName, setFirstName] = useState('');
     const [validFirstName, setValidFirstName] = useState(false);
@@ -73,6 +85,10 @@ const AddPatientForm = () => {
     const [dob, setDob] = useState('');
     const [validDob, setValidDob] = useState(false);
     const [dobFocus, setDobFocus] = useState('');
+
+    const [socialSecurity, setSocialSecurity] = useState('');
+    const [validSocialSecurity, setValidSocialSecurity] = useState(false);
+    const [socialSecurityFocus, setSocialSecurityFocus] = useState('');
 
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
@@ -106,6 +122,19 @@ const AddPatientForm = () => {
     const [validInsurance, setValidInsurance] = useState(false);
     const [insuranceFocus, setInsuranceFocus] = useState('');
 
+    const [gender, setGender] = useState('');
+    const [validGender, setValidGender] = useState(false);
+    const [genderFocus, setGenderFocus] = useState('');
+
+    const [ethnicity, setEthnicity] = useState('');
+    const [validEthnicity, setValidEthnicity] = useState(false);
+    const [ethnicityFocus, setEthnicityFocus] = useState('');
+
+    const [bloodType, setBloodType] = useState('');
+    const [validBloodType, setValidBloodType] = useState(false);
+    const [bloodTypeFocus, setBloodTypeFocus] = useState('');
+
+
     const [conditions, setConditions] = useState('');
     const [validConditions, setValidConditions] = useState(false);
     const [conditionsFocus, setConditionsFocus] = useState('');
@@ -119,14 +148,17 @@ const AddPatientForm = () => {
 
 
     useEffect (() => {
-        usernameRef.current.focus();
+        patientCodeRef.current.focus();
     }, []);
 
     useEffect(() => {
-        setValidUsername(USERNAME_REGEX.test(username));
+        setValidPatientCode(PATIENT_CODE_REGEX.test(patientCode));
         setValidFirstName(FIRSTNAME_REGEX.test(firstName));
         setValidLastName(LASTNAME_REGEX.test(lastName));
         setValidDob(DOB_REGEX.test(dob));
+        setValidSocialSecurity(SSN_REGEX.test(socialSecurity));
+        setValidGender(GENDER_REGEX.test(gender));
+        setValidEthnicity(ETHNICITY_REGEX.test(ethnicity));
         setValidEmail(EMAIL_REGEX.test(email));
         setValidPhone(PHONE_REGEX.test(phone));
         setValidAddress(ADDRESS_REGEX.test(address));
@@ -134,14 +166,18 @@ const AddPatientForm = () => {
         setValidState(STATE_REGEX.test(state));
         setValidZip(ZIP_REGEX.test(zip));
         setValidAllergies(ALLERGIES_REGEX.test(allergies));
+        setValidBloodType(BLOOD_TYPE_REGEX.test(bloodType));
         setValidInsurance(INSURANCE_REGEX.test(insurance));
         setValidConditions(CONDITIONS_REGEX.test(conditions));
         setValidMedications(MEDICATIONS_REGEX.test(medications));
         
-    }, [username, 
+    }, [patientCode, 
         firstName, 
         lastName,
         dob,
+        socialSecurity,
+        gender,
+        ethnicity,
         email, 
         phone, 
         address, 
@@ -149,6 +185,7 @@ const AddPatientForm = () => {
         state,     
         zip, 
         allergies,
+        bloodType,
         insurance, 
         conditions, 
         medications
@@ -156,10 +193,13 @@ const AddPatientForm = () => {
     
     useEffect(() => {
         setError('');
-    }, [username, 
+    }, [patientCode, 
         firstName, 
         lastName,
         dob,
+        socialSecurity,
+        gender,
+        ethnicity,
         email, 
         phone, 
         address, 
@@ -167,7 +207,8 @@ const AddPatientForm = () => {
         state,     
         zip, 
         allergies,
-        insurance,
+        bloodType,
+        insurance, 
         conditions, 
         medications
     ]);
@@ -176,17 +217,18 @@ const AddPatientForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(username, firstName, lastName, dob, email, phone, address, city, state, zip, allergies, insurance, conditions, medications);
+        // console.log(patientCode, firstName, lastName, dob, email, phone, address, city, state, zip, allergies, insurance, conditions, medications);
 
 
         try {
                 const newPatient = await axios.post(`${ADD_PATIENT_URL}/${id}`, {
-                username,
+                patientCode,
                 firstName,
                 lastName,
-                // convert dob to YYYY-MM-DD format
-                // 
                 dob: moment(dob).format('YYYY-MM-DD'),
+                socialSecurity,
+                gender,
+                ethnicity,
                 email,
                 phone,
                 address,
@@ -194,6 +236,7 @@ const AddPatientForm = () => {
                 state,
                 zip,
                 allergies,
+                bloodType,
                 insurance,
                 conditions,
                 medications
@@ -202,10 +245,13 @@ const AddPatientForm = () => {
 
             window.location.href = `/provider/${id}`;
 
-            setUsername('');
+            setPatientCode('');
             setFirstName('');
             setLastName('');
             setDob('');
+            setSocialSecurity('');
+            setGender('');
+            setEthnicity('');
             setEmail('');
             setPhone('');
             setAddress('');
@@ -213,6 +259,7 @@ const AddPatientForm = () => {
             setState('');
             setZip('');
             setAllergies('');
+            setBloodType('');
             setInsurance('');
             setConditions('');
             setMedications('');
@@ -222,7 +269,7 @@ const AddPatientForm = () => {
             if (!error?.response) {
                 setError(error.response.data);
             } else if ( error.response?.status === 409) {
-                setError('Username already exists');
+                setError('Patient code already exists');
             } else {
                 setError('Unable to add patient');
             }
@@ -237,82 +284,32 @@ const AddPatientForm = () => {
                 <Card>
                     <form action="" onSubmit={handleSubmit} className='p-3'>
                         <h1>Add Patient Form</h1>
-                        <Row>
-                            <div className="form-group">
-                                <label htmlFor="username">Username</label>
+                        <Row id='demos'>
+                            <Col md={4} className="form-group my-2">
+                                <label htmlFor="patientCode">Patient Code</label>
                                 <input
                                     type="text"
-                                    ref={usernameRef}
+                                    ref={patientCodeRef}
                                     className='form-control'
-                                    id='username'
-                                    name='username'
-                                    value={username}
-                                    aria-invalid={validUsername ? 'false' : 'true'}
+                                    id='patientCode'
+                                    name='patientCode'
+                                    value={patientCode}
+                                    aria-invalid={validPatientCode ? 'false' : 'true'}
                                     aria-describedby='newpatientnote'
                                     autoComplete='off'
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    onFocus={() => setUsernameFocus('focus')}
-                                    onBlur={() => setUsernameFocus('')}
+                                    onChange={(e) => setPatientCode(e.target.value)}
+                                    onFocus={() => setPatientCodeFocus('focus')}
+                                    onBlur={() => setPatientCodeFocus('')}
                                 />
-                                <p id='newpatientnote' className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'}>
+                                <p id='newpatientnote' className={patientCodeFocus && patientCode && !validPatientCode ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    <FontAwesomeIcon icon={faTimes} className={validUsername || !username ? 'hide' : 'invalid'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validPatientCode || !patientCode ? 'hide' : 'invalid'} />
                                     4 to 10 characters.<br />
                                     Must begin with a letter.<br />
                                     Letters, numbers, underscores, hyphens allowed.
                                 </p>  
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor='firstname'>
-                                    First Name:
-                                    <FontAwesomeIcon icon={faCheck} className={validFirstName ? 'valid' : 'hide'} />
-                                    <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? 'hide' : 'invalid'} />
-                                </label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='firstname'
-                                    required
-                                    autoComplete='off'
-                                    value={firstName}
-                                    aria-invalid={validFirstName ? 'false' : 'true'}
-                                    aria-describedby='firstnamenote'
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                    onFocus={() => setFirstNameFocus(true)}
-                                    onBlur={() => setFirstNameFocus(false)}
-                                />
-                                <p id='firstnamenote' className={firstNameFocus && !validFirstName ? 'instructions' : 'offscreen'}>
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
-                                    Letters, spaces, and hyphens allowed.
-                                </p>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor='lastname'>
-                                    Last Name:
-                                    <FontAwesomeIcon icon={faCheck} className={validLastName ? 'valid' : 'hide'} />
-                                    <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? 'hide' : 'invalid'} />
-                                </label>
-                                <input
-                                    type='text'
-                                    className='form-control'
-                                    id='lastname'
-                                    required
-                                    autoComplete='off'
-                                    value={lastName}
-                                    aria-invalid={validLastName ? 'false' : 'true'}
-                                    aria-describedby='lastnamenote'
-                                    onChange={(e) => setLastName(e.target.value)}
-                                    onFocus={() => setLastNameFocus(true)}
-                                    onBlur={() => setLastNameFocus(false)}
-                                />
-                                <p id='lastnamenote' className={lastNameFocus && !validLastName ? 'instructions' : 'offscreen'}>
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
-                                    Letters, spaces, and hyphens allowed.
-                                </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
                                 <label htmlFor='dob'>
                                     Date of Birth:
                                     <FontAwesomeIcon icon={faCheck} className={validDob ? 'valid' : 'hide'} />
@@ -337,8 +334,161 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must enter a validate date, MM/DD/YYYY.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='firstname'>
+                                    First Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validFirstName ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='text'
+                                    className='form-control'
+                                    id='firstname'
+                                    required
+                                    autoComplete='off'
+                                    value={firstName}
+                                    aria-invalid={validFirstName ? 'false' : 'true'}
+                                    aria-describedby='firstnamenote'
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    onFocus={() => setFirstNameFocus(true)}
+                                    onBlur={() => setFirstNameFocus(false)}
+                                />
+                                <p id='firstnamenote' className={firstNameFocus && !validFirstName ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='lastname'>
+                                    Last Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validLastName ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='lastname'
+                                    required
+                                    autoComplete='off'
+                                    value={lastName}
+                                    aria-invalid={validLastName ? 'false' : 'true'}
+                                    aria-describedby='lastnamenote'
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    onFocus={() => setLastNameFocus(true)}
+                                    onBlur={() => setLastNameFocus(false)}
+                                />
+                                <p id='lastnamenote' className={lastNameFocus && !validLastName ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='gender'>
+                                    Gender:
+                                    <FontAwesomeIcon icon={faCheck} className={validGender ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validGender || !gender ? 'hide' : 'invalid'} />
+                                </label>
+                                <input 
+                                    type='text'
+                                    className='form-control'
+                                    id='gender'
+                                    required
+                                    autoComplete='off'
+                                    value={gender}
+                                    aria-invalid={validGender ? 'false' : 'true'}
+                                    aria-describedby='gendernote'
+                                    onChange={(e) => setGender(e.target.value)}
+                                    onFocus={() => setGenderFocus(true)}
+                                    onBlur={() => setGenderFocus(false)}
+                                />
+                                <p id='gendernote' className={genderFocus && !validGender ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 1 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='ethnicity'>
+                                    Race/Ethnicity:
+                                    <FontAwesomeIcon icon={faCheck} className={validEthnicity ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validEthnicity || !ethnicity ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='ethnicity'
+                                    required
+                                    autoComplete='off'
+                                    value={ethnicity}
+                                    aria-invalid={validEthnicity ? 'false' : 'true'}
+                                    aria-describedby='ethnicitynote'
+                                    onChange={(e) => setEthnicity(e.target.value)}
+                                    onFocus={() => setEthnicityFocus(true)}
+                                    onBlur={() => setEthnicityFocus(false)}
+                                />
+                                <p id='ethnicitynote' className={ethnicityFocus && !validEthnicity ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='bloodType'>
+                                    Blood Type:
+                                    <FontAwesomeIcon icon={faCheck} className={validBloodType ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validBloodType || !bloodType ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='bloodType'
+                                    required
+                                    autoComplete='off'
+                                    value={bloodType}
+                                    aria-invalid={validBloodType ? 'false' : 'true'}
+                                    aria-describedby='bloodTypenote'
+                                    onChange={(e) => setBloodType(e.target.value)}
+                                    onFocus={() => setBloodTypeFocus(true)}
+                                    onBlur={() => setBloodTypeFocus(false)}
+                                />
+                                <p id='bloodTypenote' className={bloodTypeFocus && !validBloodType ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='socialSecurity'>
+                                    SSN:
+                                    <FontAwesomeIcon icon={faCheck} className={validSocialSecurity ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validSocialSecurity || !socialSecurity ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='socialSecurity'
+                                    required
+                                    autoComplete='off'
+                                    value={socialSecurity}
+                                    aria-invalid={validSocialSecurity ? 'false' : 'true'}
+                                    aria-describedby='socialSecuritynote'
+                                    onChange={(e) => setSocialSecurity(e.target.value)}
+                                    onFocus={() => setSocialSecurityFocus(true)}
+                                    onBlur={() => setSocialSecurityFocus(false)}
+                                />
+                                <p id='socialSecuritynote' className={socialSecurityFocus && !validSocialSecurity ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Only 11 characters.<br />
+                                    123-45-6789.
+                                </p>
+                            </Col>
+                        </Row>
+                        <hr className='text-danger'/>
+                        <Row id='contact'>
+                            <Col md={6} className="form-group  my-2">
                                 <label htmlFor='email'>
                                     Email:
                                     <FontAwesomeIcon icon={faCheck} className={validEmail ? 'valid' : 'hide'} />
@@ -361,8 +511,8 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be a valid email address.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
                                 <label htmlFor='phone'>
                                     Phone:
                                     <FontAwesomeIcon icon={faCheck} className={validPhone ? 'valid' : 'hide'} />
@@ -386,8 +536,8 @@ const AddPatientForm = () => {
                                     Must be a valid phone number.<br />
                                     10 digits, with dashes.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col xs={12} className="form-group  my-2">
                                 <label htmlFor='address'>
                                     Address:
                                     <FontAwesomeIcon icon={faCheck} className={validAddress ? 'valid' : 'hide'} />
@@ -411,8 +561,8 @@ const AddPatientForm = () => {
                                     Must be at least 5 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col md={4} className="form-group  my-2">
                                 <label htmlFor='city'>
                                     City:
                                     <FontAwesomeIcon icon={faCheck} className={validCity ? 'valid' : 'hide'} />
@@ -436,8 +586,8 @@ const AddPatientForm = () => {
                                     Must be at least 2 characters.<br />
                                     Letters, spaces, and hyphens allowed.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col md={4} className="form-group  my-2">
                                 <label htmlFor='state'>
                                     State:
                                     <FontAwesomeIcon icon={faCheck} className={validState ? 'valid' : 'hide'} />
@@ -461,8 +611,8 @@ const AddPatientForm = () => {
                                     Must be a valid state abbreviation.<br />
                                     2 letters, no spaces or punctuation.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col md={4} className="form-group  my-2">
                                 <label htmlFor='zip'>
                                     Zip:
                                     <FontAwesomeIcon icon={faCheck} className={validZip ? 'valid' : 'hide'} />
@@ -486,8 +636,11 @@ const AddPatientForm = () => {
                                     Must be a valid zip code.<br />
                                     5 digits, no spaces or punctuation.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                        </Row>
+                        <hr />
+                        <Row id='med'>
+                            <Col className="form-group  my-2">
                                 <label htmlFor='allergies'>
                                     Allergies:
                                     <FontAwesomeIcon icon={faCheck} className={validAllergies ? 'valid' : 'hide'} />
@@ -511,8 +664,8 @@ const AddPatientForm = () => {
                                     Must be at least 2 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col xs={12} className="form-group  my-2">
                                 <label htmlFor='insurance'>
                                     Insurance:
                                     <FontAwesomeIcon icon={faCheck} className={validInsurance ? 'valid' : 'hide'} />
@@ -536,8 +689,8 @@ const AddPatientForm = () => {
                                     Must be at least 2 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col xs={12} className="form-group  my-2">
                                 <label htmlFor='conditions'>
                                     Conditions:
                                     <FontAwesomeIcon icon={faCheck} className={validConditions ? 'valid' : 'hide'} />
@@ -562,8 +715,8 @@ const AddPatientForm = () => {
                                     Must be at least 2 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
-                            </div>
-                            <div className="form-group">
+                            </Col>
+                            <Col xs={12} className="form-group  my-2">
                                 <label htmlFor='medications'>
                                     Medications:
                                     <FontAwesomeIcon icon={faCheck} className={validMedications ? 'valid' : 'hide'} />
@@ -587,7 +740,7 @@ const AddPatientForm = () => {
                                     Must be at least 2 characters.<br />
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
-                            </div>
+                            </Col>
                             <div className="form-group">
                                 <button type='submit'>
                                     Submit

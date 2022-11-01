@@ -22,6 +22,9 @@ const LASTNAME_REGEX = /^[A-z- ]{2,}$/;
 // regex for specialty - must be at least 8 characters long, can have letters, spaces, hyphens, commas, apostrophes, periods
 const SPECIALTY_REGEX = /^[A-z ,.'-]{8,}$/;
 
+// regex for suffix - must be at least 2 characters long, only letters
+
+
 const RegistrationForm = () => {
     // set the focus on the username when the component loads
     const usernameRef = useRef();
@@ -62,6 +65,11 @@ const RegistrationForm = () => {
     const [specialty, setSpecialty] = useState('')
     const [validSpecialty, setValidSpecialty] = useState(false);
     const [specialtyFocus, setSpecialtyFocus] = useState(false);
+
+    // suffix state
+    const [suffix, setSuffix] = useState('');
+    const [validSuffix, setValidSuffix] = useState(false);
+    const [suffixFocus, setSuffixFocus] = useState(false);
 
     // state for success/ error messages
     const [success, setSuccess] = useState(false);
@@ -118,10 +126,18 @@ const RegistrationForm = () => {
         setValidSpecialty(result);
     }, [specialty]);
 
+    // useEffect to validate the suffix
+    useEffect(() => {
+        const result = LASTNAME_REGEX.test(suffix);
+        console.log(result);
+        console.log(suffix);
+        setValidSuffix(result);
+    }, [suffix]);
+
     // useEffect for error message
     useEffect(() => {
         setError('');
-    }, [username, password, firstName, lastName, specialty]);
+    }, [username, password, firstName, lastName, specialty, suffix]);
 
     
     const handleSubmit = async (e) => {
@@ -135,7 +151,8 @@ const RegistrationForm = () => {
                 password,
                 firstName,
                 lastName,
-                specialty
+                specialty,
+                suffix
             });
             
             console.log(JSON.stringify(registration.data));
@@ -149,6 +166,7 @@ const RegistrationForm = () => {
             setFirstName('');
             setLastName('');
             setSpecialty('');
+            setSuffix('');
             setSuccess(true);
 
         } catch (error) {
@@ -330,6 +348,31 @@ const RegistrationForm = () => {
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be at least 8 characters.<br />
                                     Letters, spaces, and hyphens allowed.
+                                </p>
+                            </div>
+                            <div className='form-group col-12 p-2'>
+                                <label htmlFor='bio'>
+                                    Suffix:
+                                    <FontAwesomeIcon icon={faCheck} className={validSuffix ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validSuffix || !suffix ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='suffix'
+                                    required
+                                    autoComplete='off'
+                                    value={suffix}
+                                    aria-invalid={validSuffix ? 'false' : 'true'}
+                                    aria-describedby='suffixnote'
+                                    onChange={(e) => setSuffix(e.target.value)}
+                                    onFocus={() => setSuffixFocus(true)}
+                                    onBlur={() => setSuffixFocus(false)}
+                                />
+                                <p id='suffixnote' className={suffixFocus && !validSuffix ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Only letters allow.
                                 </p>
                             </div>
                         </Row>

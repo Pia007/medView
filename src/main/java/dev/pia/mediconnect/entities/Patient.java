@@ -23,9 +23,10 @@ public class Patient {
     private Long id;
 
     @Column(unique = true)
-    private String username;
+    private String patientCode;
 
-
+    // reorder first, last, dob, change patientCode to patient code
+    // add gender, ethnicity
     @Column(name = "first_name", length = 25)
     private String firstName;
 
@@ -35,6 +36,18 @@ public class Patient {
     @Column(name = "dob")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "ethnicity")
+    private String ethnicity;
+
+    @Column(name = " social_security")
+    private String socialSecurity;
+
+    @Column(name = "blood_type")
+    private String bloodType;
 
     @Transient /* not stored in the database */
     private int age;
@@ -72,16 +85,13 @@ public class Patient {
 
     /* provider relationship - many patients to one provider */
     @ManyToOne
-    // @JoinColumn
-    // @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    // @JoinColumn(name = "provider_id")
-    // lazy loading - causes issues when getting patients
-    // @JsonBackReference
     private Provider provider;
 
     /* patient relationship with patient notes */
     // @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+
+    // change to cascade all when ready recedin db
+    @OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference
     private Set<PatientNote> patientNoteSet = new HashSet<>();
 
@@ -94,8 +104,8 @@ public class Patient {
     /* custom constructor */
     public Patient(PatientDto patientDto) {
         
-        if (patientDto.getUsername() != null) {
-            this.username = patientDto.getUsername();
+        if (patientDto.getPatientCode() != null) {
+            this.patientCode = patientDto.getPatientCode();
         }
         if (patientDto.getFirstName() != null) {
             this.firstName = patientDto.getFirstName();
@@ -106,6 +116,22 @@ public class Patient {
         if (patientDto.getDob() != null) {
             this.dob = patientDto.getDob();
         }
+        // gender
+        if (patientDto.getGender() != null) {
+            this.gender = patientDto.getGender();
+        }
+        // ethnicity
+        if (patientDto.getEthnicity() !=null) {
+            this.ethnicity = patientDto.getEthnicity();
+        }
+        
+        if (patientDto.getSocialSecurity() != null) {
+            this.socialSecurity = patientDto.getSocialSecurity();
+        }
+        if (patientDto.getBloodType() != null) {
+            this.bloodType = patientDto.getBloodType();
+        }
+
         if (patientDto.getEmail() != null) {
             this.email = patientDto.getEmail();
         }
@@ -127,6 +153,7 @@ public class Patient {
         if (patientDto.getInsurance() != null) {
             this.insurance = patientDto.getInsurance();
         }
+
         if (patientDto.getAllergies() != null) {
             this.allergies = patientDto.getAllergies();
         }
@@ -144,7 +171,7 @@ public class Patient {
     /*  toString */
     @Override
     public String toString() {
-        return "Patient [id=" + id + ", username=" + username + ", +  firstName=" + firstName
+        return "Patient [id=" + id + ", patientCode=" + patientCode + ", +  firstName=" + firstName
                 + ", lastName=" + lastName + ", dob=" + dob + ", age=" + age + ", email=" + email
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
                 + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions

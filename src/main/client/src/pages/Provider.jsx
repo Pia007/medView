@@ -9,7 +9,7 @@ import axios from '../api/AxiosApi';
 const PROVIDER_URL = '/providers';
 const PATIENT_URL = '/patients';
 
-const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChangeTwo, onChangeThree, patId, onClick}) => {
+const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onChangeFirstName, onChangeLastName, onChangeSpecialty, patId, onClick}) => {
     const { id } = useParams();
 
     console.log("provider id: " + id);
@@ -166,12 +166,12 @@ const Provider = ({valueOne, valueTwo, valueThree, onSubmit, onChangeOne, onChan
                 isOpen={modal}
                 toggle={toggleModal}
                 onSubmit={handleSubmit}
-                valueOne={provider.firstName}
-                valueTwo={provider.lastName}
-                valueThree={provider.specialty}
-                onChangeOne={(e) => setProvider({...provider, firstName: e.target.value})}
-                onChangeTwo={(e) => setProvider({...provider, lastName: e.target.value})}
-                onChangeThree={(e) => setProvider({...provider, specialty: e.target.value})}
+                valueFirstName={provider.firstName}
+                valueLastName={provider.lastName}
+                valueSpecialty={provider.specialty}
+                onChangeFirstName={(e) => setProvider({...provider, firstName: e.target.value})}
+                onChangeLastName={(e) => setProvider({...provider, lastName: e.target.value})}
+                onChangeSpecialty={(e) => setProvider({...provider, specialty: e.target.value})}
             />
             {/*  if the provider has no patients */}
             {!patients.length > 0 ? (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, ModalBody} from 'reactstrap';
-import AddNoteForm from './AddNoteModal';
 
 const NoteModal = ({
     onSubmit,
@@ -18,16 +17,7 @@ const NoteModal = ({
         <>
             <Modal isOpen={isOpen} toggle={toggle} centered>
                 <ModalBody>
-                    <AddNoteForm 
-                        onSubmit={onSubmit}
-                        valueBody={valueBody}
-                        valueDateCreated={valueDateCreated}
-                        onChangeBody={onChangeBody}
-                        onFocusBody={onFocusBody}
-                        onBlurBody={onBlurBody}
-                        onChangeDateCreated={onChangeDateCreated}
-
-                    />
+                    
                 </ModalBody>
             </Modal>
         </>

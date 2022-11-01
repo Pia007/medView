@@ -7,6 +7,10 @@ const PatientModal = ({
     valueFirstName, 
     valueLastName,
     valueDob,
+    valueSocial,
+    valueGender,
+    valueEthnicity,
+    valueBloodType,
     valueEmail,
     valuePhone,
     valueAddress,
@@ -20,6 +24,10 @@ const PatientModal = ({
     onChangeFirstName,
     onChangeLastName,
     onChangeDob,
+    onChangeGender,
+    onChangeSocial,
+    onChangeEthnicity,
+    onChangeBloodType,
     onChangeEmail,
     onChangePhone,
     onChangeAddress,
@@ -70,6 +78,47 @@ const PatientModal = ({
                                 // convert date from MM/DD/YYYY to YYYY-MM-DD
                                 // value={valueDob.split('/').reverse().join('-')}
 
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor="gender">Gender</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='gender'
+                                value={valueGender}
+                                onChange={onChangeGender}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <label htmlFor="social">Social Security Number</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='social'
+                                value={valueSocial}
+                                onChange={onChangeSocial}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="bloodType">Blood Type</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='bloodType'
+                                value={valueBloodType}
+                                onChange={onChangeBloodType}
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor="ethnicity">Race/Ethnicity</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='ethnicity'
+                                value={valueEthnicity}
+                                onChange={onChangeEthnicity}
                             />
                         </div>
                         <div className='form-group'>

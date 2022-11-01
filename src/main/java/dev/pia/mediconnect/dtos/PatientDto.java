@@ -14,10 +14,13 @@ public class PatientDto implements Serializable {
 
     /*fields */
     private Long id;
-    private String username;
+    private String patientCode;
+    private LocalDate dob;
     private String firstName;
     private String lastName;
-    private LocalDate dob;
+    private String gender;
+    private String ethnicity;
+    private String socialSecurity;
     private int age;
     private String email;
     private String phone;
@@ -27,6 +30,7 @@ public class PatientDto implements Serializable {
     private String zip;
     private String allergies;
     private String insurance;
+    private String bloodType;
     private String conditions;
     private String medications;
     private Provider provider;
@@ -39,14 +43,23 @@ public class PatientDto implements Serializable {
         if (patient.getId() != null) {
             this.id = patient.getId();
         }
-        if (patient.getUsername() != null) {
-            this.username = patient.getUsername();
+        if (patient.getPatientCode() != null) {
+            this.patientCode = patient.getPatientCode();
         }
         if (patient.getFirstName() != null) {
             this.firstName = patient.getFirstName();
         }
         if (patient.getLastName() != null) {
             this.lastName = patient.getLastName();
+        }
+        if (patient.getGender() != null) {
+            this.gender = patient.getGender();
+        }
+        if (patient.getEthnicity() != null ) {
+            this.ethnicity = patient.getEthnicity();
+        }
+        if (patient.getSocialSecurity() != null) {
+            this.socialSecurity = patient.getSocialSecurity();
         }
         if (patient.getDob() != null) {
             this.dob = patient.getDob();
@@ -74,6 +87,9 @@ public class PatientDto implements Serializable {
         }
         if (patient.getInsurance() != null) {
             this.insurance = patient.getInsurance();
+        }
+        if (patient.getBloodType() != null) {
+            this.bloodType = patient.getBloodType();
         }
         if (patient.getAllergies() != null) {
             this.allergies = patient.getAllergies();

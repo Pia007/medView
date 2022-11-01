@@ -16,6 +16,7 @@ export const RenderProvider = ({provider, onClick}) => {
                     </button>
                 </Col>
                 <Col>
+                {/* convert first letter to upper case */}
                     <h2> {provider.firstName} {provider.lastName} </h2>
                     <h3>{provider.specialty}</h3>
                 </Col>
@@ -76,4 +77,25 @@ export const RenderNotes = ({patientNote}) => {
 
         </>
     )
+}
+
+export const RenderData = ( {data, title, dataValue, onClick, src, alt} ) => {
+    if ({data}) {
+        return (
+            <Card>
+                {/* make the first letter  of each word uppercase */}
+                <Col className='d-flex justify-content-between'>
+                    <p className='mb-1'>
+                        <strong>{title}: </strong> 
+                        {dataValue}
+                    </p>
+                    <button className='edit-conditions-btn'
+                        onClick={onClick}
+                    >
+                        <img src={src} alt={alt} className="edit-icon" />
+                    </button>
+                </Col>
+            </Card>
+        )
+    }
 }

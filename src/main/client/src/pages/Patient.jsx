@@ -1,9 +1,9 @@
 import React, {useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
-import { RenderNotes } from '../components/Renders';
+import edit from '../images/edit.svg';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
 
@@ -17,6 +17,10 @@ const Patient = ({
     valueFirstName, 
     valueLastName,
     valueDob,
+    valueGender,
+    valueSocial,
+    valueBloodType,
+    valueEthnicity,
     valueEmail,
     valuePhone,
     valueAddress,
@@ -30,6 +34,10 @@ const Patient = ({
     onChangeFirstName,
     onChangeLastName,
     onChangeDob,
+    onChangeGender,
+    onChangeSocial,
+    onChangeBloodType,
+    onChangeEthnicity,
     onChangeEmail,
     onChangePhone,
     onChangeAddress,
@@ -49,7 +57,7 @@ const Patient = ({
     onChangeBody,
     onFocusBody,
     onBlurBody,
-    onChangeDateCreated}) => { 
+    onChangeDateCreated }) => { 
 
     const { id } = useParams();
 
@@ -61,17 +69,10 @@ const Patient = ({
     const [noteId, setNoteId] = useState('');
     const [message, setMessage] = useState('');
 
-    const [note , setNote] = useState('');
-    const [body, setBody] = useState('');
-    const [dateCreated, setDateCreated] = useState('');
-
-
-
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
 
-    const [noteModal, setNoteModal] = useState(false);
-    const toggleNoteModal = () => setNoteModal(!noteModal);
+    const [ category, setCategory ] = useState('conditions');
 
     // call the api to get the patient
     useEffect (() => {
@@ -80,6 +81,7 @@ const Patient = ({
                 const response = await axios.get(`${PATIENT_URL}/${id}`);
                 setPatient(response.data);
                 console.log(patient)
+                console.log(patient.conditions)
                 // setLoading(false);
             } catch (error) {
                 setError(error);
@@ -107,13 +109,6 @@ const Patient = ({
                 console.log(note.patientDto.provider.firstName);
                 console.log(note.patientDto.provider.lastName);
                 console.log("provider id: ", note.patientDto.provider.id);
-                // console.log(notes);
-                // console.log(notes.note.body);
-                // console.log(notes.note.dateCreated);
-                
-                // if {notes.length > 0} {
-
-               
 
                 // create a new array of note id
                 const noteIds = notes.map((note) => note.id);
@@ -126,22 +121,6 @@ const Patient = ({
                     setNoteId(id);
                     console.log(id)
                 });
-            // } else if ( response.data.length > 0) {
-            //     // console.log(response.data);
-            //     setNotes(response.data);
-            //     // console.log(notes)
-
-            //     // create a new array of note id
-            //     const noteIds = notes.map((note) => note.id);
-            //     console.log(noteIds);
-
-            //     // get the id of each note
-            //     noteIds.forEach (noteId => {
-            //         const id = noteId;
-            //         console.log('Note id: ' + id);
-            //         setNoteId(id);
-            //         console.log(id)
-            //     });
             } else {
                 setNotes('');
                 console.log("No notes found for this patient");
@@ -168,6 +147,10 @@ const Patient = ({
                 firstName: patient.firstName,
                 lastName: patient.lastName,
                 dob: patient.dob,
+                gender: patient.gender,
+                socialSecurity: patient.socialSecurity,
+                bloodType: patient.bloodType,
+                ethnicity: patient.ethnicity,
                 email: patient.email,
                 phone: patient.phone,
                 address: patient.address,
@@ -186,37 +169,17 @@ const Patient = ({
         }
     }
 
-    // const handleNoteSubmit = async (e) => {
-    //     e.preventDefault();
 
-    //     try {
-    //         const note = await axios.post(`${NOTES_URL}/patient/${id}`, {
-    //             body,
-    //             // set current date
-    //             dateCreated: moment(new Date().toLocaleDateString()).format('YYYY-MM-DD')
-    //         });
-    //         console.log(note);
-    //         toggleModal();
-    //     } catch (error) {
-    //         setError(error);
-    //     }
-    // }
-
-    
     /* display the notes from the array of objects*/
     const displayNotes = () => {
         if (notes.length > 0) {
             return notes.map((note) => {
                 return (
-                    <div key={note.id}>
-                        <Link to={`/patient/${id}/addNote`} >add a note</Link>
-                        <p>{note.body}</p>
-                        {/* moment.js to convert the date to Month day year */}
-                        <p>{moment(note.dateCreated).format('MM/DD/YYYY')}</p>
-                        <p>{note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </div>
+                    <Card key={note.id}>
+                        <p className='m-0'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
+                        <p className='mb-1'><strong>Text:</strong> {note.body}</p>
+                        <p className='mb-1'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
+                    </Card>
                 )
             })
         } else {
@@ -228,21 +191,67 @@ const Patient = ({
         }
     }
 
+    const displayConditions = () => {
+        if (patient.conditions) {
+            return (
+                <Card>
+                    {/* make the first letter  of each word uppercase */}
+                    <Col className='d-flex justify-content-between'>
+                        <p className='mb-1'>
+                            <strong>Conditions: </strong> 
+                            {patient.conditions.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                        </p>
+                        <button className='edit-conditions-btn'
+                            onClick={toggleModal}
+                        >
+                            <img src={edit} alt="edit conditions" className="edit-icon" />
+                        </button>
+                    </Col>
+                </Card>
+            )
+        }
+    }
 
+    const displayAllergies = () => {
+        if (patient.allergies) {
+            return (
+                <Card>
+                    <Col className='d-flex justify-content-between'>
+                        <p className='mb-1'>
+                            <strong>Allergies: </strong> 
+                            {patient.allergies.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                        </p>
+                        <button className='edit-conditions-btn'
+                            onClick={toggleModal}
+                        >
+                            <img src={edit} alt="edit conditions" className="edit-icon" />
+                        </button>
+                    </Col>
+                </Card>
+            )
+        }
+    }
 
+    const displayMedications = () => {
+        if (patient.medications) {
+            return (
+                <Card>
+                    <Col className='d-flex justify-content-between'>
+                        <p className='mb-1'>
+                            <strong>Medications: </strong> 
+                            {patient.medications.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                        </p>
+                        <button className='edit-conditions-btn'
+                            onClick={toggleModal}
+                        >
+                            <img src={edit} alt="edit conditions" className="edit-icon" />
+                        </button>
+                    </Col>
+                </Card>
+            )
+        }
+    }
 
-
-    // const noteList = notes?.map((note, index) => {
-    //     return (
-    //         <Row key={note.id}>
-    //             <Col>
-    //                 <p>{note.body}</p>
-    //             </Col>
-                
-    //         </Row>
-    //     );
-    // });
-    
 
     return (
         <div className='container'>
@@ -254,6 +263,10 @@ const Patient = ({
                 valueFirstName={patient.firstName}
                 valueLastName={patient.lastName}
                 valueDob={patient.dob}
+                valueGender={patient.gender}
+                valueSocial={patient.socialSecurity}
+                valueBloodType={patient.bloodType}
+                valueEthnicity={patient.ethnicity}
                 valueEmail={patient.email}
                 valuePhone={patient.phone}
                 valueAddress={patient.address}
@@ -267,6 +280,10 @@ const Patient = ({
                 onChangeFirstName={(e) => setPatient({...patient, firstName: e.target.value})}
                 onChangeLastName={(e) => setPatient({...patient, lastName: e.target.value})}
                 onChangeDob={(e) => setPatient({...patient, dob: e.target.value})}
+                onChangeGender={(e) => setPatient({...patient, gender: e.target.value})}
+                onChangeSocial={(e) => setPatient({...patient, socialSecurity: e.target.value})}
+                onChangeBloodType={(e) => setPatient({...patient, bloodType: e.target.value})}
+                onChangeEthnicity={(e) => setPatient({...patient, ethnicity: e.target.value})}
                 onChangeEmail={(e) => setPatient({...patient, email: e.target.value})}
                 onChangePhone={(e) => setPatient({...patient, phone: e.target.value})}
                 onChangeAddress={(e) => setPatient({...patient, address: e.target.value})}
@@ -280,47 +297,54 @@ const Patient = ({
                 onSubmit={handleSubmit}
                 closeModal={() => toggleModal()}
             />
-            {/* < AddNoteModal
-                isOpen={noteModal}
-                toggle={() => toggleNoteModal()}
-                valueBody={note.body} 
-                onChangeBody={(e) => setNote({...note, body: e.target.value})}
-                valueDateCreated={note.dateCreated}
-                onChangeDateCreated={(e) => setNote({...note, dateCreated: e.target.value})}
-                onSubmitNote={handleNoteSubmit}
-
-            /> */}
-
-            <Row>
-                <Col>
-                    <button>
-                        Demographics
-                    </button>
-                </Col>
-                <Col>
-                    <button>
-                        Conditions
-                    </button>
-                </Col>
-                <Col>
-                    <button>
-                        Medications
-                    </button>
-                </Col>
-                <Col>
-                    <button >
-                        Notes
-                    </button>
-                </Col>
-                
+            <Row  className='d-flex p-2'>
+                <ButtonToolbar>
+                    <ButtonGroup className="m-auto">
+    
+                        <Button 
+                            color="primary"
+                            onClick={() => {setCategory('conditions')}} 
+                        >
+                            Dx
+                        </Button>
+                        <Button 
+                            color="primary"
+                            onClick={() => {setCategory('allergies')}}
+                        >
+                            Allergies
+                        </Button>
+                        <Button 
+                            color="primary"
+                            onClick={() => {setCategory('medications')}}
+                        >
+                            Rx
+                        </Button>
+                        <Button 
+                            color="primary"
+                            onClick={() => {setCategory('notes')}}
+                        >
+                            Notes
+                        </Button>
+                    </ButtonGroup>
+                </ButtonToolbar>
             </Row>
-            {/* display the notes */}
-            <div>
-                {displayNotes()}
-            </div>                      
 
-            
-            
+            {/* <Row className='d-flex p-2'> */}
+                {
+                    category === 'conditions' ? displayConditions() : null
+
+                }
+                {
+                    category === 'allergies' ? displayAllergies() : null
+                }
+                {
+                    category === 'medications' ? displayMedications() : null
+                }
+                {
+                    category === 'notes' ? displayNotes() : null
+                }
+            {/* </Row> */}
+
         </div>
     );
 

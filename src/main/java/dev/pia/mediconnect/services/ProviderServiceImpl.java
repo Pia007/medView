@@ -92,6 +92,7 @@ public class ProviderServiceImpl implements ProviderService {
             provider.setFirstName(providerDto.getFirstName());
             provider.setLastName(providerDto.getLastName());
             provider.setSpecialty(providerDto.getSpecialty());
+            provider.setSuffix(providerDto.getSuffix());
         }
         response.add("Provider updated successfully");
         return response;

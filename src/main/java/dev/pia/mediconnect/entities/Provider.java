@@ -35,6 +35,9 @@ public class Provider {
 
     @Column(name = "specialty", length = 50)
     private String specialty;
+    
+    @Column(name = "suffix", length = 10)
+    private String suffix;
 
     // relationship with patient - one to many
     @OneToMany(mappedBy="provider",  fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -62,6 +65,9 @@ public class Provider {
         if (providerDto.getSpecialty() != null) {
             this.specialty = providerDto.getSpecialty();
         }
+        if (providerDto.getSuffix() != null) {
+            this.suffix = providerDto.getSuffix();
+        }
     }
 
 
@@ -69,7 +75,7 @@ public class Provider {
     @Override
     public String toString() {
         return "Provider [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", specialty=" + specialty + "]";
+                + ", lastName=" + lastName + ", specialty=" + specialty + ", suffix=" + suffix + "]";
     }
 
     public Object getProviderId() {

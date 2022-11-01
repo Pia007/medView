@@ -18,6 +18,7 @@ public class ProviderDto implements Serializable {
     private String firstName;
     private String lastName;
     private String specialty;
+    private String suffix;
     private Set<PatientDto> patientDtoSet = new HashSet<>();;
 
     public ProviderDto(Provider provider) {
@@ -38,6 +39,9 @@ public class ProviderDto implements Serializable {
         }
         if (provider.getSpecialty() != null) {
             this.specialty = provider.getSpecialty();
+        }
+        if (provider.getSuffix() != null) {
+            this.suffix = provider.getSuffix();
         }
     } 
     

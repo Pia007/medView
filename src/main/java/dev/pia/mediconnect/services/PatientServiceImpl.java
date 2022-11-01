@@ -28,7 +28,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-    /* provider adds a patient with username */
+    /* provider adds a patient with patientCode */
     @Override
     @Transactional
     public List<String> addPatient(PatientDto patientDto, Long providerId) {
@@ -43,7 +43,7 @@ public class PatientServiceImpl implements PatientService {
             // if patient exists
             
 
-            Optional<Patient> optionalPatient = patientRepository.findByUsername(patientDto.getUsername());
+            Optional<Patient> optionalPatient = patientRepository.findByPatientCode(patientDto.getPatientCode());
         
             if (optionalPatient.isPresent()) {
                 return Arrays.asList("Patient already exists");
@@ -54,7 +54,7 @@ public class PatientServiceImpl implements PatientService {
                 response.add("Patient added");
                 return response;
 
-                // patient.setUsername(patientDto.getUsername());
+                // patient.setPatientCode(patientDto.getPatientCode());
                 // patient.setFirstName(patientDto.getFirstName());
                 // patient.setLastName(patientDto.getLastName());
                 // patient.setAddress(patientDto.getAddress());
@@ -125,6 +125,11 @@ public class PatientServiceImpl implements PatientService {
             patient.setInsurance(patientDto.getInsurance());
             patient.setMedications(patientDto.getMedications());
             patient.setDob(patientDto.getDob());
+            patient.setGender(patientDto.getGender());
+            patient.setEthnicity(patientDto.getEthnicity());
+            patient.setSocialSecurity(patientDto.getSocialSecurity());
+            patient.setBloodType(patientDto.getBloodType());
+            patient.setPatientCode(patientDto.getPatientCode());
             patientRepository.saveAndFlush(patient);
             response.add("Patient updated successfully");
         } else {
@@ -137,7 +142,7 @@ public class PatientServiceImpl implements PatientService {
     //     Optional<Patient> optionalPatient = patientRepository.findById(patientDto.getId());
     //     if (optionalPatient.isPresent()) {
     //         Patient patient = optionalPatient.get();
-    //         patient.setUsername(patientDto.getUsername());
+    //         patient.setPatientCode(patientDto.getPatientCode());
     //         patient.setFirstName(patientDto.getFirstName());
     //         patient.setLastName(patientDto.getLastName());
     //         patient.setAddress(patientDto.getAddress());
