@@ -91,7 +91,7 @@ public class Patient {
     // @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
 
     // change to cascade all when ready recedin db
-    @OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference
     private Set<PatientNote> patientNoteSet = new HashSet<>();
 

@@ -1,20 +1,29 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Route, Link} from 'react-router-dom';
 import axios from '../api/AxiosApi';
 import { Row, Card } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
 const LOGIN_URL = '/providers/login'
 
+
+
 const LoginForm = () => {
+
+    // send the value of isLoggedIn to the parent component
+    const [loggedIn, setLoggedIn] = useState();
+
+
     const usernameRef = useRef();
     const errorRef = useRef();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    // const [ provider, setProvider ] = useState();
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [providerId, setProviderId] = useState(null)
-    const [loggedIn, setLoggedIn] = useState(false)
+    
+    
 
     useEffect(() => {
         usernameRef.current.focus();  
@@ -23,7 +32,6 @@ const LoginForm = () => {
     useEffect(() => {
         setError('');
     }, [username, password])
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,14 +43,27 @@ const LoginForm = () => {
             });
             console.log(login.data);
             console.log(JSON.stringify(login.data));
-                console.log(login.data)
-                const id = login.data[1];
-                
-                    window.location.href = '/provider/' + id;
+            console.log(login.data)
+            const id = login.data[0];
+            console.log(id);
+            setProviderId(id);
 
-                setUsername('');
-                setPassword('');
-                setLoggedIn(true)
+            console.log(providerId);
+            
+            setLoggedIn(true);
+            console.log("loggin is good")
+            
+            window.location.href = '/provider/' + id;
+            
+            setUsername('');
+            setPassword('');
+            setLoggedIn(true);
+
+            // isLoggedIn={loggedIn}
+
+            console.log('logged in')
+
+            
         } catch ( error ) {
             if (!error?.response) {
                 setError('Network error');
@@ -54,6 +75,9 @@ const LoginForm = () => {
                 setError('Login failed');
             }
             errorRef.current.focus();
+            setLoggedIn(false);
+            // isLoggedIn={loggedIn}
+
         }
     }
     

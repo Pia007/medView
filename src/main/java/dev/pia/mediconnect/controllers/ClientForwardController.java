@@ -12,7 +12,6 @@ public class ClientForwardController {
 
         For pages that you want to be handled by spring boot, you can add (.)
 
-    
     */
     
     @GetMapping(value = "/**/{path:[^\\.]*}")

@@ -1,14 +1,16 @@
 import React, {useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button } from 'reactstrap';
+import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button, Modal, ModalBody } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
 import edit from '../images/edit.svg';
+import trash from '../images/delete.svg';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
 
 const PATIENT_URL = '/patients';
 const NOTES_URL = '/notes';
+// const ADD_NOTE_URL = '/notes';
 
 
 const Patient = ({
@@ -69,8 +71,19 @@ const Patient = ({
     const [noteId, setNoteId] = useState('');
     const [message, setMessage] = useState('');
 
+    const [body, setBody] = useState('');
+    // const [validBody, setValidBody] = useState(false);
+    // const [bodyFocus, setBodyFocus] = useState(false);
+
+    const [dateCreated, setDateCreated] = useState('');
+    // const [validDateCreated, setValidDateCreated] = useState(false);
+    // const [dateCreatedFocus, setDateCreatedFocus] = useState(false);
+
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
+
+    const [modalNote, setModalNote ] = useState(false);
+    const toggleNoteModal = () => setModalNote(!modalNote);
 
     const [ category, setCategory ] = useState('conditions');
 
@@ -80,8 +93,8 @@ const Patient = ({
             try {
                 const response = await axios.get(`${PATIENT_URL}/${id}`);
                 setPatient(response.data);
-                console.log(patient)
-                console.log(patient.conditions)
+                // console.log(patient)
+                // console.log(patient.conditions)
                 // setLoading(false);
             } catch (error) {
                 setError(error);
@@ -93,22 +106,22 @@ const Patient = ({
 
         try {
             const response = await axios.get(`${NOTES_URL}/patient/${id}`);
-            console.log(response.data);
+            // console.log(response.data);
             
             if (response.data.length > 0 ) {
-                console.log(response.data[0].id);
-                console.log(response.data[0].body);
-                console.log(response.data[0].dateCreated);
+                // console.log(response.data[0].id);
+                // console.log(response.data[0].body);
+                // console.log(response.data[0].dateCreated);
                 setNotes(response.data);
-                console.log("Notes", notes);
+                // console.log("Notes", notes);
                 const note = response.data[0];
-                console.log("Note", note);
+                // console.log("Note", note);
                 // console.log(notes);
-                console.log(note.body);
-                console.log(note.dateCreated);
-                console.log(note.patientDto.provider.firstName);
-                console.log(note.patientDto.provider.lastName);
-                console.log("provider id: ", note.patientDto.provider.id);
+                // console.log(note.body);
+                // console.log(note.dateCreated);
+                // console.log(note.patientDto.provider.firstName);
+                // console.log(note.patientDto.provider.lastName);
+                // console.log("provider id: ", note.patientDto.provider.id);
 
                 // create a new array of note id
                 const noteIds = notes.map((note) => note.id);
@@ -117,13 +130,13 @@ const Patient = ({
                 // get the id of each note
                 noteIds.forEach (noteId => {
                     const id = noteId;
-                    console.log('Note id: ' + id);
+                    // console.log('Note id: ' + id);
                     setNoteId(id);
-                    console.log(id)
+                    // console.log(id)
                 });
             } else {
                 setNotes('');
-                console.log("No notes found for this patient");
+                // console.log("No notes found for this patient");
                 setMessage('No notes found for this patient');
             }
             
@@ -162,10 +175,56 @@ const Patient = ({
                 conditions: patient.conditions,
                 medications: patient.medications
             });
-            console.log(response);
+            // console.log(response);
             toggleModal();
         } catch (error) {
             setError(error);
+        }
+    }
+
+    const handleNote = async (e) => {
+        e.preventDefault();
+
+        try {
+            const newNote = await axios.post(`${NOTES_URL}/patient/${id}`, {
+                body,
+                // automatically set dateCreated 
+                dateCreated
+            });
+            console.log(newNote.data);
+            console.log("Pia note", newNote.data)
+            window.location.href = `/patient/${id}`;
+
+            setBody('');
+            setDateCreated('');
+        } catch (error) {
+            console.log(error);
+            setError(error.response.data);
+        }
+        
+    };
+
+    // delete the node
+    const handleDelete = async (noteId) => {
+        
+
+        // get the id for each note
+        
+        
+        
+        
+        
+        console.log("Delete this note: ", noteId);
+
+        try {
+            const deleteNote = await axios.delete(`${NOTES_URL}/${noteId}`);
+                console.log(deleteNote.data)
+                window.location.href = `/patient/${id}`;
+
+
+        } catch( error) {
+            console.log(error)
+            setError(error.response)
         }
     }
 
@@ -176,9 +235,12 @@ const Patient = ({
             return notes.map((note) => {
                 return (
                     <Card key={note.id}>
-                        <p className='m-0'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
-                        <p className='mb-1'><strong>Text:</strong> {note.body}</p>
-                        <p className='mb-1'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
+                        <div>
+                            <p className='m-0'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
+                            <p className='mb-1'><strong>Text:</strong> {note.body}</p>
+                            <p className='mb-1'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
+                        </div>
+                        <button onClick={() => handleDelete(note.id)}><img src={trash} alt='delete' /></button>
                     </Card>
                 )
             })
@@ -256,7 +318,7 @@ const Patient = ({
     return (
         <div className='container'>
             <RenderPatient singlePatient={patient} handleClick={toggleModal} />
-
+            <button type='button' onClick={toggleNoteModal}>Add Note</button>
             <PatientModal 
                 isOpen={modal}
                 toggle={() => toggleModal()}
@@ -329,22 +391,69 @@ const Patient = ({
                 </ButtonToolbar>
             </Row>
 
-            {/* <Row className='d-flex p-2'> */}
-                {
-                    category === 'conditions' ? displayConditions() : null
+            {
+                category === 'conditions' ? displayConditions() : null
 
-                }
-                {
-                    category === 'allergies' ? displayAllergies() : null
-                }
-                {
-                    category === 'medications' ? displayMedications() : null
-                }
-                {
-                    category === 'notes' ? displayNotes() : null
-                }
-            {/* </Row> */}
+            }
+            {
+                category === 'allergies' ? displayAllergies() : null
+            }
+            {
+                category === 'medications' ? displayMedications() : null
+            }
+            {
+                category === 'notes' ? displayNotes() : null
+            }
 
+            <Modal isOpen={modalNote} toggle={toggleNoteModal} centered>
+                <ModalBody>
+                    <form action="" onSubmit={handleNote}>
+                    <div className='form-group'>
+                        <label htmlFor="body">Body</label>
+                        <input
+                            type="text"
+                            // ref={bodyRef}
+                            className='form-control'
+                            id='body'
+                            required
+                            value={body}
+                            // aria-invalid={validBody ? 'false' : 'true'}
+                            // aria-describedby='bodynote'
+                            onChange={(e) => setBody(e.target.value)}
+                            // onFocus={() => setBodyFocus('focus')}
+                            // onBlur={() => setBodyFocus('')}
+                        />
+                        {/* <p id='bodynote' className={bodyFocus && body && !validBody ? 'instructions' : 'offscreen'}>
+                            <FontAwesomeIcon icon={faInfoCircle} /> 
+                            <FontAwesomeIcon icon={faTimes}  className={validBody || !body ? 'hide' : 'invalid'} />
+                            4 to 10 characters.<br />
+                            Must begin with a letter.<br />
+                            Letters, numbers, underscores, hyphens allowed.
+                        </p> */}
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor="dateCreated">Date Created</label>
+                        <input
+                            type="date"
+                            className='form-control'
+                            id='dateCreated'
+                            // set date to current date
+                            value={new Date().toISOString().slice(0, 10)}
+                            // aria-invalid={validDateCreated ? 'false' : 'true'}
+                            // aria-describedby='dateCreatednote'
+                            onChange={(e) => setDateCreated(e.target.value)}
+                            // onFocus={() => setDateCreatedFocus(true)}
+                            // onBlur={() => setDateCreatedFocus(false)}
+                        />
+                        {/* <p id='dateCreatednote' className={dateCreatedFocus && !validDateCreated ? 'instructions' : 'offscreen'}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Must enter a valid date.
+                        </p> */}
+                    </div>
+                    <button>Submit</button>
+                </form>
+                </ModalBody>
+            </Modal>
         </div>
     );
 

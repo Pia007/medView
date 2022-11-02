@@ -5,8 +5,17 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Header = () => {
+    const [ isLogggedIn, setIsLoggedIn ] = useState(false);
     const [navigation, setNavigation] = useState(false);
     const openNav = () => setNavigation(!navigation);
+
+    const loggedIn = () => {
+        setIsLoggedIn(true);
+    }
+
+    const loggedOut = () => {
+        setIsLoggedIn(false);
+    }
 
 
     const MenuItem = ({ to, linkName }) => {

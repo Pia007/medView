@@ -53,8 +53,15 @@ public class ProviderServiceImpl implements ProviderService {
 
         if (optionalProvider.isPresent()) {
             if (passwordEncoder.matches(providerDto.getPassword(), optionalProvider.get().getPassword())) {
-                response.add("Provider logged in successfully");
-                response.add(String.valueOf(optionalProvider.get().getId()));
+
+                String id = optionalProvider.get().getId().toString();
+                String username = optionalProvider.get().getUsername();
+                String password = providerDto.getPassword();
+                response.add(id);
+                response.add(username);
+                response.add(password);
+               
+                //set the 
             } else {
                 response.add("Invalid password");
             }

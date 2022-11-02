@@ -32,7 +32,7 @@ public class PatientNote {
     // @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @ManyToOne
     // @JoinColumn
-    // @JsonManagedReference
+    // @JsonBackReference
     private Patient patient;
 
 
