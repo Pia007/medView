@@ -1,13 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Route, Link} from 'react-router-dom';
+import { useNavigate, Outlet, Route, Link} from 'react-router-dom';
+import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
-import { Row, Card } from 'reactstrap';
+import { Row, Col, Card, Button } from 'reactstrap';
 
 const LOGIN_URL = '/providers/login'
 
 
-
 const LoginForm = () => {
+
+    const navigate = useNavigate();
+
 
     // send the value of isLoggedIn to the parent component
     const [loggedIn, setLoggedIn] = useState();
@@ -19,7 +23,8 @@ const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // const [ provider, setProvider ] = useState();
-    const [error, setError] = useState('');
+    const [err, setErr] = useState('');
+    const [loginMsg, setLoginMsg] = useState('');
     const [success, setSuccess] = useState(false);
     const [providerId, setProviderId] = useState(null)
     
@@ -30,7 +35,7 @@ const LoginForm = () => {
     }, [])
 
     useEffect(() => {
-        setError('');
+        setErr('');
     }, [username, password])
 
     const handleSubmit = async (e) => {
@@ -43,15 +48,21 @@ const LoginForm = () => {
             });
             console.log(login.data);
             console.log(JSON.stringify(login.data));
-            console.log(login.data)
+            // const id = login.data[0];
+            // console.log(id);
+            setProviderId(login.data[0]);
+            
             const id = login.data[0];
-            console.log(id);
-            setProviderId(id);
-
+            
             console.log(providerId);
             
             setLoggedIn(true);
             console.log("loggin is good")
+
+            // save the username to local storage
+            localStorage.setItem('username', JSON.stringify(login.data[1]));
+
+            
             
             window.location.href = '/provider/' + id;
             
@@ -59,40 +70,53 @@ const LoginForm = () => {
             setPassword('');
             setLoggedIn(true);
 
-            // isLoggedIn={loggedIn}
+            // get the value of loggedIn from the child component
+
 
             console.log('logged in')
 
             
         } catch ( error ) {
             if (!error?.response) {
-                setError('Network error');
+                setErr('Login Failed. Please try again.');
             } else if (error.response?.status === 400) {
-                setError('Invalid username or password');
+                setErr('Invalid username or password');
             } else if (error.response?.status === 401) {
-                setError('Not authorized');
+                setErr('Not authorized');
             } else {
-                setError('Login failed');
+                setErr('Login failed');
             }
             errorRef.current.focus();
             setLoggedIn(false);
-            // isLoggedIn={loggedIn}
+            // window.location.href = '/login';
+            
+            /// //// setLoginMsg('Login failed');
+            
+            // prevent page from redirecting
+
+            // navigate('/login', { replace: true });
+            
 
         }
+        
     }
     
 
     return (
         <>
-            <section className='row m-auto p-3 justify-content-around'>
-                <p ref={errorRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
-                
-                <h1 className='text-center'>Login</h1>
-                <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
+            <section className='row m-auto p-3 justify-content-around m-5 login-section'>
+                <Card className='col-12 col-md-10 col-lg-8 p-2 login-card mt-2 align-self-center my-5'>
+                    <h1 className='text-left p-2 mb-0 form-title'>Sign in</h1>
+                    <h2 className='text-left p-2 mb-0 form-st'>
+                        Don't have an account? <Link to='/register' className='text-decoration-none form-link'> Create one </Link>here.
+                    </h2>
                     <form onSubmit={handleSubmit} className='p-3'>
+                        <p ref={errorRef} className={err ? 'error' : 'offscreen'} aria-live='assertive'>{err}
+                            {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
+                        </p>
                         <Row>
                             <div className='form-group col-12 p-2'>
-                                <label htmlFor='username'>Username:</label>
+                                <label htmlFor='username'>Username</label>
                                 <input
                                     type='text'
                                     id='username'
@@ -106,7 +130,7 @@ const LoginForm = () => {
                                 />
                             </div>
                             <div className='form-group col-12 p-2'>
-                                <label htmlFor='password'>Password:</label>
+                                <label htmlFor='password'>Password</label>
                                 <input
                                     type='password'
                                     id='password'
@@ -119,11 +143,11 @@ const LoginForm = () => {
                             </div>
                         </Row>
                         <div className='form-group col-12 p-2 text-center'>
-                            <button type='submit' className='btn btn-primary' >Login</button>
+                            <Button type='submit' className='col-8 col-sm-6 col-md-4 form-btn' 
+                                color='primary'
+                            >Sign in</Button>
                         </div>
-                        <p className='text-center'>
-                            Don't have an account? <Link to='/register'> Register here.</Link>
-                        </p>
+                        
                     </form>
                 </Card>
             </section>

@@ -6,6 +6,8 @@ import '../node_modules/bootswatch/dist/spacelab/bootstrap.min.css';
 import '@fontsource/lato';
 import '@fontsource/mulish';
 import '@fontsource/open-sans';
+import '@fontsource/montserrat-alternates';
+import '@fontsource/poppins';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useParams, Link } from 'react-router-dom';
 import files from '../images/files.svg';
-import { Row, Col, Table, Card} from 'reactstrap';
+import { Row, Col, Table, Card, Button} from 'reactstrap';
 import { RenderProvider } from '../components/Renders';
 import ProviderModal from '../components/ProviderModal';
 import axios from '../api/AxiosApi';
@@ -181,33 +181,36 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                         add a patient</Link>?
                 </Col>
             ) : (
-                <Row>
-                    {/* <h3>Patients</h3> */}
-                    <Link to={`/provider/${id}/addPatient`}>Add A Patient</Link>
-                
-                    <div className='p-2 ' id='tableHolder'>
-                        <Table hover striped responsive>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        First Name
-                                    </th>
-                                    <th>
-                                        Last Name
-                                    </th>
-                                    <th>
-                                        Age
-                                    </th>
-                                    <th className='d-flex justify-content-end'>
-                                        Files
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {patientList}
-                            </tbody>
-                        </Table>
-                    </div>
+                <Row className='d-flex'>
+                    <Link to={`/provider/${id}/addPatient`}
+                            className='text-center mb-2 text-decoration-none add-link'>Add A Patient?
+                    </Link>
+                    {/* </Button> */}
+                    <Col>
+                        <Card className='p-2 ' id='tableHolder'>
+                            <Table hover striped responsive  className='pat-table'>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            First Name
+                                        </th>
+                                        <th>
+                                            Last Name
+                                        </th>
+                                        <th>
+                                            Age
+                                        </th>
+                                        <th className='d-flex justify-content-end'>
+                                            Files
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {patientList}
+                                </tbody>
+                            </Table>
+                        </Card>
+                    </Col>
                 </Row>
 
             )}

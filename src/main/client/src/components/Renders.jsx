@@ -7,9 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const RenderProvider = ({provider, onClick}) => {
 
+    // upercase first letter of provider specialty
+    const specialty = provider.specialty.charAt(0).toUpperCase() + provider.specialty.slice(1);
+
     return (
         <>
-            <Row className='text-center p-3'>
+            <Row className='text-center p-3 mt-2'>
                 <Col xs={12}>
                     <button className='p-1 text-center provider-icon-button' onClick={onClick}>
                         <FontAwesomeIcon icon={faUserPen} className='icon provider-icon' />
@@ -17,8 +20,8 @@ export const RenderProvider = ({provider, onClick}) => {
                 </Col>
                 <Col>
                 {/* convert first letter to upper case */}
-                    <h2> {provider.firstName} {provider.lastName} </h2>
-                    <h3>{provider.specialty}</h3>
+                    <h2 className='mt-2'> {provider.firstName} {provider.lastName}, {provider.suffix} </h2>
+                    <h3>{specialty}</h3>
                 </Col>
 
             </Row>
@@ -39,16 +42,16 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                 </Col> */}
                 <Col>
                     <button className='p-1 text-center provider-icon-button' onClick={handleClick}>
-                        <FontAwesomeIcon icon={faPenToSquare} className='pat-edit-icon'/>
+                        <FontAwesomeIcon icon={faPenToSquare} className='icon pat-icon'/>
                     </button>
                     <h2>{singlePatient.firstName} {singlePatient.lastName} </h2>
                     {/* display age in Month day year */}
-                    <h3>DOB: {new Date(singlePatient.dob).toLocaleDateString()}</h3>
+                    <p className='mb-1 detail'>DOB: {new Date(singlePatient.dob).toLocaleDateString()}</p>
 
-                    <p className='mb-1'>{singlePatient.address}, {singlePatient.city}, {singlePatient.state} {singlePatient.zip}</p>
+                    <p className='mb-1 detail'>{singlePatient.address}, {singlePatient.city}, {singlePatient.state} {singlePatient.zip}</p>
                     
-                    <p className='mb-1'>{singlePatient.email}</p>
-                    <p className='mb-1'>{singlePatient.phone}</p>
+                    <p className='mb-1 detail'>{singlePatient.email}</p>
+                    <p className='mb-1 detail'>{singlePatient.phone}</p>
                     {/* <FontAwesomeIcon icon={faPenToSquare} className='pat-edit-icon'/> */}
                 </Col>
 

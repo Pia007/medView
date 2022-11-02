@@ -207,13 +207,6 @@ const Patient = ({
     // delete the node
     const handleDelete = async (noteId) => {
         
-
-        // get the id for each note
-        
-        
-        
-        
-        
         console.log("Delete this note: ", noteId);
 
         try {
@@ -234,13 +227,15 @@ const Patient = ({
         if (notes.length > 0) {
             return notes.map((note) => {
                 return (
-                    <Card key={note.id}>
+                    <Card key={note.id} className='d-flex flex-row justify-content-between'>
                         <div>
-                            <p className='m-0'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
-                            <p className='mb-1'><strong>Text:</strong> {note.body}</p>
-                            <p className='mb-1'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
+                            <p className='m-0 detail'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
+                            <p className='mb-1 detail'><strong>Text:</strong> {note.body}</p>
+                            <p className='mb-1 detail'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
                         </div>
-                        <button onClick={() => handleDelete(note.id)}><img src={trash} alt='delete' /></button>
+                        <div className='d-flex align-content-around'>
+                            <button className='trash-btn' onClick={() => handleDelete(note.id)}><img src={trash} alt='delete' /></button>
+                        </div>
                     </Card>
                 )
             })
@@ -259,7 +254,7 @@ const Patient = ({
                 <Card>
                     {/* make the first letter  of each word uppercase */}
                     <Col className='d-flex justify-content-between'>
-                        <p className='mb-1'>
+                        <p className='my-1 detail'>
                             <strong>Conditions: </strong> 
                             {patient.conditions.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
                         </p>
@@ -279,7 +274,7 @@ const Patient = ({
             return (
                 <Card>
                     <Col className='d-flex justify-content-between'>
-                        <p className='mb-1'>
+                        <p className='my-1 detail'>
                             <strong>Allergies: </strong> 
                             {patient.allergies.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
                         </p>
@@ -299,7 +294,7 @@ const Patient = ({
             return (
                 <Card>
                     <Col className='d-flex justify-content-between'>
-                        <p className='mb-1'>
+                        <p className='my-1 detail'>
                             <strong>Medications: </strong> 
                             {patient.medications.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
                         </p>
@@ -318,7 +313,10 @@ const Patient = ({
     return (
         <div className='container'>
             <RenderPatient singlePatient={patient} handleClick={toggleModal} />
-            <button type='button' onClick={toggleNoteModal}>Add Note</button>
+            <Col className='text-center'>
+                <Button type='button' color='primary' className='add-note-btn' onClick={toggleNoteModal}>Add Note</Button>
+            </Col>
+
             <PatientModal 
                 isOpen={modal}
                 toggle={() => toggleModal()}
@@ -407,31 +405,21 @@ const Patient = ({
 
             <Modal isOpen={modalNote} toggle={toggleNoteModal} centered>
                 <ModalBody>
+                    <p className='fw-bold text-center detail'>Add a note</p>
                     <form action="" onSubmit={handleNote}>
-                    <div className='form-group'>
+                    <div className='form-group my-2'>
                         <label htmlFor="body">Body</label>
-                        <input
+                        <textarea
                             type="text"
-                            // ref={bodyRef}
+                            rows={5}
                             className='form-control'
                             id='body'
                             required
                             value={body}
-                            // aria-invalid={validBody ? 'false' : 'true'}
-                            // aria-describedby='bodynote'
                             onChange={(e) => setBody(e.target.value)}
-                            // onFocus={() => setBodyFocus('focus')}
-                            // onBlur={() => setBodyFocus('')}
                         />
-                        {/* <p id='bodynote' className={bodyFocus && body && !validBody ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle} /> 
-                            <FontAwesomeIcon icon={faTimes}  className={validBody || !body ? 'hide' : 'invalid'} />
-                            4 to 10 characters.<br />
-                            Must begin with a letter.<br />
-                            Letters, numbers, underscores, hyphens allowed.
-                        </p> */}
                     </div>
-                    <div className='form-group'>
+                    <div className='form-group my-2'>
                         <label htmlFor="dateCreated">Date Created</label>
                         <input
                             type="date"
@@ -439,18 +427,13 @@ const Patient = ({
                             id='dateCreated'
                             // set date to current date
                             value={new Date().toISOString().slice(0, 10)}
-                            // aria-invalid={validDateCreated ? 'false' : 'true'}
-                            // aria-describedby='dateCreatednote'
+                            
                             onChange={(e) => setDateCreated(e.target.value)}
-                            // onFocus={() => setDateCreatedFocus(true)}
-                            // onBlur={() => setDateCreatedFocus(false)}
                         />
-                        {/* <p id='dateCreatednote' className={dateCreatedFocus && !validDateCreated ? 'instructions' : 'offscreen'}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Must enter a valid date.
-                        </p> */}
                     </div>
-                    <button>Submit</button>
+                    <div className='d-flex justify-content-around'>
+                        <Button className='mt-3 mr-0 note-btn'>Submit</Button>
+                    </div>
                 </form>
                 </ModalBody>
             </Modal>

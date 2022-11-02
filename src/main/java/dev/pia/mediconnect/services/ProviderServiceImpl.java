@@ -57,9 +57,11 @@ public class ProviderServiceImpl implements ProviderService {
                 String id = optionalProvider.get().getId().toString();
                 String username = optionalProvider.get().getUsername();
                 String password = providerDto.getPassword();
+                
                 response.add(id);
                 response.add(username);
                 response.add(password);
+                response.add("http://localhost:8080/provider");
                
                 //set the 
             } else {

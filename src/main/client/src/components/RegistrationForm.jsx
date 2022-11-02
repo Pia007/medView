@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
-import { Row, Card } from 'reactstrap';
+import { Row, Card, Button } from 'reactstrap';
 
 
 const REGISTER_URL = '/providers/register';
@@ -183,17 +183,21 @@ const RegistrationForm = () => {
 
     return (
         <>
-            <section className='row p-3 justify-content-around' style={{border: '2px solid red'}}>
+            <section className='row m-auto p-3 justify-content-around'>
                 <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
 
-                <h1 className='text-center'>Provider Registration</h1>
+               
                 
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
+                    <h1 className='text-left p-2 mb-0 form-title'>Sign up</h1>
+                    <h2 className='text-left p-2 mb-0 form-st'>
+                            Already have an account? <Link to='/login' className='text-decoration-none form-link'> Sign in</Link> here.
+                        </h2>
                     <form onSubmit={handleSubmit} className='p-3' style={{border: ''}}>
                         <Row className=''>
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='username' className=''>
-                                    Username:
+                                    Username
                                     <FontAwesomeIcon icon={faCheck} className={validUsername ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validUsername || !username ? 'hide' : 'invalid'} />
                                 </label>
@@ -206,22 +210,22 @@ const RegistrationForm = () => {
                                     required
                                     value={username}
                                     aria-invalid={validUsername ? 'false' : 'true'}
-                                    aria-describedby='uidnote'
+                                    aria-describedby='unote'
                                     autoComplete='off'
                                     onChange={(e) => setUsername(e.target.value)}
                                     onFocus={() => setUsernameFocus(true)}
                                     onBlur={() => setUsernameFocus(false)}
                                 />
-                                <p id='uidnote' className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'}>
+                                <p id='unote' className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'} >
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    4 to 10 characters.<br />
+                                    4 to 10 characters.
                                     Must begin with a letter.<br />
                                     Letters, numbers, underscores, hyphens allowed.
                                 </p>
                             </div>
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='password'>
-                                    Password:
+                                    Password
                                     <FontAwesomeIcon icon={faCheck} className={validPassword ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? 'hide' : 'invalid'} />
                                 </label>
@@ -233,23 +237,23 @@ const RegistrationForm = () => {
                                     autoComplete='off'
                                     value={password}
                                     aria-invalid={validPassword ? 'false' : 'true'}
-                                    aria-describedby='passwordnote'
+                                    aria-describedby='pnote'
                                     onChange={(e) => setPassword(e.target.value)}
                                     onFocus={() => setPasswordFocus(true)}
                                     onBlur={() => setPasswordFocus(false)}
 
                                 />
-                                <p id='passwordnote' className={passwordFocus && !validPassword ? 'instructions' : 'offscreen'}>
+                                <p id='pnote' className={passwordFocus && !validPassword ? 'instructions' : 'offscreen'} >
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     4 to 10 characters.<br />
-                                    Must include uppercase and lowercase letters, a number and a special character.<br />
+                                    Must include uppercase and lowercase letters, a number and a special character.
                                     Allowed special characters: <span aria-label='exclamation mark'>!</span> <span aria-label='at symbol'>@</span> <span aria-label='hashtag'>#</span> <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
                                 </p>
                             </div>
 
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='confirm_password'>
-                                    Confirm Password:
+                                    Confirm Password
                                     <FontAwesomeIcon icon={faCheck} className={validMatch && matchPassword ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPassword ? 'hide' : 'invalid'} />
                                 </label>
@@ -274,7 +278,7 @@ const RegistrationForm = () => {
 
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='firstname'>
-                                    First Name:
+                                    First Name
                                     <FontAwesomeIcon icon={faCheck} className={validFirstName ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? 'hide' : 'invalid'} />
                                 </label>
@@ -293,7 +297,7 @@ const RegistrationForm = () => {
                                 />
                                 <p id='firstnamenote' className={firstNameFocus && !validFirstName ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
+                                    Must be at least 2 characters.
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </div>
@@ -301,7 +305,7 @@ const RegistrationForm = () => {
 
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='lastname'>
-                                    Last Name:
+                                    Last Name
                                     <FontAwesomeIcon icon={faCheck} className={validLastName ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? 'hide' : 'invalid'} />
                                 </label>
@@ -320,14 +324,14 @@ const RegistrationForm = () => {
                                 />
                                 <p id='lastnamenote' className={lastNameFocus && !validLastName ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
+                                    Must be at least 2 characters.
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </div>
 
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='specialty'>
-                                    Specialty:
+                                    Specialty
                                     <FontAwesomeIcon icon={faCheck} className={validSpecialty ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validSpecialty || !specialty ? 'hide' : 'invalid'} />
                                 </label>
@@ -346,13 +350,13 @@ const RegistrationForm = () => {
                                 />
                                 <p id='specialtynote' className={specialtyFocus && !validSpecialty ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 8 characters.<br />
+                                    Must be at least 8 characters.
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </div>
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='bio'>
-                                    Suffix:
+                                    Suffix
                                     <FontAwesomeIcon icon={faCheck} className={validSuffix ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validSuffix || !suffix ? 'hide' : 'invalid'} />
                                 </label>
@@ -371,17 +375,17 @@ const RegistrationForm = () => {
                                 />
                                 <p id='suffixnote' className={suffixFocus && !validSuffix ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
+                                    Must be at least 2 characters.
                                     Only letters allow.
                                 </p>
                             </div>
                         </Row>
                         <div className='form-group col-12 p-2 text-center'>
-                            <button type='submit' className='btn btn-primary' >Register</button>
+                            <Button type='submit' className='col-8 col-sm-6 col-md-4 form-btn' 
+                                color='primary'
+                            >Sign up</Button>
                         </div>
-                        <p className='text-center'>
-                            Already have an account? <Link to='/login'> Login here.</Link>
-                        </p>
+                        
                     </form>
                 </Card>
             </section>
