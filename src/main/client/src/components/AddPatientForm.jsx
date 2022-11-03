@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
-import { Row,Col, Card } from 'reactstrap'
+import { Row, Col, Card,Button } from 'reactstrap'
 
 const PROVIDER_URL = '/providers/';
 const ADD_PATIENT_URL = '/patients/provider/';
@@ -65,6 +65,8 @@ const MEDICATIONS_REGEX = /^[A-z-, ]{2,}$/;
 
 
 const AddPatientForm = () => {
+
+    const navigate = useNavigate();
 
     const { id } = useParams();
     const patientCodeRef = useRef();
@@ -243,7 +245,7 @@ const AddPatientForm = () => {
             });
             console.log(JSON.stringify(newPatient.data));
 
-            window.location.href = `/provider/${id}`;
+            navigate(`/patient/${id}`);
 
             setPatientCode('');
             setFirstName('');
@@ -278,14 +280,15 @@ const AddPatientForm = () => {
     }
 
     return (
-        <div className='container'>
-            <section className='row p-3 justify-content-around' style={{border: '2px solid red'}}>
-                <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
-                <Card>
+        <>
+            <section className='row m-auto p-3 justify-content-around'>
+                {/* <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p> */}
+                <Card className='col-12 col-md-10 col-lg-8 p-2 mt-2 align-self-center my-5'>
+                    <h3 className='px-3 form-title'>Add Patient Form</h3>
                     <form action="" onSubmit={handleSubmit} className='p-3'>
-                        <h1>Add Patient Form</h1>
+                        
                         <Row id='demos'>
-                            <Col md={4} className="form-group my-2">
+                            <Col md={6} className="form-group my-2">
                                 <label htmlFor="patientCode">Patient Code</label>
                                 <input
                                     type="text"
@@ -741,16 +744,16 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <div className="form-group">
-                                <button type='submit'>
+                            <div className="d-flex justify-content-end mt-2">
+                                <Button type='submit' className='form-btn'>
                                     Submit
-                                </button>
+                                </Button>
                             </div>
                         </Row>
                     </form>
                 </Card>
             </section>
-        </div>
+        </>
     )
 }
 

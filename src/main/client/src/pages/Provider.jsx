@@ -49,11 +49,9 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                 // check if there are any patients
                 if (!response.data.length > 0 || response.data.length > 0) {
             
-                    console.log(response.data);
                     setPatients(response.data);
                     console.log(patients);
 
-                    console.log("First patient: " + patients[0].id)
                     setMessage(' You do not have any patients yet');
 
                     // create an array of patient ids
@@ -119,6 +117,7 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                 firstName: provider.firstName,
                 lastName: provider.lastName,
                 specialty: provider.specialty,
+                suffix: provider.suffix
             });
             console.log(update.data);
             toggleModal();
@@ -169,9 +168,11 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                 valueFirstName={provider.firstName}
                 valueLastName={provider.lastName}
                 valueSpecialty={provider.specialty}
+                valueSuffix={provider.suffix}
                 onChangeFirstName={(e) => setProvider({...provider, firstName: e.target.value})}
                 onChangeLastName={(e) => setProvider({...provider, lastName: e.target.value})}
                 onChangeSpecialty={(e) => setProvider({...provider, specialty: e.target.value})}
+                onChangeSuffix={(e) => setProvider({...provider, suffix: e.target.value})}
             />
             {/*  if the provider has no patients */}
             {!patients.length > 0 ? (
@@ -214,15 +215,6 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                 </Row>
 
             )}
-                {/* {!patients ? (
-                    <h3>{message} <br/>
-                        Would you like to add a patient to your service? <br/>
-                        <Link to={`/provider/${id}/addPatient`}>Add A Patient</Link>
-                    </h3>
-                ) : (
-                    
-                )}  */}
-    
         </div>
     )
 }

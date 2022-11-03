@@ -9,6 +9,9 @@ export const RenderProvider = ({provider, onClick}) => {
 
     // upercase first letter of provider specialty
     const specialty = provider.specialty.charAt(0).toUpperCase() + provider.specialty.slice(1);
+    const firstName = provider.firstName.charAt(0).toUpperCase() + provider.firstName.slice(1);
+    const lastName = provider.lastName.charAt(0).toUpperCase() + provider.lastName.slice(1);
+    const suffix = provider.suffix.toUpperCase();
 
     return (
         <>
@@ -19,8 +22,7 @@ export const RenderProvider = ({provider, onClick}) => {
                     </button>
                 </Col>
                 <Col>
-                {/* convert first letter to upper case */}
-                    <h2 className='mt-2'> {provider.firstName} {provider.lastName}, {provider.suffix} </h2>
+                    <h2 className='mt-2'> {firstName} {lastName}, {suffix} </h2>
                     <h3>{specialty}</h3>
                 </Col>
 
@@ -32,14 +34,13 @@ export const RenderProvider = ({provider, onClick}) => {
 
 /* render patient */
 export const RenderPatient = ({singlePatient, handleClick}) => {
+
+
+    
     return (
         <>
             <Row className='text-center p-3'>
-                {/* <Col xs={12}>
-                    <button className='p-1 text-center provider-icon-button' onClick={onClick}>
-                        <FontAwesomeIcon icon={faUserPen} className='icon provider-icon' />
-                    </button>
-                </Col> */}
+                
                 <Col>
                     <button className='p-1 text-center provider-icon-button' onClick={handleClick}>
                         <FontAwesomeIcon icon={faPenToSquare} className='icon pat-icon'/>
@@ -52,7 +53,6 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                     
                     <p className='mb-1 detail'>{singlePatient.email}</p>
                     <p className='mb-1 detail'>{singlePatient.phone}</p>
-                    {/* <FontAwesomeIcon icon={faPenToSquare} className='pat-edit-icon'/> */}
                 </Col>
 
             </Row>
@@ -67,7 +67,6 @@ export const RenderNotes = ({patientNote}) => {
         <>
             <Row className='text-center p-3'>
                 <Col>
-                    {/* <p>{patientNote.dateCreated}</p> */}
                     <p>{patientNote.body}</p>
                 </Col>
                 <button>

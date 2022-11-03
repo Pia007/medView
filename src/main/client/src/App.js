@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
         <div className="App">
-          <Main style={{maxWidth: '100vw', height: '100vh', paddingX: '10'}}/>
+          <Main />
         </div>
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalBody } from 'reactstrap';
+import { Modal, ModalBody, Button } from 'reactstrap';
 
 const ProviderModal = ({
     onSubmit,
@@ -18,9 +18,10 @@ const ProviderModal = ({
     return (
         <>
             <Modal isOpen={isOpen} toggle={toggle} centered>
-                <ModalBody> 
+                <ModalBody>
+                    <h2 className='px-2'>Provider Update</h2> 
                     <form action="" onSubmit={onSubmit}>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="firstName">First Name</label>
                             <input 
                                 type="text" 
@@ -30,7 +31,7 @@ const ProviderModal = ({
                                 onChange={onChangeFirstName}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="lastName">Last Name</label>
                             <input 
                                 type="text" 
@@ -40,7 +41,7 @@ const ProviderModal = ({
                                 onChange={onChangeLastName}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="specialty">Specialty</label>
                             <input 
                                 type="text" 
@@ -50,7 +51,7 @@ const ProviderModal = ({
                                 onChange={onChangeSpecialty}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="suffix">Suffix</label>
                             <input
                                 type="text"
@@ -60,8 +61,9 @@ const ProviderModal = ({
                                 onChange={onChangeSuffix}
                             />
                         </div>
-                        <button type='submit'>Update</button>
-                        <button type="button" className="btn-close" onClick={closeModal}>Cancel</button>
+                        <div className='d-flex justify-content-end p-2'>
+                            <Button className='form-btn' type='submit'>Submit</Button>
+                        </div>
                     </form>
                 </ModalBody>
             </Modal>

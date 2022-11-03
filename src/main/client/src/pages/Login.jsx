@@ -5,11 +5,9 @@ import { Row, Col, Card } from 'reactstrap';
 
 const Login = () => {
     return (
-        <div className='container'>
-            <Row>           
-            <LoginForm />
+            <Row className='view'>           
+                <LoginForm />
             </Row>
-        </div>
     )
 }
 

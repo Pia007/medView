@@ -1,11 +1,12 @@
 import React from 'react';
 import RegistrationForm from '../components/RegistrationForm';
+import { Row, Col, Card } from 'reactstrap';
 
 const Registrations = () => {
     return (
-        <div className='container'>
+        <Row className='view'>
             <RegistrationForm />
-        </div>
+        </Row>
     )
 }
 

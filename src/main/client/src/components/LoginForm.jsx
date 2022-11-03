@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate, Outlet, Route, Link} from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
@@ -46,10 +46,7 @@ const LoginForm = () => {
                 username,
                 password,
             });
-            console.log(login.data);
-            console.log(JSON.stringify(login.data));
-            // const id = login.data[0];
-            // console.log(id);
+
             setProviderId(login.data[0]);
             
             const id = login.data[0];
@@ -61,20 +58,12 @@ const LoginForm = () => {
 
             // save the username to local storage
             localStorage.setItem('username', JSON.stringify(login.data[1]));
-
-            
-            
-            window.location.href = '/provider/' + id;
+            // navigate(`/provider/${id}`);
+            navigate(`/provider/${id}`);
             
             setUsername('');
             setPassword('');
             setLoggedIn(true);
-
-            // get the value of loggedIn from the child component
-
-
-            console.log('logged in')
-
             
         } catch ( error ) {
             if (!error?.response) {
@@ -88,17 +77,7 @@ const LoginForm = () => {
             }
             errorRef.current.focus();
             setLoggedIn(false);
-            // window.location.href = '/login';
-            
-            /// //// setLoginMsg('Login failed');
-            
-            // prevent page from redirecting
-
-            // navigate('/login', { replace: true });
-            
-
         }
-        
     }
     
 

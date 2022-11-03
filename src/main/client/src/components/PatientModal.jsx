@@ -1,9 +1,10 @@
 import React from 'react';
-import { Modal, ModalBody} from 'reactstrap';
+import { Modal, ModalBody, Button} from 'reactstrap';
 
 const PatientModal = ({
     isOpen, 
     toggle, 
+    patCode,
     valueFirstName, 
     valueLastName,
     valueDob,
@@ -44,10 +45,11 @@ const PatientModal = ({
 
     return (
         <>
-            <Modal isOpen={isOpen} toggle={toggle} centered>
+            <Modal isOpen={isOpen} toggle={toggle} centered className='modals'>
                 <ModalBody>
                     <form action="" onSubmit={onSubmit}>
-                        <div className='form-group'>
+                        <h3 className='px-2'>MRN: {patCode} </h3>
+                        <div className='form-group p-2'>
                             <label htmlFor="firstName">First Name</label>
                             <input
                                 type="text"
@@ -57,7 +59,7 @@ const PatientModal = ({
                                 onChange={onChangeFirstName}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="lastName">Last Name</label>
                             <input
                                 type="text"
@@ -67,7 +69,7 @@ const PatientModal = ({
                                 onChange={onChangeLastName}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="dob">Date of Birth</label>
                             <input
                                 type="text"
@@ -75,12 +77,9 @@ const PatientModal = ({
                                 id='dob'
                                 value={valueDob}
                                 onChange={onChangeDob}
-                                // convert date from MM/DD/YYYY to YYYY-MM-DD
-                                // value={valueDob.split('/').reverse().join('-')}
-
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="gender">Gender</label>
                             <input
                                 type="text"
@@ -91,8 +90,8 @@ const PatientModal = ({
                             />
                         </div>
 
-                        <div className='form-group'>
-                            <label htmlFor="social">Social Security Number</label>
+                        <div className='form-group p-2'>
+                            <label htmlFor="social">SSN</label>
                             <input
                                 type="text"
                                 className='form-control'
@@ -101,7 +100,7 @@ const PatientModal = ({
                                 onChange={onChangeSocial}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group p-2">
                             <label htmlFor="bloodType">Blood Type</label>
                             <input
                                 type="text"
@@ -111,7 +110,7 @@ const PatientModal = ({
                                 onChange={onChangeBloodType}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="ethnicity">Race/Ethnicity</label>
                             <input
                                 type="text"
@@ -121,7 +120,7 @@ const PatientModal = ({
                                 onChange={onChangeEthnicity}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="email">Email</label>
                             <input
                                 type="text"
@@ -131,7 +130,7 @@ const PatientModal = ({
                                 onChange={onChangeEmail}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="phone">Phone</label>
                             <input
                                 type="text"
@@ -141,7 +140,7 @@ const PatientModal = ({
                                 onChange={onChangePhone}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="address">Address</label>
                             <input
                                 type="text"
@@ -151,7 +150,7 @@ const PatientModal = ({
                                 onChange={onChangeAddress}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="city">City</label>
                             <input
                                 type="text"
@@ -161,7 +160,7 @@ const PatientModal = ({
                                 onChange={onChangeCity}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="state">State</label>
                             <input
                                 type="text"
@@ -171,7 +170,7 @@ const PatientModal = ({
                                 onChange={onChangeState}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="zip">Zip</label>
                             <input
                                 type="text"
@@ -181,7 +180,7 @@ const PatientModal = ({
                                 onChange={onChangeZip}
                             />  
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="allergies">Allergies</label>
                             <input
                                 type="text"
@@ -191,7 +190,7 @@ const PatientModal = ({
                                 onChange={onChangeAllergies}
                             />  
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="insurance">Insurance</label>
                             <input
                                 type="text"
@@ -201,7 +200,7 @@ const PatientModal = ({
                                 onChange={onChangeInsurance}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="conditions">Conditions</label>
                             <input
                                 type="text"
@@ -211,7 +210,7 @@ const PatientModal = ({
                                 onChange={onChangeConditions}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group p-2'>
                             <label htmlFor="medications">Medications</label>
                             <input
                                 type="text"
@@ -221,8 +220,9 @@ const PatientModal = ({
                                 onChange={onChangeMedications}
                             />
                         </div>
-                        <button type='submit' className='btn btn-primary'>Update</button>
-                        <button type='cancel' className='btn btn-secondary' onClick={closeModal}>Cancel</button>
+                        <div className='d-flex justify-content-end px-2'>
+                            <Button type='submit' className='form-btn'>Update</Button>
+                        </div>
                     </form>
                 </ModalBody>
             </Modal>

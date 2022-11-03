@@ -8,6 +8,7 @@ import Provider from './Provider';
 import AddPatient from './AddPatient';
 import Patient from './Patient';
 import Footer from '../components/Footer';
+import Protected from '../ProtectedRoute';
 
 
 const Main = () => {
@@ -15,19 +16,21 @@ const Main = () => {
     return (
         <div>
             <Header  />
-            <div className='d-flex align-content-around justify-content-center m-6'>
                 
                 <Routes>
                     <Route path='/' element={<Home/>} />
                     
                     <Route path='register' element={<Registration />} />
+                    {/* protect the provider route with its id  */}
                     <Route path='login/' element={<Login />} />
-                    <Route path='provider/:id' element={<Provider />} />
-                    <Route path='provider/:id/addPatient' element={<AddPatient />} />
-                    <Route path='patient/:id' element={<Patient />} />
+                    <Route path='provider/:id' element={<Protected><Provider /></Protected>} />
+                    <Route path='addpatient/:id' element={<Protected><AddPatient /></Protected>} />
+                    <Route path='patient/:id' element={<Protected><Patient /></Protected>} />
+
+                    {/* <Route path='provider/:id/addPatient' element={<AddPatient />} />
+                    <Route path='patient/:id' element={<Patient />} /> */}
                     
                 </Routes>
-            </div>
             <Footer />
         </div>
     )

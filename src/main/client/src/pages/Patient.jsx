@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button, Modal, ModalBody } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
@@ -16,6 +16,7 @@ const NOTES_URL = '/notes';
 const Patient = ({
     singlePatient,
     handleClick,
+    patCode,
     valueFirstName, 
     valueLastName,
     valueDob,
@@ -63,7 +64,9 @@ const Patient = ({
 
     const { id } = useParams();
 
-    console.log("patient id: " + id);
+    const navigate = useNavigate();
+
+
 
     const [patient, setPatient] = useState('');
     const [error, setError] = useState('');
@@ -72,12 +75,8 @@ const Patient = ({
     const [message, setMessage] = useState('');
 
     const [body, setBody] = useState('');
-    // const [validBody, setValidBody] = useState(false);
-    // const [bodyFocus, setBodyFocus] = useState(false);
 
     const [dateCreated, setDateCreated] = useState('');
-    // const [validDateCreated, setValidDateCreated] = useState(false);
-    // const [dateCreatedFocus, setDateCreatedFocus] = useState(false);
 
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
@@ -193,7 +192,7 @@ const Patient = ({
             });
             console.log(newNote.data);
             console.log("Pia note", newNote.data)
-            window.location.href = `/patient/${id}`;
+            navigate(`/patient/${id}`);
 
             setBody('');
             setDateCreated('');
@@ -314,12 +313,13 @@ const Patient = ({
         <div className='container'>
             <RenderPatient singlePatient={patient} handleClick={toggleModal} />
             <Col className='text-center'>
-                <Button type='button' color='primary' className='add-note-btn' onClick={toggleNoteModal}>Add Note</Button>
+                <Button type='button' color='primary' className='form-btn' onClick={toggleNoteModal}>Add Note</Button>
             </Col>
 
             <PatientModal 
                 isOpen={modal}
                 toggle={() => toggleModal()}
+                patCode={patient.patientCode}
                 valueFirstName={patient.firstName}
                 valueLastName={patient.lastName}
                 valueDob={patient.dob}
@@ -359,32 +359,37 @@ const Patient = ({
             />
             <Row  className='d-flex p-2'>
                 <ButtonToolbar>
-                    <ButtonGroup className="m-auto">
+                    <ButtonGroup className="m-auto ">
     
-                        <Button 
-                            color="primary"
+                        <button 
+                            
+                            type="button" 
+                            className='btn form-btn button-grp'
                             onClick={() => {setCategory('conditions')}} 
                         >
                             Dx
-                        </Button>
-                        <Button 
-                            color="primary"
+                        </button>
+                        <button 
+                            type="button"
+                            className='btn form-btn button-grp'
                             onClick={() => {setCategory('allergies')}}
                         >
                             Allergies
-                        </Button>
-                        <Button 
-                            color="primary"
+                        </button>
+                        <button 
+                            type="button" 
+                            className='btn form-btn button-grp'
                             onClick={() => {setCategory('medications')}}
                         >
                             Rx
-                        </Button>
-                        <Button 
-                            color="primary"
+                        </button>
+                        <button 
+                            type="button" 
+                            className='btn form-btn button-grp'
                             onClick={() => {setCategory('notes')}}
                         >
                             Notes
-                        </Button>
+                        </button>
                     </ButtonGroup>
                 </ButtonToolbar>
             </Row>
@@ -405,7 +410,7 @@ const Patient = ({
 
             <Modal isOpen={modalNote} toggle={toggleNoteModal} centered>
                 <ModalBody>
-                    <p className='fw-bold text-center detail'>Add a note</p>
+                    <h2 className='fw-bold text-center detail'>Add a note</h2>
                     <form action="" onSubmit={handleNote}>
                     <div className='form-group my-2'>
                         <label htmlFor="body">Body</label>
@@ -432,7 +437,7 @@ const Patient = ({
                         />
                     </div>
                     <div className='d-flex justify-content-around'>
-                        <Button className='mt-3 mr-0 note-btn'>Submit</Button>
+                        <Button className='mt-3 mr-0 form-btn'>Submit</Button>
                     </div>
                 </form>
                 </ModalBody>

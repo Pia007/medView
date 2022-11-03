@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle, faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
@@ -7,15 +7,16 @@ import axios from '../api/AxiosApi';
 import { Row, Card } from 'reactstrap';
 
 const ADD_NOTE_URL = '/notes';
+
 // body must be at least 10 characters long and can have any letters, characters, punctuation, etc.
 const BODY_REGEX = /^.{10,}$/;
 
 const DATE_CREATED_REGEX = /^(?!\s*$).+/;
 
 
-
-
 const AddNote = () => {
+
+    const navigate = useNavigate();
 
     const { id } = useParams();
     console.log(id);
@@ -58,7 +59,7 @@ const AddNote = () => {
                 dateCreated
             });
             console.log(newNote);
-            window.location.href = `/patient/${id}`;
+            navigate(`/patient/${id}`);
 
             setBody('');
             setDateCreated('');
@@ -117,7 +118,7 @@ const AddNote = () => {
                             Must enter a valid date.
                         </p>
                     </div>
-                    <button>Submit</button>
+                    <button className='form-sub-btn'>Submit</button>
                 </form>
             </Card>
         </>

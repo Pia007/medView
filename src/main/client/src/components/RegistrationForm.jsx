@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
@@ -31,6 +31,8 @@ const RegistrationForm = () => {
 
     // if error, focus on the input that caused the error, screen reader will read the error message
     const errRef = useRef();
+
+    const navigate = useNavigate();
 
 
     // state for the username input
@@ -157,7 +159,7 @@ const RegistrationForm = () => {
             
             console.log(JSON.stringify(registration.data));
 
-            window.location.href = '/login';
+            navigate('/login');
 
             // clear the form
             setUsername('');
@@ -183,7 +185,7 @@ const RegistrationForm = () => {
 
     return (
         <>
-            <section className='row m-auto p-3 justify-content-around'>
+            <section className='row m-auto p-3 justify-content-around m-5'>
                 <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
 
                
@@ -193,7 +195,7 @@ const RegistrationForm = () => {
                     <h2 className='text-left p-2 mb-0 form-st'>
                             Already have an account? <Link to='/login' className='text-decoration-none form-link'> Sign in</Link> here.
                         </h2>
-                    <form onSubmit={handleSubmit} className='p-3' style={{border: ''}}>
+                    <form onSubmit={handleSubmit} className='py-2 px-3' style={{border: ''}}>
                         <Row className=''>
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='username' className=''>
