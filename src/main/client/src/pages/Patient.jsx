@@ -30,13 +30,17 @@ const Patient = ({
     valueCity,
     valueState,
     valueZip,
+    valueContactFirstname,
+    valueContactLastname,
+    valueContactPhone,
+    valueContactRelationship,
     valueAllergies,
     valueInsurance,
     valueConditions,
     valueMedications,
     onChangePatientCode,
-    onChangeFirstName,
-    onChangeLastName,
+    onChangeFirstname,
+    onChangeLastname,
     onChangeDob,
     onChangeGender,
     onChangeSocial,
@@ -59,7 +63,8 @@ const Patient = ({
     valueBody,
     valueDateCreated,
     onChangeBody,
-    onChangeDateCreated
+    onChangeDateCreated,
+    onButtonClick
      }) => { 
 
     const { id } = useParams();
@@ -92,7 +97,7 @@ const Patient = ({
             try {
                 const response = await axios.get(`${PATIENT_URL}/${id}`);
                 setPatient(response.data);
-                // console.log(patient)
+                console.log(response.data);
                 // console.log(patient.conditions)
                 // setLoading(false);
             } catch (error) {
@@ -171,6 +176,10 @@ const Patient = ({
                 city: patient.city,
                 state: patient.state,
                 zip: patient.zip,
+                contactFirstname: patient.contactFirstname,
+                contactLastname: patient.contactLastname,
+                contactPhone: patient.contactPhone,
+                contactRelationship: patient.contactRelationship,
                 allergies: patient.allergies,
                 insurance: patient.insurance,
                 conditions: patient.conditions,
@@ -193,12 +202,17 @@ const Patient = ({
             });
             console.log(newNote.data);
             console.log("Pia note", newNote.data)
+            // reload the page
+            // window.location('/patients/' + id);
             // navigate(`/patient/${id}`);
             
+            // getNotes();
 
             setBody('');
             setDateCreated('');
             toggleNoteModal();
+
+            window.location.reload();
         } catch (error) {
             console.log(error);
             setError(error.response.data);
@@ -213,9 +227,7 @@ const Patient = ({
 
         try {
             const deleteNote = await axios.delete(`${NOTES_URL}/${noteId}`);
-                console.log(deleteNote.data)
-                // reload the page affter deleting note
-                // navigate(`/patient/${id}`);
+                console.log(deleteNote.data);
                 window.location.href = `/patient/${id}`;
 
         } catch( error) {
@@ -339,6 +351,10 @@ const Patient = ({
                 valueCity={patient.city}
                 valueState={patient.state}
                 valueZip={patient.zip}
+                valueContactFirstname={patient.contactFirstname}
+                valueContactLastname={patient.contactLastname}
+                valueContactPhone={patient.contactPhone}
+                valueContactRelationship={patient.contactRelationship}
                 valueAllergies={patient.allergies}
                 valueInsurance={patient.insurance}
                 valueConditions={patient.conditions}
@@ -356,6 +372,10 @@ const Patient = ({
                 onChangeCity={(e) => setPatient({...patient, city: e.target.value})}
                 onChangeState={(e) => setPatient({...patient, state: e.target.value})}
                 onChangeZip={(e) => setPatient({...patient, zip: e.target.value})}
+                onChangeContactFirstname={(e) => setPatient({...patient, contactFirstname: e.target.value})}
+                onChangeContactLastname={(e) => setPatient({...patient, contactLastname: e.target.value})}
+                onChangeContactPhone={(e) => setPatient({...patient, contactPhone: e.target.value})}
+                onChangeContactRelationship={(e) => setPatient({...patient, contactRelationship: e.target.value})}
                 onChangeAllergies={(e) => setPatient({...patient, allergies: e.target.value})}
                 onChangeInsurance={(e) => setPatient({...patient, insurance: e.target.value})}
                 onChangeConditions={(e) => setPatient({...patient, conditions: e.target.value})}
@@ -426,6 +446,7 @@ const Patient = ({
                 onChangeBody={(e) => setBody(e.target.value)}
                 onChangeDateCreated={(e) => setDateCreated(e.target.value)}
                 onSubmitNote={handleNote}
+                onButtonClick={toggleNoteModal}
             />
 
         </div>

@@ -19,6 +19,10 @@ const PatientModal = ({
     valueCity,
     valueState,
     valueZip,
+    valueContactFirstname,
+    valueContactLastname,
+    valueContactPhone,
+    valueContactRelationship,
     valueAllergies,
     valueInsurance,
     valueConditions,
@@ -37,6 +41,10 @@ const PatientModal = ({
     onChangeCity,
     onChangeState,
     onChangeZip,
+    onChangeContactFirstname,
+    onChangeContactLastname,
+    onChangeContactPhone,
+    onChangeContactRelationship,
     onChangeAllergies,
     onChangeInsurance,
     onChangeConditions,
@@ -101,6 +109,7 @@ const PatientModal = ({
                                 className='form-select'
                                 onChange={onChangeGender}
                             >
+                                <option value="">Select</option>
                                 <option value='Male'>Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Non-Binary">Non Binary</option>
@@ -126,15 +135,16 @@ const PatientModal = ({
                                 id='bloodType'
                                 className='form-select'
                                 onChange={onChangeBloodType}
-                                >
-                                    <option value='A+'>A+</option>
-                                    <option value='A-'>A-</option>
-                                    <option value='B+'>B+</option>
-                                    <option value='B-'>B-</option>
-                                    <option value='O+'>O+</option>
-                                    <option value='O-'>O-</option>
-                                    <option value='AB+'>AB+</option>
-                                    <option value='AB-'>AB-</option>
+                            >
+                                <option value="">Select</option>
+                                <option value='A+'>A+</option>
+                                <option value='A-'>A-</option>
+                                <option value='B+'>B+</option>
+                                <option value='B-'>B-</option>
+                                <option value='O+'>O+</option>
+                                <option value='O-'>O-</option>
+                                <option value='AB+'>AB+</option>
+                                <option value='AB-'>AB-</option>
                             </select>
                         </div>
                         <div className='form-group p-2'>
@@ -144,24 +154,16 @@ const PatientModal = ({
                                     id='ethnicity'
                                     className='form-select'
                                     onChange={onChangeEthnicity}
-                                    // onFocus={() => setEthnicity(true)}
-                                    // onBlur={() => setEthnicity(false)}
-                                >
-                                    <option value='Asian or Pacific Islander'>Asian or Pacific Islander</option>
-                                    <option value='Black of African American'>Black of African American</option>
-                                    <option value='Hispanic or Latino'>Hispanic or Latino</option>
-                                    <option value='Native American or Alaskan Native'>Native American or Alaskan Native</option>
-                                    <option value='White or Caucasian'>White or Caucasian</option>
-                                    <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
-                                    <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
-                                </select>
-                            {/* <input
-                                type="text"
-                                className='form-control'
-                                id='ethnicity'
-                                value={valueEthnicity}
-                                onChange={onChangeEthnicity}
-                            /> */}
+                            >
+                                <option value="">Select</option>
+                                <option value='Asian or Pacific Islander'>Asian or Pacific Islander</option>
+                                <option value='Black of African American'>Black of African American</option>
+                                <option value='Hispanic or Latino'>Hispanic or Latino</option>
+                                <option value='Native American or Alaskan Native'>Native American or Alaskan Native</option>
+                                <option value='White or Caucasian'>White or Caucasian</option>
+                                <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
+                                <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
+                            </select>
                         </div>
                         <div className='form-group p-2'>
                             <label htmlFor="email">Email</label>
@@ -222,6 +224,46 @@ const PatientModal = ({
                                 value={valueZip}
                                 onChange={onChangeZip}
                             />  
+                        </div>
+                        <div className='form-group p-2'>
+                            <label htmlFor="contactFirstname">First Name</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='contactFirstname'
+                                value={valueContactFirstname}
+                                onChange={onChangeContactFirstname}
+                            />
+                        </div>
+                        <div className='form-group p-2'>
+                            <label htmlFor="contactLastName">Last Name</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='contactLastName'
+                                value={valueContactLastname}
+                                onChange={onChangeContactLastname}
+                            />
+                        </div>
+                        <div className='form-group p-2'>
+                            <label htmlFor="contactPhone">Phone</label>
+                            <input  
+                                type="text"
+                                className='form-control'
+                                id='contactPhone'
+                                value={valueContactPhone}
+                                onChange={onChangeContactPhone}
+                            />
+                        </div>
+                        <div className='form-group p-2'>
+                            <label htmlFor='contactRelationship'>Relationship</label>
+                            <input
+                                type="text"
+                                className='form-control'
+                                id='contactRelationship'
+                                value={valueContactRelationship}
+                                onChange={onChangeContactRelationship}
+                            />
                         </div>
                         <div className='form-group p-2'>
                             <label htmlFor="allergies">Allergies</label>

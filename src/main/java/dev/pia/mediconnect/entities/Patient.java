@@ -70,6 +70,18 @@ public class Patient {
     @Column(name = "zip_code", length = 5)
     private String zip;
 
+    @Column(name = "emergency_contact_firstname", length = 25)
+    private String contactFirstname;
+
+    @Column(name = "emergency_contact_lastname", length = 25)
+    private String contactLastname;
+
+    @Column(name = "emergency_contact_phone", length = 15)
+    private String contactPhone;
+
+    @Column(name = "emergency_contact_relationship", length = 25)
+    private String contactRelationship;
+
     @Column(name = "insurance_provider", length = 500)
     private String insurance;
 
@@ -150,10 +162,22 @@ public class Patient {
         if (patientDto.getZip() != null) {
             this.zip = patientDto.getZip();
         }
+
+        if (patientDto.getContactFirstname() != null) {
+            this.contactFirstname = patientDto.getContactFirstname();
+        }
+        if (patientDto.getContactLastname() != null) {
+            this.contactLastname = patientDto.getContactLastname();
+        }
+        if (patientDto.getContactPhone() != null) {
+            this.contactPhone = patientDto.getContactPhone();
+        }
+        if (patientDto.getContactRelationship() != null) {
+            this.contactRelationship = patientDto.getContactRelationship();
+        }
         if (patientDto.getInsurance() != null) {
             this.insurance = patientDto.getInsurance();
         }
-
         if (patientDto.getAllergies() != null) {
             this.allergies = patientDto.getAllergies();
         }
@@ -174,7 +198,8 @@ public class Patient {
         return "Patient [id=" + id + ", patientCode=" + patientCode + ", +  firstName=" + firstName
                 + ", lastName=" + lastName + ", dob=" + dob + ", age=" + age + ", email=" + email
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
-                + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions
+                + ", contactFirstname=" + contactFirstname + ", contactLastname=" + contactLastname + ", contactPhone="
+                + contactPhone + ", contactRelationship=" + contactRelationship + ", insurance=" + insurance + ",       allergies=" + allergies + ", conditions=" + conditions
                 + ", medications=" + medications + "]";
     }
 

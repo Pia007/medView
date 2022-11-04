@@ -200,14 +200,40 @@ h4 {
   margin: 0;
   padding: 0;
 }
-
-
+.pat-text {
+  color: var(--opt-darkblue);
+  /* font-weight: 600; */
+  /* font-size: 1.25rem; */
+}
+.alert-icon {
+  float: right;
+  width: 3.5rem;
+  height: 4rem;
+  color: var(--opt-alert);
+}
+.alert-detail {
+    color: var(--opt-alert);
+    font-weight: 600;
+    font-size: 14px;
+}
 .trash-btn {
   font-size: 1.5rem;
   cursor: pointer;
   border: none;
   background: none;
   outline: none;
+}
+.trash-btn:hover,
+.trash-btn:focus,
+.trash-btn:active,
+.file-button:hover,
+.file-button:focus,
+.file-button:active,
+.edit-conditions-btn:hover,
+.edit-conditions-btn:focus,
+.edit-conditions-btn:active {
+  /* font-size: 2.5rem; */
+  transform: scale(1.2);
 }
 
 th {
@@ -258,6 +284,22 @@ p {
 .form-btn:active {
   background-image: linear-gradient(#3f658f,var(--opt-darkblue) 50%,#7191b3);
   border: 1px solid #36587c;
+  color: white;
+  opacity: 0.95;
+}
+
+.cancel-btn {
+  color: white;
+  border-radius: 25px;
+  background-image: linear-gradient(#de8d8d,var(--opt-alert) 50%,#e35353);
+  border: 1px solid #ff5f5f;
+}
+
+.cancel-btn:hover,
+.cancel-btn:focus,
+.cancel-btn:active {
+  background-image: linear-gradient(#ff5f5f,var(--opt-alert) 50%,#f76a6a);
+  border: 1px solid #ff5f5f;
   color: white;
   opacity: 0.95;
 }

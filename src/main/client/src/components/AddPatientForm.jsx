@@ -47,6 +47,18 @@ const STATE_REGEX = /^[A-z- ]{2,}$/;
 // zip regex - must be at least 5 characters long, can contain numbers, hyphens or spaces
 const ZIP_REGEX = /^[0-9- ]{5,}$/;
 
+// contact first name regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
+const CONTACT_FIRSTNAME_REGEX = /^[A-z- ]{2,}$/;
+
+// contact last name regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
+const CONTACT_LASTNAME_REGEX = /^[A-z- ]{2,}$/;
+
+// contact phone regex - must be at least 10 characters long, can contain numbers, hyphens or spaces
+const CONTACT_PHONE_REGEX = /^[0-9- ]{10,}$/;
+
+// contact relationship regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
+const CONTACT_RELATIONSHIP_REGEX = /^[A-z- ]{2,}$/;
+
 // allergies regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
 const ALLERGIES_REGEX = /^[A-z-, ]{2,}$/;
 
@@ -61,7 +73,6 @@ const CONDITIONS_REGEX = /^[A-z-, ]{2,}$/;
 
 // medications regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
 const MEDICATIONS_REGEX = /^[A-z-, ]{2,}$/;
-
 
 
 const AddPatientForm = () => {
@@ -116,6 +127,22 @@ const AddPatientForm = () => {
     const [validZip, setValidZip] = useState(false);
     const [zipFocus, setZipFocus] = useState('');
 
+    const [contactFirstname, setContactFirstname] = useState('');
+    const [validContactFirstname, setValidContactFirstname] = useState(false);
+    const [contactFirstNameFocus, setContactFirstNameFocus] = useState('');
+
+    const [contactLastname, setContactLastname] = useState('');
+    const [validContactLastname, setValidContactLastname] = useState(false);
+    const [contactLastNameFocus, setContactLastNameFocus] = useState('');
+
+    const [contactPhone, setContactPhone] = useState('');
+    const [validContactPhone, setValidContactPhone] = useState(false);
+    const [contactPhoneFocus, setContactPhoneFocus] = useState('');
+
+    const [contactRelationship, setContactRelationship] = useState('');
+    const [validContactRelationship, setValidContactRelationship] = useState(false);
+    const [contactRelationshipFocus, setContactRelationshipFocus] = useState('');
+
     const [allergies, setAllergies] = useState('');
     const [validAllergies, setValidAllergies] = useState(false);
     const [allergiesFocus, setAllergiesFocus] = useState('');
@@ -126,16 +153,12 @@ const AddPatientForm = () => {
 
     const [gender, setGender] = useState('');
     const [validGender, setValidGender] = useState(false);
-    const [genderFocus, setGenderFocus] = useState('');
 
     const [ethnicity, setEthnicity] = useState('');
     const [validEthnicity, setValidEthnicity] = useState(false);
-    const [ethnicityFocus, setEthnicityFocus] = useState('');
 
     const [bloodType, setBloodType] = useState('');
     const [validBloodType, setValidBloodType] = useState(false);
-    const [bloodTypeFocus, setBloodTypeFocus] = useState('');
-
 
     const [conditions, setConditions] = useState('');
     const [validConditions, setValidConditions] = useState(false);
@@ -167,6 +190,10 @@ const AddPatientForm = () => {
         setValidCity(CITY_REGEX.test(city));
         setValidState(STATE_REGEX.test(state));
         setValidZip(ZIP_REGEX.test(zip));
+        setValidContactFirstname(CONTACT_FIRSTNAME_REGEX.test(contactFirstname));
+        setValidContactLastname(CONTACT_LASTNAME_REGEX.test(contactLastname));
+        setValidContactPhone(CONTACT_PHONE_REGEX.test(contactPhone));
+        setValidContactRelationship(CONTACT_RELATIONSHIP_REGEX.test(contactRelationship));
         setValidAllergies(ALLERGIES_REGEX.test(allergies));
         setValidBloodType(BLOOD_TYPE_REGEX.test(bloodType));
         setValidInsurance(INSURANCE_REGEX.test(insurance));
@@ -186,6 +213,10 @@ const AddPatientForm = () => {
         city, 
         state,     
         zip, 
+        contactFirstname,
+        contactLastname,
+        contactPhone,
+        contactRelationship,
         allergies,
         bloodType,
         insurance, 
@@ -208,6 +239,10 @@ const AddPatientForm = () => {
         city, 
         state,     
         zip, 
+        contactFirstname,
+        contactLastname,
+        contactPhone,
+        contactRelationship,
         allergies,
         bloodType,
         insurance, 
@@ -234,6 +269,10 @@ const AddPatientForm = () => {
                 city,
                 state,
                 zip,
+                contactFirstname,
+                contactLastname,
+                contactPhone,
+                contactRelationship,
                 allergies,
                 bloodType,
                 insurance,
@@ -257,6 +296,10 @@ const AddPatientForm = () => {
             setCity('');
             setState('');
             setZip('');
+            setContactFirstname('');
+            setContactLastname('');
+            setContactPhone('');
+            setContactRelationship('');
             setAllergies('');
             setBloodType('');
             setInsurance('');
@@ -396,9 +439,8 @@ const AddPatientForm = () => {
                                     id='gender'
                                     className='form-select'
                                     onChange={(e) => setGender(e.target.value)}
-                                    onFocus={() => setGenderFocus(true)}
-                                    onBlur={() => setGenderFocus(false)}
                                     >
+                                        <option value=''>Select</option>
                                         <option value='Male'>Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Non-Binary">Non Binary</option>
@@ -420,6 +462,7 @@ const AddPatientForm = () => {
                                     onFocus={() => setEthnicity(true)}
                                     onBlur={() => setEthnicity(false)}
                                 >
+                                    <option value=''>Select</option>
                                     <option value='Asian or Pacific Islander'>Asian or Pacific Islander</option>
                                     <option value='Black of African American'>Black of African American</option>
                                     <option value='Hispanic or Latino'>Hispanic or Latino</option>
@@ -428,24 +471,6 @@ const AddPatientForm = () => {
                                     <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
                                     <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
                                 </select>
-                                {/* <input
-                                    type='text'
-                                    className='form-control'
-                                    id='ethnicity'
-                                    required
-                                    autoComplete='off'
-                                    value={ethnicity}
-                                    aria-invalid={validEthnicity ? 'false' : 'true'}
-                                    aria-describedby='ethnicitynote'
-                                    onChange={(e) => setEthnicity(e.target.value)}
-                                    onFocus={() => setEthnicityFocus(true)}
-                                    onBlur={() => setEthnicityFocus(false)}
-                                />
-                                <p id='ethnicitynote' className={ethnicityFocus && !validEthnicity ? 'instructions' : 'offscreen'}>
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
-                                    Letters, spaces, and hyphens allowed.
-                                </p> */}
                             </Col>
                             <Col md={6} className="form-group  my-2">
                                 <label htmlFor='bloodType'>
@@ -458,9 +483,8 @@ const AddPatientForm = () => {
                                     id='bloodType'
                                     className='form-select'
                                     onChange={(e) => setBloodType(e.target.value)}
-                                    onFocus={() => setBloodTypeFocus(true)}
-                                    onBlur={() => setBloodTypeFocus(false)}
                                 >
+                                    <option value=''>Select</option>
                                     <option value='A+'>A+</option>
                                     <option value='A-'>A-</option>
                                     <option value='B+'>B+</option>
@@ -646,6 +670,108 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be a valid zip code.<br />
                                     5 digits, no spaces or punctuation.
+                                </p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='contactFirstname'>
+                                    First Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validContactFirstname ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validContactFirstname || !contactFirstname ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='contactFirstname'
+                                    required
+                                    autoComplete='off'
+                                    value={contactFirstname}
+                                    aria-invalid={validContactFirstname ? 'false' : 'true'}
+                                    aria-describedby='cfnote'
+                                    onChange={(e) => setContactFirstname(e.target.value)}
+                                    onFocus={() => setContactFirstNameFocus(true)}
+                                    onBlur={() => setContactFirstNameFocus(false)}
+                                />
+                                <p id='cfnote' className={contactFirstNameFocus && !validContactFirstname ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='contactLastname'>
+                                    Last Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validContactLastname ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validContactLastname || !contactLastname ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='contactLastname'
+                                    required
+                                    autoComplete='off'
+                                    value={contactLastname}
+                                    aria-invalid={validContactLastname ? 'false' : 'true'}
+                                    aria-describedby='clnote'
+                                    onChange={(e) => setContactLastname(e.target.value)}
+                                    onFocus={() => setContactLastNameFocus(true)}
+                                    onBlur={() => setContactLastNameFocus(false)}
+                                />
+                                <p id='clnote' className={contactLastNameFocus && !validContactLastname ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='contactPhone'>
+                                    Phone Number:
+                                    <FontAwesomeIcon icon={faCheck} className={validContactPhone ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validContactPhone || !contactPhone ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='contactPhone'
+                                    required
+                                    autoComplete='off'
+                                    value={contactPhone}
+                                    aria-invalid={validContactPhone ? 'false' : 'true'}
+                                    aria-describedby='cpnote'
+                                    onChange={(e) => setContactPhone(e.target.value)}
+                                    onFocus={() => setContactPhoneFocus(true)}
+                                    onBlur={() => setContactPhoneFocus(false)}
+                                />
+                                <p id='cpnote' className={contactPhoneFocus && !validContactPhone ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be a valid phone number.<br />
+                                    15 digits, no spaces or punctuation.
+                                </p>
+                            </Col>
+                            <Col md={6} className="form-group my-2">
+                                <label htmlFor='contactRelationship'>
+                                    Relationship:
+                                    <FontAwesomeIcon icon={faCheck} className={validContactRelationship ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validContactRelationship || !contactRelationship ? 'hide' : 'invalid'} />
+                                </label>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    id='contactRelationship'
+                                    required
+                                    autoComplete='off'
+                                    value={contactRelationship}
+                                    aria-invalid={validContactRelationship ? 'false' : 'true'}
+                                    aria-describedby='crnote'
+                                    onChange={(e) => setContactRelationship(e.target.value)}
+                                    onFocus={() => setContactRelationshipFocus(true)}
+                                    onBlur={() => setContactRelationshipFocus(false)}
+                                />
+                                <p id='crnote' className={contactRelationshipFocus && !validContactRelationship ? 'instructions' : 'offscreen'}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                    Must be at least 2 characters.<br />
+                                    Letters, spaces, and hyphens allowed.
                                 </p>
                             </Col>
                         </Row>

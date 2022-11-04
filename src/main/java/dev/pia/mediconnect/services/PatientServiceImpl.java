@@ -53,24 +53,6 @@ public class PatientServiceImpl implements PatientService {
                 patientRepository.saveAndFlush(patient);
                 response.add("Patient added");
                 return response;
-
-                // patient.setPatientCode(patientDto.getPatientCode());
-                // patient.setFirstName(patientDto.getFirstName());
-                // patient.setLastName(patientDto.getLastName());
-                // patient.setAddress(patientDto.getAddress());
-                // patient.setCity(patientDto.getCity());
-                // patient.setState(patientDto.getState());
-                // patient.setZip(patientDto.getZip());
-                // patient.setPhone(patientDto.getPhone());
-                // patient.setEmail(patientDto.getEmail());
-                // patient.setConditions(patientDto.getConditions());
-                // patient.setAllergies(patientDto.getAllergies());
-                // patient.setInsurance(patientDto.getInsurance());
-                // patient.setMedications(patientDto.getMedications());
-                // patient.setDob(patientDto.getDob());
-                // patient.setProvider(provider);
-                // patientRepository.saveAndFlush(patient);
-                // response.add("Patient added successfully");
             }
         } else {
             response.add("Invalid provider");
@@ -130,6 +112,10 @@ public class PatientServiceImpl implements PatientService {
             patient.setSocialSecurity(patientDto.getSocialSecurity());
             patient.setBloodType(patientDto.getBloodType());
             patient.setPatientCode(patientDto.getPatientCode());
+            patient.setContactFirstname(patientDto.getContactFirstname());
+            patient.setContactLastname(patientDto.getContactLastname());
+            patient.setContactPhone(patientDto.getContactPhone());
+            patient.setContactRelationship(patientDto.getContactRelationship());
             patientRepository.saveAndFlush(patient);
             response.add("Patient updated successfully");
         } else {
@@ -137,32 +123,7 @@ public class PatientServiceImpl implements PatientService {
         }
         return response;
     }
-    // public List<String> updatePatient(PatientDto patientDto) {
-    //     List<String> response = new ArrayList<>();
-    //     Optional<Patient> optionalPatient = patientRepository.findById(patientDto.getId());
-    //     if (optionalPatient.isPresent()) {
-    //         Patient patient = optionalPatient.get();
-    //         patient.setPatientCode(patientDto.getPatientCode());
-    //         patient.setFirstName(patientDto.getFirstName());
-    //         patient.setLastName(patientDto.getLastName());
-    //         patient.setAddress(patientDto.getAddress());
-    //         patient.setCity(patientDto.getCity());
-    //         patient.setState(patientDto.getState());
-    //         patient.setZip(patientDto.getZip());
-    //         patient.setPhone(patientDto.getPhone());
-    //         patient.setEmail(patientDto.getEmail());
-    //         patient.setConditions(patientDto.getConditions());
-    //         patient.setAllergies(patientDto.getAllergies());
-    //         patient.setInsurance(patientDto.getInsurance());
-    //         patient.setMedications(patientDto.getMedications());
-    //         patient.setDob(patientDto.getDob());
-    //         patientRepository.saveAndFlush(patient);
-    //         response.add("Patient updated successfully");
-    //     } else {
-    //         response.add("Patient not found");
-    //     }
-    //     return response;
-    // }
+    
 
     /* update patient first name */
     @Transactional

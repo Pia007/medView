@@ -28,6 +28,10 @@ public class PatientDto implements Serializable {
     private String city;
     private String state;
     private String zip;
+    private String contactFirstname;
+    private String contactLastname;
+    private String contactPhone;
+    private String contactRelationship;
     private String allergies;
     private String insurance;
     private String bloodType;
@@ -84,6 +88,18 @@ public class PatientDto implements Serializable {
         }
         if (patient.getZip() != null) {
             this.zip = patient.getZip();
+        }
+        if (patient.getContactFirstname() != null) {
+            this.contactFirstname = patient.getContactFirstname();
+        }
+        if (patient.getContactLastname() != null) {
+            this.contactLastname = patient.getContactLastname();
+        }
+        if (patient.getContactPhone() != null) {
+            this.contactPhone = patient.getContactPhone();
+        }
+        if (patient.getContactRelationship() != null) {
+            this.contactRelationship = patient.getContactRelationship();
         }
         if (patient.getInsurance() != null) {
             this.insurance = patient.getInsurance();
