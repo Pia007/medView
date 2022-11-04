@@ -39,6 +39,8 @@ public class PatientNoteServiceImpl implements PatientNoteService {
             patientNote.setDateCreated(patientNoteDto.getDateCreated());
             patientNoteRepository.saveAndFlush(patientNote);
             response.add("Patient note added successfully");
+            response.add(patientNote.toString());
+            
         });
         return response;
     }

@@ -12,4 +12,6 @@ public interface PatientNoteRepository extends JpaRepository<PatientNote, Long> 
 
     List<PatientNote> findAllByPatientEquals(Patient patient);
 
+    // find note date
+
 }

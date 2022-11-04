@@ -35,13 +35,13 @@ public class PatientNoteDto implements Serializable {
     }
 
     /* set dateCreate */
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+    // public void setDateCreated(LocalDate dateCreated) {
+    //     this.dateCreated = dateCreated;
+    // }
 
-    /* get dateCreated */
-    public LocalDate getDateCreated() {
-        return this.dateCreated;
-    }
+    // /* get dateCreated */
+    // public LocalDate getDateCreated() {
+    //     return this.dateCreated;
+    // }
     
 }

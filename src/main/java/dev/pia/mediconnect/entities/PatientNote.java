@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 // import com.fasterxml.jackson.annotation.*;
 
 import dev.pia.mediconnect.dtos.*;
@@ -26,6 +28,7 @@ public class PatientNote {
     private String body;
 
     @Column(name = "date_created")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateCreated;
 
     /* relationship to patient */
@@ -54,7 +57,7 @@ public class PatientNote {
 
     /* set getDate */
     public LocalDate getDateCreated() {
-        return LocalDate.now();
+        return dateCreated;
     }
 
 }

@@ -42,10 +42,12 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const login = await axios.post(LOGIN_URL, {
-                username,
-                password,
-            });
+            const login = await axios.post(LOGIN_URL, 
+                {
+                    username,
+                    password,
+                }
+            );
 
             setProviderId(login.data[0]);
             

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, ModalBody, Button } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 
-const ProviderModal = ({
+const ProviderModal = (args, {
     onSubmit,
     isOpen, 
     toggle, 
@@ -17,7 +17,7 @@ const ProviderModal = ({
 
     return (
         <>
-            <Modal isOpen={isOpen} toggle={toggle} centered>
+            <Modal isOpen={isOpen} toggle={toggle} {...args}>
                 <ModalBody>
                     <h2 className='px-2'>Provider Update</h2> 
                     <form action="" onSubmit={onSubmit}>
@@ -62,7 +62,7 @@ const ProviderModal = ({
                             />
                         </div>
                         <div className='d-flex justify-content-end p-2'>
-                            <Button className='form-btn' type='submit'>Submit</Button>
+                            <button className='p-2 form-btn' type='submit'>Submit</button>
                         </div>
                     </form>
                 </ModalBody>

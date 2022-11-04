@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { faCheck, faBars, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button } from 'reactstrap';
 import menu from '../images/menu.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Header = () => {
+    const navigate = useNavigate();
 
     const [navigation, setNavigation] = useState(false);
     const openNav = () => setNavigation(!navigation);
+
+    // erase the token from local storage and redirect to login page
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
+
 
     const MenuItem = ({ to, linkName }) => {
         return (
@@ -42,11 +50,17 @@ const Header = () => {
                     <Nav navbar className='ml-auto text-center text-light '>
                         <MenuItem to='/' linkName='Home' />
                     
+                        {/* hide register and login button when user is logged in  */}
+                        
                         <MenuItem to='/login' linkName='Login' />
-                    
-                        <MenuItem to='/register' linkName='Register' />
 
-                        {/* <MenuItem to='/provider' linkName='Provider' /> */}
+                        <MenuItem to='/register' linkName='Register' /> 
+
+                        {/* hide logout if user is not logged in */}
+                        
+                        <button className='nav-link logout' onClick={logout}>Logout </button> 
+
+                        
                     </Nav>
                     
                 </Collapse>

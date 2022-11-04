@@ -1,22 +1,22 @@
 import React, {useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button, Modal, ModalBody } from 'reactstrap';
+import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
+import NoteModal from '../components/NoteModal';
 import edit from '../images/edit.svg';
 import trash from '../images/delete.svg';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
 
 const PATIENT_URL = '/patients';
-const NOTES_URL = '/notes';
-// const ADD_NOTE_URL = '/notes';
-
+const NOTES_URL = '/notes';;
 
 const Patient = ({
     singlePatient,
     handleClick,
     patCode,
+    valuePatientCode,
     valueFirstName, 
     valueLastName,
     valueDob,
@@ -34,6 +34,7 @@ const Patient = ({
     valueInsurance,
     valueConditions,
     valueMedications,
+    onChangePatientCode,
     onChangeFirstName,
     onChangeLastName,
     onChangeDob,
@@ -52,15 +53,14 @@ const Patient = ({
     onChangeConditions,
     onChangeMedications,
     onSubmit,
-    closeModal,
-    patientNote,
+    isOpen,
+    toggleNote,
     onSubmitNote,
     valueBody,
     valueDateCreated,
     onChangeBody,
-    onFocusBody,
-    onBlurBody,
-    onChangeDateCreated }) => { 
+    onChangeDateCreated
+     }) => { 
 
     const { id } = useParams();
 
@@ -125,6 +125,7 @@ const Patient = ({
                 // create a new array of note id
                 const noteIds = notes.map((note) => note.id);
                 // console.log(noteIds);
+                console.log(note.dateCreated)
 
                 // get the id of each note
                 noteIds.forEach (noteId => {
@@ -156,6 +157,7 @@ const Patient = ({
 
         try {
             const response = await axios.put(`${PATIENT_URL}/${id}`, {
+                patientCode: patient.patientCode,
                 firstName: patient.firstName,
                 lastName: patient.lastName,
                 dob: patient.dob,
@@ -174,7 +176,7 @@ const Patient = ({
                 conditions: patient.conditions,
                 medications: patient.medications
             });
-            // console.log(response);
+            console.log(response);
             toggleModal();
         } catch (error) {
             setError(error);
@@ -187,15 +189,16 @@ const Patient = ({
         try {
             const newNote = await axios.post(`${NOTES_URL}/patient/${id}`, {
                 body,
-                // automatically set dateCreated 
                 dateCreated
             });
             console.log(newNote.data);
             console.log("Pia note", newNote.data)
-            navigate(`/patient/${id}`);
+            // navigate(`/patient/${id}`);
+            
 
             setBody('');
             setDateCreated('');
+            toggleNoteModal();
         } catch (error) {
             console.log(error);
             setError(error.response.data);
@@ -211,8 +214,9 @@ const Patient = ({
         try {
             const deleteNote = await axios.delete(`${NOTES_URL}/${noteId}`);
                 console.log(deleteNote.data)
+                // reload the page affter deleting note
+                // navigate(`/patient/${id}`);
                 window.location.href = `/patient/${id}`;
-
 
         } catch( error) {
             console.log(error)
@@ -229,11 +233,12 @@ const Patient = ({
                     <Card key={note.id} className='d-flex flex-row justify-content-between'>
                         <div>
                             <p className='m-0 detail'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
+                            {/* <p className='m-0 detail'><strong>Date:</strong> <em>11/01/2022</em></p> */}
                             <p className='mb-1 detail'><strong>Text:</strong> {note.body}</p>
                             <p className='mb-1 detail'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
                         </div>
                         <div className='d-flex align-content-around'>
-                            <button className='trash-btn' onClick={() => handleDelete(note.id)}><img src={trash} alt='delete' /></button>
+                            <button type='submit' className='trash-btn' onClick={() => handleDelete(note.id)}><img src={trash} alt='delete' /></button>
                         </div>
                     </Card>
                 )
@@ -320,6 +325,7 @@ const Patient = ({
                 isOpen={modal}
                 toggle={() => toggleModal()}
                 patCode={patient.patientCode}
+                valuePatientCode={patient.patientCode}
                 valueFirstName={patient.firstName}
                 valueLastName={patient.lastName}
                 valueDob={patient.dob}
@@ -355,8 +361,9 @@ const Patient = ({
                 onChangeConditions={(e) => setPatient({...patient, conditions: e.target.value})}
                 onChangeMedications={(e) => setPatient({...patient, medications: e.target.value})}
                 onSubmit={handleSubmit}
-                closeModal={() => toggleModal()}
+                // closeModal={() => toggleModal()}
             />
+
             <Row  className='d-flex p-2'>
                 <ButtonToolbar>
                     <ButtonGroup className="m-auto ">
@@ -386,7 +393,10 @@ const Patient = ({
                         <button 
                             type="button" 
                             className='btn form-btn button-grp'
-                            onClick={() => {setCategory('notes')}}
+                            onClick={() => {
+                                setCategory('notes') 
+                            }}
+
                         >
                             Notes
                         </button>
@@ -408,40 +418,16 @@ const Patient = ({
                 category === 'notes' ? displayNotes() : null
             }
 
-            <Modal isOpen={modalNote} toggle={toggleNoteModal} centered>
-                <ModalBody>
-                    <h2 className='fw-bold text-center detail'>Add a note</h2>
-                    <form action="" onSubmit={handleNote}>
-                    <div className='form-group my-2'>
-                        <label htmlFor="body">Body</label>
-                        <textarea
-                            type="text"
-                            rows={5}
-                            className='form-control'
-                            id='body'
-                            required
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}
-                        />
-                    </div>
-                    <div className='form-group my-2'>
-                        <label htmlFor="dateCreated">Date Created</label>
-                        <input
-                            type="date"
-                            className='form-control'
-                            id='dateCreated'
-                            // set date to current date
-                            value={new Date().toISOString().slice(0, 10)}
-                            
-                            onChange={(e) => setDateCreated(e.target.value)}
-                        />
-                    </div>
-                    <div className='d-flex justify-content-around'>
-                        <Button className='mt-3 mr-0 form-btn'>Submit</Button>
-                    </div>
-                </form>
-                </ModalBody>
-            </Modal>
+            <NoteModal
+                isOpen={modalNote}
+                toggle={toggleNoteModal}
+                valueBody={body}
+                valueDateCreated={dateCreated.split('/').reverse().join('-')}
+                onChangeBody={(e) => setBody(e.target.value)}
+                onChangeDateCreated={(e) => setDateCreated(e.target.value)}
+                onSubmitNote={handleNote}
+            />
+
         </div>
     );
 

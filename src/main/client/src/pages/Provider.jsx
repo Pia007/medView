@@ -1,15 +1,18 @@
 import React, { useState, useEffect} from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import files from '../images/files.svg';
 import { Row, Col, Table, Card, Button} from 'reactstrap';
 import { RenderProvider } from '../components/Renders';
+import SearchBar from '../components/SearchBar';
 import ProviderModal from '../components/ProviderModal';
+import PatientList from '../components/PatientList';
 import axios from '../api/AxiosApi';
 
 const PROVIDER_URL = '/providers';
 const PATIENT_URL = '/patients';
 
 const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onChangeFirstName, onChangeLastName, onChangeSpecialty, patId, onClick}) => {
+    
     const { id } = useParams();
 
     console.log("provider id: " + id);

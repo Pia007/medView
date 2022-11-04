@@ -219,9 +219,6 @@ const AddPatientForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // console.log(patientCode, firstName, lastName, dob, email, phone, address, city, state, zip, allergies, insurance, conditions, medications);
-
-
         try {
                 const newPatient = await axios.post(`${ADD_PATIENT_URL}/${id}`, {
                 patientCode,
@@ -394,24 +391,20 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faCheck} className={validGender ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validGender || !gender ? 'hide' : 'invalid'} />
                                 </label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
+                                <select
+                                    name='gender'
                                     id='gender'
-                                    required
-                                    autoComplete='off'
-                                    value={gender}
-                                    aria-invalid={validGender ? 'false' : 'true'}
-                                    aria-describedby='gendernote'
+                                    className='form-select'
                                     onChange={(e) => setGender(e.target.value)}
                                     onFocus={() => setGenderFocus(true)}
                                     onBlur={() => setGenderFocus(false)}
-                                />
-                                <p id='gendernote' className={genderFocus && !validGender ? 'instructions' : 'offscreen'}>
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 1 characters.<br />
-                                    Letters, spaces, and hyphens allowed.
-                                </p>
+                                    >
+                                        <option value='Male'>Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Non-Binary">Non Binary</option>
+                                        <option value="Prefer not to answer">Prefer not to answer</option>
+                                        <option value="Not listed here">Not listed here</option>
+                                </select>
                             </Col>
                             <Col md={6} className="form-group  my-2">
                                 <label htmlFor='ethnicity'>
@@ -419,7 +412,23 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faCheck} className={validEthnicity ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validEthnicity || !ethnicity ? 'hide' : 'invalid'} />
                                 </label>
-                                <input
+                                <select
+                                    name='ethnicity'
+                                    id='ethnicity'
+                                    className='form-select'
+                                    onChange={(e) => setEthnicity(e.target.value)}
+                                    onFocus={() => setEthnicity(true)}
+                                    onBlur={() => setEthnicity(false)}
+                                >
+                                    <option value='Asian or Pacific Islander'>Asian or Pacific Islander</option>
+                                    <option value='Black of African American'>Black of African American</option>
+                                    <option value='Hispanic or Latino'>Hispanic or Latino</option>
+                                    <option value='Native American or Alaskan Native'>Native American or Alaskan Native</option>
+                                    <option value='White or Caucasian'>White or Caucasian</option>
+                                    <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
+                                    <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
+                                </select>
+                                {/* <input
                                     type='text'
                                     className='form-control'
                                     id='ethnicity'
@@ -436,7 +445,7 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be at least 2 characters.<br />
                                     Letters, spaces, and hyphens allowed.
-                                </p>
+                                </p> */}
                             </Col>
                             <Col md={6} className="form-group  my-2">
                                 <label htmlFor='bloodType'>
@@ -444,24 +453,23 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faCheck} className={validBloodType ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validBloodType || !bloodType ? 'hide' : 'invalid'} />
                                 </label>
-                                <input
-                                    type='text'
-                                    className='form-control'
+                                <select
+                                    name='bloodType'
                                     id='bloodType'
-                                    required
-                                    autoComplete='off'
-                                    value={bloodType}
-                                    aria-invalid={validBloodType ? 'false' : 'true'}
-                                    aria-describedby='bloodTypenote'
+                                    className='form-select'
                                     onChange={(e) => setBloodType(e.target.value)}
                                     onFocus={() => setBloodTypeFocus(true)}
                                     onBlur={() => setBloodTypeFocus(false)}
-                                />
-                                <p id='bloodTypenote' className={bloodTypeFocus && !validBloodType ? 'instructions' : 'offscreen'}>
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
-                                    Letters, spaces, and hyphens allowed.
-                                </p>
+                                >
+                                    <option value='A+'>A+</option>
+                                    <option value='A-'>A-</option>
+                                    <option value='B+'>B+</option>
+                                    <option value='B-'>B-</option>
+                                    <option value='O+'>O+</option>
+                                    <option value='O-'>O-</option>
+                                    <option value='AB+'>AB+</option>
+                                    <option value='AB-'>AB-</option>
+                                </select>
                             </Col>
                             <Col md={6} className="form-group  my-2">
                                 <label htmlFor='socialSecurity'>
