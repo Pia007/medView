@@ -59,13 +59,15 @@ public class ProviderServiceImpl implements ProviderService {
                 String password = providerDto.getPassword();
                 
                 response.add(id);
+                response.add("Provider logged in successfully");
                 response.add(username);
-                response.add(password);
-                response.add("http://localhost:8080/provider");
+                // response.add(password);
+                
                
                 //set the 
             } else {
                 response.add("Invalid password");
+                
             }
         } else {
             response.add("Invalid Provider username or password");

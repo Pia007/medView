@@ -98,6 +98,7 @@ const Patient = ({
                 const response = await axios.get(`${PATIENT_URL}/${id}`);
                 setPatient(response.data);
                 console.log(response.data);
+            
                 // console.log(patient.conditions)
                 // setLoading(false);
             } catch (error) {
@@ -113,19 +114,9 @@ const Patient = ({
             // console.log(response.data);
             
             if (response.data.length > 0 ) {
-                // console.log(response.data[0].id);
-                // console.log(response.data[0].body);
-                // console.log(response.data[0].dateCreated);
                 setNotes(response.data);
-                // console.log("Notes", notes);
                 const note = response.data[0];
-                // console.log("Note", note);
-                // console.log(notes);
-                // console.log(note.body);
-                // console.log(note.dateCreated);
-                // console.log(note.patientDto.provider.firstName);
-                // console.log(note.patientDto.provider.lastName);
-                // console.log("provider id: ", note.patientDto.provider.id);
+               
 
                 // create a new array of note id
                 const noteIds = notes.map((note) => note.id);
@@ -245,7 +236,6 @@ const Patient = ({
                     <Card key={note.id} className='d-flex flex-row justify-content-between'>
                         <div>
                             <p className='m-0 detail'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
-                            {/* <p className='m-0 detail'><strong>Date:</strong> <em>11/01/2022</em></p> */}
                             <p className='mb-1 detail'><strong>Text:</strong> {note.body}</p>
                             <p className='mb-1 detail'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
                         </div>
@@ -268,7 +258,6 @@ const Patient = ({
         if (patient.conditions) {
             return (
                 <Card>
-                    {/* make the first letter  of each word uppercase */}
                     <Col className='d-flex justify-content-between'>
                         <p className='my-1 detail'>
                             <strong>Conditions: </strong> 
@@ -426,7 +415,6 @@ const Patient = ({
 
             {
                 category === 'conditions' ? displayConditions() : null
-
             }
             {
                 category === 'allergies' ? displayAllergies() : null
@@ -451,7 +439,6 @@ const Patient = ({
 
         </div>
     );
-
 }
 
 export default Patient;

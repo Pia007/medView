@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { faCheck, faBars, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button } from 'reactstrap';
+import axios from 'axios';
 import menu from '../images/menu.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+const PROVIDER_URL = '/providers';
+
 const Header = () => {
     const navigate = useNavigate();
+    
+    const pathname = window.location.pathname;
 
     const [navigation, setNavigation] = useState(false);
     const openNav = () => setNavigation(!navigation);
-
-    // erase the token from local storage and redirect to login page
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.clear();
         navigate('/login');
     }
 
+    // get the provider id from the token
+    const token = localStorage.getItem('username');
+    console.log('token: ' + token);
 
+    // if token is undefined  go to login page
+    if (token === undefined) {
+        navigate('/login');
+        logout();
+    }
+    
+    
     const MenuItem = ({ to, linkName }) => {
         return (
             <NavItem>
@@ -42,27 +55,25 @@ const Header = () => {
 
                     <NavbarToggler onClick={openNav} className='align-self-end p-0 pb-2'>
                         <img src={menu} alt='menu bars' className='menu-bars' />
-                            {/* <FontAwesomeIcon icon={faBars} size='2x' className=''/> */}
                     </NavbarToggler>
                 </div>
 
                 <Collapse isOpen={navigation} navbar className='justify-content-end'>
                     <Nav navbar className='ml-auto text-center text-light '>
-                        <MenuItem to='/' linkName='Home' />
-                    
-                        {/* hide register and login button when user is logged in  */}
-                        
-                        <MenuItem to='/login' linkName='Login' />
 
-                        <MenuItem to='/register' linkName='Register' /> 
-
-                        {/* hide logout if user is not logged in */}
-                        
-                        <button className='nav-link logout' onClick={logout}>Logout </button> 
-
-                        
+                        { pathname === '/' || pathname === '/login' || pathname === '/register' ? (
+                            <React.Fragment>
+                                <MenuItem to='/' linkName='Home' />
+                                <MenuItem to='/login' linkName='Login' />
+                                <MenuItem to='/register' linkName='Register' /> 
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                            <MenuItem to='/' linkName='Home' />
+                            <button className='nav-link logout' onClick={logout}>Logout </button> 
+                            </React.Fragment>
+                        )}
                     </Nav>
-                    
                 </Collapse>
             </Navbar>
         </React.Fragment>

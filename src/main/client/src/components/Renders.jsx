@@ -52,15 +52,15 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                         </Col> */}
                     </Col>
                     <Col md={4} className='d-flex flex-column justify-content-around'>
-                        <Col xs={4} className='m-auto text-center' >
-                            <button className='p-1 text-center pat-icon-button ' onClick={handleClick} >
+                        {/* <Col xs={4} className='m-auto '> */}
+                            <button className='p-1 m-auto pat-icon-button ' onClick={handleClick} >
                                 <FontAwesomeIcon icon={faUser} className='icon pat-icon'/>
                             </button>
                             
-                        </Col>
-                        <Col className='text-center mt-2'>
-                            <p className='pat-text detail fw-bold'>MRN: <span className='fw-normal'>{singlePatient.patientCode}</span></p>
-                        </Col>
+                        {/* </Col> */}
+                        {/* <Col className='mt-2'> */}
+                            <p className='m-auto pat-text detail fw-bold'>MRN: <span className='fw-normal text' >{singlePatient.patientCode}</span></p>
+                        {/* </Col> */}
                     </Col>
                     <Col>
                         {/* display only if there patient alleries equal none or is empty otherwise display nothing*/}

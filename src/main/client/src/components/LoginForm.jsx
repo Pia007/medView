@@ -13,10 +13,6 @@ const LoginForm = () => {
     const navigate = useNavigate();
 
 
-    // send the value of isLoggedIn to the parent component
-    const [loggedIn, setLoggedIn] = useState();
-
-
     const usernameRef = useRef();
     const errorRef = useRef();
 
@@ -38,48 +34,41 @@ const LoginForm = () => {
         setErr('');
     }, [username, password])
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        try {
-            const login = await axios.post(LOGIN_URL, 
-                {
-                    username,
-                    password,
-                }
-            );
-
-            setProviderId(login.data[0]);
-            
-            const id = login.data[0];
-            
-            console.log(providerId);
-            
-            setLoggedIn(true);
-            console.log("loggin is good")
-
-            // save the username to local storage
-            localStorage.setItem('username', JSON.stringify(login.data[1]));
-            // navigate(`/provider/${id}`);
-            navigate(`/provider/${id}`);
-            
-            setUsername('');
-            setPassword('');
-            setLoggedIn(true);
-            
-        } catch ( error ) {
-            if (!error?.response) {
-                setErr('Login Failed. Please try again.');
-            } else if (error.response?.status === 400) {
-                setErr('Invalid username or password');
-            } else if (error.response?.status === 401) {
-                setErr('Not authorized');
-            } else {
-                setErr('Login failed');
+        axios.post(LOGIN_URL, 
+            {
+                username,
+                password,
             }
-            errorRef.current.focus();
-            setLoggedIn(false);
-        }
+        )
+        .then((response) => {
+            console.log("Status: ", response.status)
+            console.log("Message: ", response.message)
+            console.log("Data: ", response.data)
+            
+            if (response.status === 200 && response.data[0] === 'Invalid Provider username or password') {
+                setErr(response.data);
+                setSuccess(false);
+                console.log('NOT SUCCESSFUL');
+            } else if ( response.status === 200 && response.data[0] === 'Invalid password') {
+                setErr(response.data);
+                setSuccess(false);
+                console.log('NOT SUCCESSFUL');
+            } else  {
+                console.log(response.data);
+                console.log(response.data[0]);
+                
+                setProviderId(response.data[0]);
+                const id = response.data[0];
+                console.log(id);
+                setUsername('');
+                setPassword('');
+                localStorage.setItem('username', response.data[2]);
+                navigate(`/provider/${id}`);
+            }
+        })
     }
     
 
@@ -92,9 +81,10 @@ const LoginForm = () => {
                         Don't have an account? <Link to='/register' className='text-decoration-none form-link'> Create one </Link>here.
                     </h2>
                     <form onSubmit={handleSubmit} className='p-3'>
-                        <p ref={errorRef} className={err ? 'error' : 'offscreen'} aria-live='assertive'>{err}
-                            {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
-                        </p>
+                        <span ref={errorRef} className={err? 'error' : 'offscreen'} aria-live='assertive'>
+                            <FontAwesomeIcon icon={faInfoCircle} /> {err}
+                        </span>
+                        
                         <Row>
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='username'>Username</label>
@@ -128,7 +118,6 @@ const LoginForm = () => {
                                 color='primary'
                             >Sign in</Button>
                         </div>
-                        
                     </form>
                 </Card>
             </section>

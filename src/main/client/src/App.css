@@ -120,6 +120,9 @@ h4 {
 .hide {
     display: none;
 }
+.show {
+    display: block;
+}
 
 .valid {
     color: limegreen;
@@ -235,6 +238,15 @@ h4 {
   /* font-size: 2.5rem; */
   transform: scale(1.2);
 }
+.hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
 
 th {
   padding: 0.5rem;
@@ -268,6 +280,16 @@ p {
   padding: .5em;
   color: var(--opt-darkblue);
   background-color: var(--opt-skyblue);
+  font-family: var(--poppins);
+}
+span {
+  color: var(--opt-alert);
+  font-weight: 600;
+  /* font-family: var(--poppins); */
+}
+.text {
+  color: var(--opt-darkblue);
+  font-weight: 600;
   font-family: var(--poppins);
 }
 

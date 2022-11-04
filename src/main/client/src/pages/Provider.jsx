@@ -3,30 +3,40 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import files from '../images/files.svg';
 import { Row, Col, Table, Card, Button} from 'reactstrap';
 import { RenderProvider } from '../components/Renders';
-import SearchBar from '../components/SearchBar';
 import ProviderModal from '../components/ProviderModal';
-import PatientList from '../components/PatientList';
 import axios from '../api/AxiosApi';
 
 const PROVIDER_URL = '/providers';
 const PATIENT_URL = '/patients';
 
-const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onChangeFirstName, onChangeLastName, onChangeSpecialty, patId, onClick}) => {
+const Provider = ({
+    valueFirstName, 
+    valueLastName, 
+    valueSpecialty, 
+    onSubmit, 
+    onChangeFirstName, 
+    onChangeLastName, 
+    onChangeSpecialty, 
+    patId, 
+    onClick}) => {
     
     const { id } = useParams();
 
-    console.log("provider id: " + id);
+    // console.log("provider id: " + id);
 
     const [provider, setProvider] = useState('')
     const [ providerInitials, setProviderInitials ] = useState('')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [patients, setPatients] = useState('')
+    const [patients, setPatients] = useState([])
     const [ message, setMessage ] = useState('')
     const [ patientId, setPatientId ] = useState('')
 
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
+
+    const [search, setSearch] = useState('');
+    console.log(search);
 
     useEffect (() => {
         const getProvider = async () => {
@@ -48,14 +58,31 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
         const getPatients = async () => {
             try {
                 const response = await axios.get(`${PATIENT_URL}/provider/${id}`);
+    
+                const patients = response.data
+                console.log("Array of patients: ", patients);
+            
+                setPatients(patients);
 
-                // check if there are any patients
+                // check if array is empty
+                if (patients.length === 0) {
+                    // setMessage("No patients found");
+                    setPatients(null);
+                    // 
+                    setLoading(false);
+                    console.log('No patients');
+                } else {
+                    setMessage("");
+                }
+
+                setLoading(false);
+
                 if (!response.data.length > 0 || response.data.length > 0) {
             
                     setPatients(response.data);
                     console.log(patients);
 
-                    setMessage(' You do not have any patients yet');
+                    // setMessage(' You do not have any patients yet');
 
                     // create an array of patient ids
                     const patientIds = patients.map(patient => patient.id);
@@ -68,33 +95,6 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                         setPatientId(patientId);
                         console.log(patientId);
                     });
-
-                    setLoading(false);
-                } else if (response.data.length > 0) {
-                    console.log(response.data);
-                    setPatients(response.data);
-                    console.log(patients);
-
-                    console.log("First patient: " + patients[0].id)
-                    setMessage(' You do not have any patients yet');
-
-                    // create an array of patient ids
-                    const patientIds = response.data.map(patient => patient.id);
-                    console.log("These are ids: " + patientIds);
-
-                    // get the id of the each patient
-                    patientIds.forEach (patientId => {
-                        const id = patientId;
-                        console.log("This is the id: " + id);
-                        setPatientId(patientId);
-                        console.log(patientId);
-                    });
-
-                } else {
-                    setPatients(null);
-                    setLoading(false);
-                    console.log('No patients');
-                    
                 }
             } catch (error) {
                 setError(error);
@@ -135,7 +135,11 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
     }
 
 
-    const patientList = patients.map(patient => {
+    const patientList = patients.filter((patient => {
+        return search.toLowerCase() !== "" 
+        ? patient.firstName.toLowerCase().includes(search.toLowerCase()) || patient.lastName.toLowerCase().includes(search.toLowerCase()) 
+        : patient
+    })).map(patient => {
         return (
             <tr key={patient.id} className="table-info">
                 <td>{patient.firstName}</td>
@@ -192,6 +196,19 @@ const Provider = ({valueFirstName, valueLastName, valueSpecialty, onSubmit, onCh
                     {/* </Button> */}
                     <Col>
                         <Card className='p-2 ' id='tableHolder'>
+                            <form >
+                                <div className='form-group d-flex flex-row mb-2'>
+                                    <label htmlFor="search bar" className='hidden'>Search Patients</label>
+                                <input 
+                                    type="text" 
+                                    id='search-bar'
+                                    placeholder="Search Patients"
+                                    className='form-control'
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                                </div>
+                            </form>
                             <Table hover striped responsive  className='pat-table'>
                                 <thead>
                                     <tr>
