@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link} from 'react-router-dom';
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
-import { Row, Col, Card, Button } from 'reactstrap';
+import { Row, Card, Button } from 'reactstrap';
 
 const LOGIN_URL = '/providers/login'
 
@@ -57,12 +58,12 @@ const LoginForm = () => {
                 setSuccess(false);
                 console.log('NOT SUCCESSFUL');
             } else  {
-                console.log(response.data);
-                console.log(response.data[0]);
+                // console.log(response.data);
+                // console.log(response.data[0]);
                 
                 setProviderId(response.data[0]);
                 const id = response.data[0];
-                console.log(id);
+               
                 setUsername('');
                 setPassword('');
                 localStorage.setItem('username', response.data[2]);

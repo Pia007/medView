@@ -1,12 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
-import { Row, Col, Card,Button } from 'reactstrap'
+import { Row, Col, Card } from 'reactstrap'
 
-const PROVIDER_URL = '/providers/';
 const ADD_PATIENT_URL = '/patients/provider/';
 
 const PATIENT_CODE_REGEX = /^[A-z][A-z0-9-_]{3,9}$/;
@@ -80,6 +80,7 @@ const AddPatientForm = () => {
     const navigate = useNavigate();
 
     const { id } = useParams();
+    console.log(id);
     const patientCodeRef = useRef();
     const errRef = useRef();
 
@@ -98,10 +99,6 @@ const AddPatientForm = () => {
     const [dob, setDob] = useState('');
     const [validDob, setValidDob] = useState(false);
     const [dobFocus, setDobFocus] = useState('');
-
-    const [socialSecurity, setSocialSecurity] = useState('');
-    const [validSocialSecurity, setValidSocialSecurity] = useState(false);
-    const [socialSecurityFocus, setSocialSecurityFocus] = useState('');
 
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
@@ -153,6 +150,10 @@ const AddPatientForm = () => {
 
     const [gender, setGender] = useState('');
     const [validGender, setValidGender] = useState(false);
+
+    const [socialSecurity, setSocialSecurity] = useState('');
+    const [validSocialSecurity, setValidSocialSecurity] = useState(false);
+    const [socialSecurityFocus, setSocialSecurityFocus] = useState('');
 
     const [ethnicity, setEthnicity] = useState('');
     const [validEthnicity, setValidEthnicity] = useState(false);
@@ -260,8 +261,8 @@ const AddPatientForm = () => {
                 firstName,
                 lastName,
                 dob: moment(dob).format('YYYY-MM-DD'),
-                socialSecurity,
                 gender,
+                socialSecurity,
                 ethnicity,
                 email,
                 phone,
@@ -281,7 +282,7 @@ const AddPatientForm = () => {
             });
             console.log(JSON.stringify(newPatient.data));
 
-            navigate(`/patient/${id}`);
+            navigate(`/provider/${id}`);
 
             setPatientCode('');
             setFirstName('');
@@ -322,9 +323,8 @@ const AddPatientForm = () => {
     return (
         <>
             <section className='row m-auto p-3 justify-content-around'>
-                {/* <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p> */}
                 <Card className='col-12 col-md-10 col-lg-8 p-2 mt-2 align-self-center my-5'>
-                    <h3 className='px-3 form-title'>Add Patient Form</h3>
+                    <h3 className='px-3 form-title'>New Patient Form</h3>
                     <form action="" onSubmit={handleSubmit} className='p-3'>
                         
                         <Row id='demos'>
@@ -449,53 +449,6 @@ const AddPatientForm = () => {
                                 </select>
                             </Col>
                             <Col md={6} className="form-group  my-2">
-                                <label htmlFor='ethnicity'>
-                                    Race/Ethnicity:
-                                    <FontAwesomeIcon icon={faCheck} className={validEthnicity ? 'valid' : 'hide'} />
-                                    <FontAwesomeIcon icon={faTimes} className={validEthnicity || !ethnicity ? 'hide' : 'invalid'} />
-                                </label>
-                                <select
-                                    name='ethnicity'
-                                    id='ethnicity'
-                                    className='form-select'
-                                    onChange={(e) => setEthnicity(e.target.value)}
-                                    onFocus={() => setEthnicity(true)}
-                                    onBlur={() => setEthnicity(false)}
-                                >
-                                    <option value=''>Select</option>
-                                    <option value='Asian or Pacific Islander'>Asian or Pacific Islander</option>
-                                    <option value='Black of African American'>Black of African American</option>
-                                    <option value='Hispanic or Latino'>Hispanic or Latino</option>
-                                    <option value='Native American or Alaskan Native'>Native American or Alaskan Native</option>
-                                    <option value='White or Caucasian'>White or Caucasian</option>
-                                    <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
-                                    <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
-                                </select>
-                            </Col>
-                            <Col md={6} className="form-group  my-2">
-                                <label htmlFor='bloodType'>
-                                    Blood Type:
-                                    <FontAwesomeIcon icon={faCheck} className={validBloodType ? 'valid' : 'hide'} />
-                                    <FontAwesomeIcon icon={faTimes} className={validBloodType || !bloodType ? 'hide' : 'invalid'} />
-                                </label>
-                                <select
-                                    name='bloodType'
-                                    id='bloodType'
-                                    className='form-select'
-                                    onChange={(e) => setBloodType(e.target.value)}
-                                >
-                                    <option value=''>Select</option>
-                                    <option value='A+'>A+</option>
-                                    <option value='A-'>A-</option>
-                                    <option value='B+'>B+</option>
-                                    <option value='B-'>B-</option>
-                                    <option value='O+'>O+</option>
-                                    <option value='O-'>O-</option>
-                                    <option value='AB+'>AB+</option>
-                                    <option value='AB-'>AB-</option>
-                                </select>
-                            </Col>
-                            <Col md={6} className="form-group  my-2">
                                 <label htmlFor='socialSecurity'>
                                     SSN:
                                     <FontAwesomeIcon icon={faCheck} className={validSocialSecurity ? 'valid' : 'hide'} />
@@ -520,10 +473,64 @@ const AddPatientForm = () => {
                                     123-45-6789.
                                 </p>
                             </Col>
-                        </Row>
-                        <hr className='text-danger'/>
-                        <Row id='contact'>
+
+                            
+
                             <Col md={6} className="form-group  my-2">
+                                <label htmlFor='bloodType'>
+                                    Blood Type:
+                                    <FontAwesomeIcon icon={faCheck} className={validBloodType ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validBloodType || !bloodType ? 'hide' : 'invalid'} />
+                                </label>
+                                <select
+                                    name='bloodType'
+                                    id='bloodType'
+                                    className='form-select'
+                                    onChange={(e) => setBloodType(e.target.value)}
+                                >
+                                    <option value=''>Select</option>
+                                    <option value='A+'>A+</option>
+                                    <option value='A-'>A-</option>
+                                    <option value='B+'>B+</option>
+                                    <option value='B-'>B-</option>
+                                    <option value='O+'>O+</option>
+                                    <option value='O-'>O-</option>
+                                    <option value='AB+'>AB+</option>
+                                    <option value='AB-'>AB-</option>
+                                </select>
+                            </Col>
+                            
+                            <Col md={6} className="form-group  my-2">
+                                <label htmlFor='ethnicity'>
+                                    Race/Ethnicity:
+                                    <FontAwesomeIcon icon={faCheck} className={validEthnicity ? 'valid' : 'hide'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validEthnicity || !ethnicity ? 'hide' : 'invalid'} />
+                                </label>
+                                <select
+                                    name='ethnicity'
+                                    id='ethnicity'
+                                    className='form-select'
+                                    onChange={(e) => setEthnicity(e.target.value)}
+                                    onFocus={() => setEthnicity(true)}
+                                    onBlur={() => setEthnicity(false)}
+                                >
+                                    <option value=''>Select</option>
+                                    <option value='Asian or Pacific Islander'>Asian or Pacific Islander</option>
+                                    <option value='Black of African American'>Black of African American</option>
+                                    <option value='Hispanic or Latino'>Hispanic or Latino</option>
+                                    <option value='Native American or Alaskan Native'>Native American or Alaskan Native</option>
+                                    <option value='White or Caucasian'>White or Caucasian</option>
+                                    <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
+                                    <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
+                                </select>
+                            </Col>
+                        </Row>
+
+                        <hr className='text-danger'/>
+
+                        <Row id='contact'>
+                            <h5>Contact</h5>
+                            <Col md={6} className="form-group p-2">
                                 <label htmlFor='email'>
                                     Email:
                                     <FontAwesomeIcon icon={faCheck} className={validEmail ? 'valid' : 'hide'} />
@@ -547,7 +554,7 @@ const AddPatientForm = () => {
                                     Must be a valid email address.
                                 </p>
                             </Col>
-                            <Col md={6} className="form-group  my-2">
+                            <Col className="form-group p-2">
                                 <label htmlFor='phone'>
                                     Phone:
                                     <FontAwesomeIcon icon={faCheck} className={validPhone ? 'valid' : 'hide'} />
@@ -572,7 +579,7 @@ const AddPatientForm = () => {
                                     10 digits, with dashes.
                                 </p>
                             </Col>
-                            <Col xs={12} className="form-group  my-2">
+                            <Col xs={12} className="form-group p-2">
                                 <label htmlFor='address'>
                                     Address:
                                     <FontAwesomeIcon icon={faCheck} className={validAddress ? 'valid' : 'hide'} />
@@ -597,7 +604,7 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col md={4} className="form-group  my-2">
+                            <Col md={6} className="form-group p-2">
                                 <label htmlFor='city'>
                                     City:
                                     <FontAwesomeIcon icon={faCheck} className={validCity ? 'valid' : 'hide'} />
@@ -622,7 +629,7 @@ const AddPatientForm = () => {
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col md={4} className="form-group  my-2">
+                            <Col className="form-group p-2">
                                 <label htmlFor='state'>
                                     State:
                                     <FontAwesomeIcon icon={faCheck} className={validState ? 'valid' : 'hide'} />
@@ -647,7 +654,7 @@ const AddPatientForm = () => {
                                     2 letters, no spaces or punctuation.
                                 </p>
                             </Col>
-                            <Col md={4} className="form-group  my-2">
+                            <Col className="form-group p-2">
                                 <label htmlFor='zip'>
                                     Zip:
                                     <FontAwesomeIcon icon={faCheck} className={validZip ? 'valid' : 'hide'} />
@@ -673,8 +680,12 @@ const AddPatientForm = () => {
                                 </p>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md={6} className="form-group  my-2">
+
+                        <hr className='text-danger'/>
+
+                        <Row className='p-2'>
+                            <h5>Emergency Contact</h5>
+                            <Col md={6} className="form-group p-2">
                                 <label htmlFor='contactFirstname'>
                                     First Name:
                                     <FontAwesomeIcon icon={faCheck} className={validContactFirstname ? 'valid' : 'hide'} />
@@ -699,7 +710,7 @@ const AddPatientForm = () => {
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col md={6} className="form-group  my-2">
+                            <Col className="form-group p-2">
                                 <label htmlFor='contactLastname'>
                                     Last Name:
                                     <FontAwesomeIcon icon={faCheck} className={validContactLastname ? 'valid' : 'hide'} />
@@ -724,7 +735,7 @@ const AddPatientForm = () => {
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col md={6} className="form-group  my-2">
+                            <Col md={6} className="form-group p-2">
                                 <label htmlFor='contactPhone'>
                                     Phone Number:
                                     <FontAwesomeIcon icon={faCheck} className={validContactPhone ? 'valid' : 'hide'} />
@@ -749,7 +760,7 @@ const AddPatientForm = () => {
                                     15 digits, no spaces or punctuation.
                                 </p>
                             </Col>
-                            <Col md={6} className="form-group my-2">
+                            <Col className="form-group p-2">
                                 <label htmlFor='contactRelationship'>
                                     Relationship:
                                     <FontAwesomeIcon icon={faCheck} className={validContactRelationship ? 'valid' : 'hide'} />
@@ -775,9 +786,12 @@ const AddPatientForm = () => {
                                 </p>
                             </Col>
                         </Row>
-                        <hr />
+
+                        <hr className='text-primary px-3'/>
+
                         <Row id='med'>
-                            <Col className="form-group  my-2">
+                            <h5>Medical Info</h5>
+                            <Col className="form-group p-2">
                                 <label htmlFor='allergies'>
                                     Allergies:
                                     <FontAwesomeIcon icon={faCheck} className={validAllergies ? 'valid' : 'hide'} />
@@ -802,7 +816,7 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col xs={12} className="form-group  my-2">
+                            <Col xs={12} className="form-group p-2">
                                 <label htmlFor='insurance'>
                                     Insurance:
                                     <FontAwesomeIcon icon={faCheck} className={validInsurance ? 'valid' : 'hide'} />
@@ -827,7 +841,7 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col xs={12} className="form-group  my-2">
+                            <Col className="form-group p-2">
                                 <label htmlFor='conditions'>
                                     Conditions:
                                     <FontAwesomeIcon icon={faCheck} className={validConditions ? 'valid' : 'hide'} />
@@ -853,7 +867,7 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <Col xs={12} className="form-group  my-2">
+                            <Col xs={12} className="form-group p-2">
                                 <label htmlFor='medications'>
                                     Medications:
                                     <FontAwesomeIcon icon={faCheck} className={validMedications ? 'valid' : 'hide'} />
@@ -878,10 +892,21 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <div className="d-flex justify-content-end mt-2">
-                                <Button type='submit' className='form-btn'>
+                            <div className="d-flex justify-content-between mt-2">
+                                <button 
+                                    type='button' 
+                                    className='mt-3 mr-0 p-2 cancel-btn' 
+                                    onClick={() => navigate('/provider/' + id)}
+                                >
+                                    Cancel
+                                </button>
+                                <button 
+                                    type='submit' 
+                                    className='mt-3 mr-0 p-2 form-btn'
+                                >
                                     Submit
-                                </Button>
+                                </button>
+                                
                             </div>
                         </Row>
                     </form>

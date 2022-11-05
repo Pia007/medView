@@ -62,8 +62,19 @@ const ProviderModal = ( {
                             />
                         </div>
                         <div className='d-flex justify-content-between'>
-                            <button className='mt-3 mr-0 p-2 form-btn' type='submit'>Submit</button>
-                            <button type='button' className='mt-3 mr-0 p-2 cancel-btn' onClick={onProviderClick}>Cancel</button>
+                            <button 
+                                type='button' 
+                                className='mt-3 mr-0 p-2 cancel-btn' 
+                                onClick={onProviderClick}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                className='mt-3 mr-0 p-2 form-btn' 
+                                type='submit'
+                            >
+                                Submit
+                            </button>
                         </div>
                     </form>
                 </ModalBody>

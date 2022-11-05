@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
 import { Row, Card, Button } from 'reactstrap';
@@ -190,6 +190,7 @@ const RegistrationForm = () => {
 
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
                     <h1 className='text-left p-2 mb-0 form-title'>Sign up</h1>
+                    
                     <h2 className='text-left p-2 mb-0 form-st'>
                             Already have an account? <Link to='/login' className='text-decoration-none form-link'> Sign in</Link> here.
                         </h2>
@@ -203,7 +204,6 @@ const RegistrationForm = () => {
                                 </label>
                                 <input 
                                     type='text'
-                                    
                                     id='username'
                                     ref={usernameRef}
                                     className='form-control'
@@ -241,7 +241,6 @@ const RegistrationForm = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     onFocus={() => setPasswordFocus(true)}
                                     onBlur={() => setPasswordFocus(false)}
-
                                 />
                                 <p id='pnote' className={passwordFocus && !validPassword ? 'instructions' : 'offscreen'} >
                                     <FontAwesomeIcon icon={faInfoCircle} />
@@ -301,7 +300,6 @@ const RegistrationForm = () => {
                                     Letters, spaces, and hyphens allowed.
                                 </p>
                             </div>
-
 
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='lastname'>
@@ -385,7 +383,6 @@ const RegistrationForm = () => {
                                 color='primary'
                             >Sign up</Button>
                         </div>
-                        
                     </form>
                 </Card>
             </section>

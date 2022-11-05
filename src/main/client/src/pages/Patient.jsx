@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
@@ -65,17 +67,13 @@ const Patient = ({
     onChangeBody,
     onChangeDateCreated,
     onPatientClick,
-    onButtonClick
-     }) => { 
+    onButtonClick}) => { 
 
     const { id } = useParams();
-
-    const navigate = useNavigate();
 
     const [patient, setPatient] = useState('');
     const [error, setError] = useState('');
     const [notes, setNotes] = useState('');
-    const [noteId, setNoteId] = useState('');
     const [message, setMessage] = useState('');
 
     const [body, setBody] = useState('');
@@ -97,41 +95,23 @@ const Patient = ({
                 const response = await axios.get(`${PATIENT_URL}/${id}`);
                 setPatient(response.data);
                 console.log(response.data);
-            
-                // console.log(patient.conditions)
-                // setLoading(false);
             } catch (error) {
                 setError(error);
             }
         }
 
         const getNotes = async (e) => {
-        // e.preventDefault();
 
         try {
             const response = await axios.get(`${NOTES_URL}/patient/${id}`);
-            // console.log(response.data);
             
             if (response.data.length > 0 ) {
                 setNotes(response.data);
                 const note = response.data[0];
-               
-
-                // create a new array of note id
-                const noteIds = notes.map((note) => note.id);
-                // console.log(noteIds);
-                console.log(note.dateCreated)
-
-                // get the id of each note
-                noteIds.forEach (noteId => {
-                    const id = noteId;
-                    // console.log('Note id: ' + id);
-                    setNoteId(id);
-                    // console.log(id)
-                });
+                console.log(note)
+                
             } else {
                 setNotes('');
-                // console.log("No notes found for this patient");
                 setMessage('No notes found for this patient');
             }
             
@@ -145,8 +125,6 @@ const Patient = ({
     }, []);
 
     
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -192,11 +170,6 @@ const Patient = ({
             });
             console.log(newNote.data);
             console.log("Pia note", newNote.data)
-            // reload the page
-            // window.location('/patients/' + id);
-            // navigate(`/patient/${id}`);
-            
-            // getNotes();
 
             setBody('');
             setDateCreated('');
@@ -234,12 +207,17 @@ const Patient = ({
                 return (
                     <Card key={note.id} className='d-flex flex-row justify-content-between'>
                         <div>
-                            <p className='m-0 detail'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
-                            <p className='mb-1 detail'><strong>Text:</strong> {note.body}</p>
-                            <p className='mb-1 detail'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
+                            <p className='m-0 detail text-capitalize'><strong>Date:</strong> <em>{moment(note.dateCreated).format('MM/DD/YYYY')}</em></p>
+                            <p className='mb-1 detail text-capitalize'><strong>Text:</strong> {note.body}</p>
+                            <p className='mb-1 detail text-capitalize'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
                         </div>
                         <div className='d-flex align-content-around'>
-                            <button type='submit' className='trash-btn' onClick={() => handleDelete(note.id)}><img src={trash} alt='delete' /></button>
+                            <button 
+                                type='submit' 
+                                className='trash-btn' 
+                                onClick={() => handleDelete(note.id)}>
+                                    <img src={trash} alt='delete' />
+                            </button>
                         </div>
                     </Card>
                 )
@@ -247,7 +225,7 @@ const Patient = ({
         } else {
             return (
                 <div>
-                    <p>{message}. Would you like to <Link to={`/patient/${id}/addNote`} >add a note</Link>?</p>
+                    <p className='detail'>{message}. Would you like to <button onClick={toggleNoteModal} className='btn btn-link px-0 pt-link'>add a note</button>?</p>
                 </div>
             )
         }
@@ -258,9 +236,9 @@ const Patient = ({
             return (
                 <Card>
                     <Col className='d-flex justify-content-between'>
-                        <p className='my-1 detail'>
+                        <p className='my-1 detail text-capitalize'>
                             <strong>Conditions: </strong> 
-                            {patient.conditions.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                            {patient.conditions}
                         </p>
                         <button className='edit-conditions-btn'
                             onClick={toggleModal}
@@ -269,6 +247,12 @@ const Patient = ({
                         </button>
                     </Col>
                 </Card>
+            )
+        } else {
+            return (
+                <div>
+                    <p className='detail'> No conditions listed. Would you like to <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>conditions</button>?</p>
+                </div>
             )
         }
     }
@@ -278,9 +262,9 @@ const Patient = ({
             return (
                 <Card>
                     <Col className='d-flex justify-content-between'>
-                        <p className='my-1 detail'>
+                        <p className='my-1 detail text-capitalize'>
                             <strong>Allergies: </strong> 
-                            {patient.allergies.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                            {patient.allergies}
                         </p>
                         <button className='edit-conditions-btn'
                             onClick={toggleModal}
@@ -290,6 +274,12 @@ const Patient = ({
                     </Col>
                 </Card>
             )
+        } else {
+            return (
+                <div>
+                    <p className='detail'> No allergies listed. Would you like to <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>add allergies</button>?</p>
+                </div>
+            )
         }
     }
 
@@ -298,9 +288,9 @@ const Patient = ({
             return (
                 <Card>
                     <Col className='d-flex justify-content-between'>
-                        <p className='my-1 detail'>
+                        <p className='my-1 detail text-capitalize'>
                             <strong>Medications: </strong> 
-                            {patient.medications.split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                            {patient.medications}
                         </p>
                         <button className='edit-conditions-btn'
                             onClick={toggleModal}
@@ -309,6 +299,12 @@ const Patient = ({
                         </button>
                     </Col>
                 </Card>
+            )
+        } else {
+            return (
+                <div>
+                    <p className='detail'> No medications listed. Would you like to <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>add medications</button>?</p>
+                </div>
             )
         }
     }

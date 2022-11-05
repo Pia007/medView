@@ -1,17 +1,9 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
-import { faUserPen, faUser, faTimes, faInfoCircle, faFileMedical, faFilePrescription, faPenToSquare, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import {Card, Col, Row} from "reactstrap";
+import { faUserPen, faUser, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 export const RenderProvider = ({provider, onClick}) => {
-
-    // upercase first letter of provider specialty
-    const specialty = provider.specialty.charAt(0).toUpperCase() + provider.specialty.slice(1);
-    const firstName = provider.firstName.charAt(0).toUpperCase() + provider.firstName.slice(1);
-    const lastName = provider.lastName.charAt(0).toUpperCase() + provider.lastName.slice(1);
-    const suffix = provider.suffix.toUpperCase();
 
     return (
         <>
@@ -21,11 +13,16 @@ export const RenderProvider = ({provider, onClick}) => {
                         <FontAwesomeIcon icon={faUserPen} className='icon provider-icon' />
                     </button>
                 </Col>
-                <Col>
-                    <h2 className='mt-2'> {firstName} {lastName}, {suffix} </h2>
-                    <h3>{specialty}</h3>
+                <Col className='text-capitalize'>
+                    <h2 className='mt-2'> 
+                        {provider.firstName} {''} 
+                        {provider.lastName}, {''}
+                        <span className='fw-bold text-two text-uppercase'>
+                            {provider.suffix} 
+                        </span>
+                    </h2>
+                    <h3 >{provider.specialty}</h3>
                 </Col>
-
             </Col>
         </>
     )
@@ -37,99 +34,76 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
 
     return (
         <>
-            <Card className=' p-3'>
-                <Row>
-                    <Col xm={4} className='text-left'>
-                        <h4>{singlePatient.lastName}, {singlePatient.firstName} </h4>
-                        <p className='mb-1 detail'><strong>DOB:</strong> {new Date(singlePatient.dob).toLocaleDateString()} - {singlePatient.gender} - {singlePatient.age}yrs</p>
-                        <p className='mb-1 detail'>{singlePatient.address}, {singlePatient.city}, {singlePatient.state} {singlePatient.zip}</p>
-                        <p className='mb-1 detail'>{singlePatient.phone}</p>
-                         <p className='mb-1 detail'>{singlePatient.email}</p>
-                        {/* <Col>
-                            <p className='mb-1 detail'>ICE: </p>
-                        </Col> */}
-                    </Col>
-                    <Col md={4} className='d-flex flex-column justify-content-around'>
-                        {/* <Col xs={4} className='m-auto '> */}
-                            <button className='p-1 m-auto pat-icon-button ' onClick={handleClick} >
-                                <FontAwesomeIcon icon={faUser} className='icon pat-icon'/>
-                            </button>
-                            
-                        {/* </Col> */}
-                        {/* <Col className='mt-2'> */}
-                            <p className='m-auto pat-text detail fw-bold'>MRN: <span className='fw-normal text' >{singlePatient.patientCode}</span></p>
-                        {/* </Col> */}
-                    </Col>
-                    <Col>
-                        {/* display only if there patient alleries equal none or is empty otherwise display nothing*/}
+            <Card className='p-3 my-5'>
+                <Row className='d-flex flex-column flex-md-row text-capitalize '>
+                    <Col xm={4} className='order-2 order-md-2 d-flex flex-column align-items-center align-items-md-start my-2 my-md-0'>
+                        <h3 className='pat-text'>{singlePatient.lastName}, {''}
+                            {singlePatient.firstName} 
+                        </h3>
+                        <p className='mb-0 detail'>
+                            <strong>
+                                DOB:
+                            </strong> {' '}
+                            {new Date(singlePatient.dob).toLocaleDateString()} - {''}
+                            <span className='text-lowercase text-two'>
+                                {singlePatient.age}yrs
+                            </span>
+                        </p>
+                        <p className='mb-0 detail'><strong>Gender:</strong> {singlePatient.gender} </p>
+                        <p className='mb-0 detail'><strong>Blood Type:</strong> {singlePatient.bloodType} </p>
+                        <p className='mb-0 detail'>
+                            <span className='text-two'>{singlePatient.address}</span>, {''}
+                            <span className='text-two'>{singlePatient.city}</span>, {''}
+                            <span className='text-two text-uppercase'>{singlePatient.state}</span> {''}
+                            {singlePatient.zip}
+                        </p>
+                        <p className='mb-0 detail'>{singlePatient.phone}</p>
+                        <p className='mb-0 detail text-lowercase'>{singlePatient.email}</p>
                         
-                        {singlePatient.allergies !== 'none' || singlePatient.allergies !== '' ?
-                            <Col className='d-flex flex-column justify-content-end'>
-                                <FontAwesomeIcon icon={faTriangleExclamation} className='icon alert-icon align-self-end'/>
-                                <p className='align-self-end alert-detail detail d'>Allergies</p>
-                            </Col>
+                    </Col>
+                    <Col md={4} className='order-1 order-md-2 d-flex flex-column justify-content-around my-2 my-md-0'>
+                        <button className='p-1 m-auto pat-icon-button ' onClick={handleClick} >
+                            <FontAwesomeIcon icon={faUser} className='icon pat-icon'/>
+                        </button>
+                    
+                        <p className='m-auto my-2 my-md-0 pat-text detail fw-bold'>
+                            MRN: <span className='fw-normal text text-lowercase' >
+                                {singlePatient.patientCode}
+                            </span>
+                        </p>
+                    </Col>
+                    <Col className='order-3 d-flex flex-column justify-content-end my-2 my-md-1'>
+                        
+                        {singlePatient.allergies && 
+                            (singlePatient.allergies !== 'None' || singlePatient.allergies !== 'none' || singlePatient.allergies !== '') 
+                            ? (
+                                <Col className='d-flex flex-column justify-content-end align-items-center align-items-md-end'>
+                                    <FontAwesomeIcon icon={faTriangleExclamation} className='icon alert-icon'/>
+                                    <p className=' alert-detail detail d'>Allergies</p>
+                                </Col>
+                            ) 
                             : null
                         }
-
-
+                        <Col className='d-flex flex-column justify-content-end align-items-center align-items-md-end mt-md-1'>
+                            <p className='detail '>
+                                <strong>Insurance: </strong> <span className='text-two'>{singlePatient.insurance} </span>
+                            </p>
+                            <p className='detail '>
+                                <strong>Emergency Contact: </strong> <span className='text-two'>{singlePatient.contactFirstname} </span>
+                                <span className='text-two'>{singlePatient.contactLastname}</span>
+                            </p>
+                            <p className='detail '>
+                                <strong>Relationship:</strong> <span className='text-two'>{singlePatient.contactRelationship}</span>
+                            </p>
+                            <p className='detail '>
+                                <span className='text-two'>{singlePatient.contactPhone}</span>
+                            </p>
+                        </Col>
                     </Col>
-                {/* <Col> */}
-                    {/* <button className='p-1 text-center provider-icon-button' onClick={handleClick}>
-                        <FontAwesomeIcon icon={faPenToSquare} className='icon pat-icon'/>
-                    </button> */}
-                    {/* <h2>{singlePatient.lastName}, {singlePatient.firstName} </h2> */}
-                    {/* display age in Month day year */}
-                    {/* <p className='mb-1 detail'>DOB: {new Date(singlePatient.dob).toLocaleDateString()} - {singlePatient.age}yrs</p>
-
-                    <p className='mb-1 detail'>{singlePatient.address}, {singlePatient.city}, {singlePatient.state} {singlePatient.zip}</p>
-                    
-                    <p className='mb-1 detail'>{singlePatient.email}</p>
-                    <p className='mb-1 detail'>{singlePatient.phone}</p> */}
-                {/* </Col> */}
-            </Row>
+                </Row>
             </Card>
         </>
     ) 
 }
 
 
-/* render patient notes */
-export const RenderNotes = ({patientNote}) => {
-    return (
-        <>
-            <Row className='text-center p-3'>
-                <Col>
-                    <p>{patientNote.body}</p>
-                </Col>
-                <button>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </button>
-                <button>
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>
-            </Row>
-
-        </>
-    )
-}
-
-export const RenderData = ( {data, title, dataValue, onClick, src, alt} ) => {
-    if ({data}) {
-        return (
-            <Card>
-                {/* make the first letter  of each word uppercase */}
-                <Col className='d-flex justify-content-between'>
-                    <p className='mb-1'>
-                        <strong>{title}: </strong> 
-                        {dataValue}
-                    </p>
-                    <button className='edit-conditions-btn'
-                        onClick={onClick}
-                    >
-                        <img src={src} alt={alt} className="edit-icon" />
-                    </button>
-                </Col>
-            </Card>
-        )
-    }
-}

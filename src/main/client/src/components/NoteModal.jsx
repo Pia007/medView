@@ -11,7 +11,6 @@ const NoteModal = ({
     onChangeBody,
     onChangeDateCreated,
     onButtonClick
-
 }) => {
 
     
@@ -39,16 +38,25 @@ const NoteModal = ({
                                 type="date"
                                 className='form-control'
                                 id='dateCreated'
-                                // set date to current date
-                                // value={dateCreated.split('/').reverse().join('-')}
                                 value={valueDateCreated}
-                                
                                 onChange={onChangeDateCreated}
                             />
                         </div>
                         <div className='d-flex justify-content-between'>
-                            <button type='submit' className='mt-3 mr-0 p-2 form-btn'>Submit</button>
-                            <button type='button' className='mt-3 mr-0 p-2 cancel-btn' onClick={onButtonClick}>Cancel</button>
+                            <button 
+                                type='button' 
+                                className='mt-3 mr-0 p-2 cancel-btn' 
+                                onClick={onButtonClick}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type='submit' 
+                                className='mt-3 mr-0 p-2 
+                                form-btn'
+                            >
+                                Submit
+                            </button>
                         </div>
                     </form>
                 </ModalBody>

@@ -144,7 +144,7 @@ const Provider = ({
         : patient
     })).map(patient => {
         return (
-            <tr key={patient.id} className="table-info">
+            <tr key={patient.id} className="table-info text-capitalize">
                 <td>{patient.firstName}</td>
                 <td>{patient.lastName}</td>
                 <td>{patient.age}</td>
@@ -166,7 +166,7 @@ const Provider = ({
     
     return (
 
-        <Row className=''>
+        <Row className='p-5'>
 
             <Col className='row m-auto p-3 justify-content-around m-5' >
                 <RenderProvider provider={provider} onClick={toggleModal} />
@@ -197,7 +197,7 @@ const Provider = ({
                     <Col className='d-flex flex-column justify-content-center'>
                         <Col  xs={12} sm={10} className='m-auto my-2 text-center'>
                             <Link to={`/provider/${id}/addPatient`}
-                                    className=' text-decoration-none add-link'>Add A Patient?
+                                    className=' text-decoration-none add-link'>Add Patient?
                             </Link>
                         </Col>
                         {/* </Button> */}
@@ -218,7 +218,7 @@ const Provider = ({
                                 </form>
                                 <Table hover striped responsive  className='pat-table'>
                                     <thead>
-                                        <tr>
+                                        <tr className='text-two fw-bold'>
                                             <th>
                                                 First
                                             </th>

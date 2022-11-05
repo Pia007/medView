@@ -55,7 +55,6 @@ const PatientModal = ({
     onPatientClick
     }) => {
 
-    
 
     return (
         <>
@@ -88,7 +87,6 @@ const PatientModal = ({
                                     className='form-control'
                                     id='patientCode'
                                     value={valuePatientCode}
-                                    // set to read only
                                     readOnly
                                     
                                 />
@@ -188,11 +186,12 @@ const PatientModal = ({
                                 </select>
                             </Col>
                         </Row>
+
                         <hr className='text-primary px-3 '/>
 
                         <Row id='up-ci' className='p-2'>
                             <h5>Contact</h5>
-                            <Col xs={12} md={6} className='form-group p-2'>
+                            <Col md={6} className='form-group p-2'>
                                 <label htmlFor="email">Email</label>
                                 <input
                                     type="text"
@@ -212,7 +211,7 @@ const PatientModal = ({
                                     onChange={onChangePhone}
                                 />
                             </Col>
-                            <Col xs={12}  className='form-group p-2'>
+                            <Col xs={12} className='form-group p-2'>
                                 <label htmlFor="address">Address</label>
                                 <input
                                     type="text"
@@ -222,7 +221,7 @@ const PatientModal = ({
                                     onChange={onChangeAddress}
                                 />
                             </Col>
-                            <Col xs={12} md={6} className='form-group p-2'>
+                            <Col md={6} className='form-group p-2'>
                                 <label htmlFor="city">City</label>
                                 <input
                                     type="text"
@@ -258,7 +257,7 @@ const PatientModal = ({
 
                         <Row id='up-ec' className='p-2'>
                             <h5>Emergency Contact</h5>
-                            <Col xs={12} md={6} className='form-group p-2'>
+                            <Col md={6} className='form-group p-2'>
                                 <label htmlFor="contactFirstname">First Name</label>
                                 <input
                                     type="text"
@@ -278,7 +277,7 @@ const PatientModal = ({
                                     onChange={onChangeContactLastname}
                                 />
                             </Col>
-                            <Col xs={12} md={6} className='form-group p-2'>
+                            <Col md={6} className='form-group p-2'>
                                 <label htmlFor="contactPhone">Phone</label>
                                 <input  
                                     type="text"
@@ -304,7 +303,7 @@ const PatientModal = ({
 
                         <Row id='up-md' className='p-2'>
                             <h5>Medical Info</h5>
-                            <Col xs={12} className='form-group p-2'>
+                            <Col className='form-group p-2'>
                                 <label htmlFor="allergies">Allergies</label>
                                 <input
                                     type="text"
@@ -324,7 +323,7 @@ const PatientModal = ({
                                     onChange={onChangeInsurance}
                                 />
                             </Col>
-                            <Col xs={12} className='form-group p-2'>
+                            <Col className='form-group p-2'>
                                 <label htmlFor="conditions">Conditions</label>
                                 <input
                                     type="text"
@@ -346,10 +345,20 @@ const PatientModal = ({
                             </Col>
                         </Row>
                         <div className='d-flex justify-content-between'>
-                            <button type='submit' className='mt-3 mr-0 p-2 form-btn'>Update</button>
-                            <button type='button' className='mt-3 mr-0 p-2 cancel-btn' onClick={onPatientClick}>Cancel</button>
+                            <button 
+                                type='button' 
+                                className='mt-3 mr-0 p-2 cancel-btn ' 
+                                onClick={onPatientClick}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type='submit' 
+                                className='mt-3 mr-0 p-2 form-btn'
+                            >
+                                Update
+                            </button>
                         </div>
-                        {/* diplay on when windos is a certain scroll */}
                         <button type='button' className='scroll-btn' >
                             <a href='#top' alt='scroll-link' className='scroll-link'> 
                                 <img src={arrow} alt='arrow'className='arrow'/>

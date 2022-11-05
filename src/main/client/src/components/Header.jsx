@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, NavLink } from 'react-router-dom';
-import { faCheck, faBars, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, Button } from 'reactstrap';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { Navbar, NavbarToggler, Collapse, Nav, NavItem } from 'reactstrap';
 import menu from '../images/menu.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const PROVIDER_URL = '/providers';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -22,14 +18,12 @@ const Header = () => {
 
     // get the provider id from the token
     const token = localStorage.getItem('username');
-    console.log('token: ' + token);
 
     // if token is undefined  go to login page
     if (token === undefined) {
         navigate('/login');
         logout();
     }
-    
     
     const MenuItem = ({ to, linkName }) => {
         return (

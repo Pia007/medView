@@ -12,30 +12,32 @@ import Protected from '../ProtectedRoute';
 const Main = () => {
 
     return (
-        <div>
+        <div >
             <Header />
-            <Routes>
-                <Route path='/' element={<Home/>} />
-                
-                <Route path='register' element={<Registration />} />
-                {/* protect the provider route with its id  */}
-                <Route path='login/' element={<Login />} />
-                <Route path='provider/:id' element={
-                    <Protected>     
-                        <Provider />
-                    </Protected>} 
-                />
-                <Route path='provider/:id/addpatient' element={
-                    <Protected>
-                        <AddPatient />
-                    </Protected>} 
-                />
-                <Route path='patient/:id' element={
-                    <Protected>
-                        <Patient />
-                    </Protected>} 
-                />
-            </Routes>
+            <div className='main'>
+                <Routes>
+                    <Route path='/' element={<Home/>} />
+                    
+                    <Route path='register' element={<Registration />} />
+                    {/* protect the provider route with its id  */}
+                    <Route path='login/' element={<Login />} />
+                    <Route path='provider/:id' element={
+                        <Protected>     
+                            <Provider />
+                        </Protected>} 
+                    />
+                    <Route path='provider/:id/addpatient' element={
+                        <Protected>
+                            <AddPatient />
+                        </Protected>} 
+                    />
+                    <Route path='patient/:id' element={
+                        <Protected>
+                            <Patient />
+                        </Protected>} 
+                    />
+                </Routes>
+            </div>
         </div>
     )
 }
