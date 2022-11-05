@@ -76,7 +76,7 @@ const LoginForm = () => {
         <>
             <section className='row m-auto p-3 justify-content-around m-5 login-section'>
                 <Card className='col-12 col-md-10 col-lg-8 p-2 login-card mt-2 align-self-center my-5'>
-                    <h1 className='text-left p-2 mb-0 form-title'>Sign in</h1>
+                    <h1 className='text-left p-2 mb-0 form-title'>Login</h1>
                     <h2 className='text-left p-2 mb-0 form-st'>
                         Don't have an account? <Link to='/register' className='text-decoration-none form-link'> Create one </Link>here.
                     </h2>
@@ -116,7 +116,7 @@ const LoginForm = () => {
                         <div className='form-group col-12 p-2 text-center'>
                             <Button type='submit' className='col-8 col-sm-6 col-md-4 form-btn' 
                                 color='primary'
-                            >Sign in</Button>
+                            >Login </Button>
                         </div>
                     </form>
                 </Card>

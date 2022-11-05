@@ -13,12 +13,15 @@ const Provider = ({
     valueFirstName, 
     valueLastName, 
     valueSpecialty, 
+    valueSuffix,
     onSubmit, 
     onChangeFirstName, 
     onChangeLastName, 
     onChangeSpecialty, 
+    onChangeSuffix,
     patId, 
-    onClick}) => {
+    onClick,
+    onProviderClick}) => {
     
     const { id } = useParams();
 
@@ -163,79 +166,84 @@ const Provider = ({
     
     return (
 
-        <div className='container'>
-            
-            <RenderProvider provider={provider} onClick={toggleModal} />
-            {patients.length > 0 ? <div></div> : <div>{message}</div>}
+        <Row className=''>
 
-            <ProviderModal 
-                isOpen={modal}
-                toggle={toggleModal}
-                onSubmit={handleSubmit}
-                valueFirstName={provider.firstName}
-                valueLastName={provider.lastName}
-                valueSpecialty={provider.specialty}
-                valueSuffix={provider.suffix}
-                onChangeFirstName={(e) => setProvider({...provider, firstName: e.target.value})}
-                onChangeLastName={(e) => setProvider({...provider, lastName: e.target.value})}
-                onChangeSpecialty={(e) => setProvider({...provider, specialty: e.target.value})}
-                onChangeSuffix={(e) => setProvider({...provider, suffix: e.target.value})}
-            />
-            {/*  if the provider has no patients */}
-            {!patients.length > 0 ? (
-                <Col className='text-center'>
-                    You don't have any patients.<br/>
-                    Would you like to <Link to={`/provider/${id}/addPatient`}>
-                        add a patient</Link>?
-                </Col>
-            ) : (
-                <Row className='d-flex'>
-                    <Link to={`/provider/${id}/addPatient`}
-                            className='text-center mb-2 text-decoration-none add-link'>Add A Patient?
-                    </Link>
-                    {/* </Button> */}
-                    <Col>
-                        <Card className='p-2 ' id='tableHolder'>
-                            <form >
-                                <div className='form-group d-flex flex-row mb-2'>
-                                    <label htmlFor="search bar" className='hidden'>Search Patients</label>
-                                <input 
-                                    type="text" 
-                                    id='search-bar'
-                                    placeholder="Search Patients"
-                                    className='form-control'
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                />
-                                </div>
-                            </form>
-                            <Table hover striped responsive  className='pat-table'>
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            First Name
-                                        </th>
-                                        <th>
-                                            Last Name
-                                        </th>
-                                        <th>
-                                            Age
-                                        </th>
-                                        <th className='d-flex justify-content-end'>
-                                            Files
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {patientList}
-                                </tbody>
-                            </Table>
-                        </Card>
+            <Col className='row m-auto p-3 justify-content-around m-5' >
+                <RenderProvider provider={provider} onClick={toggleModal} />
+                {patients.length > 0 ? <div></div> : <div>{message}</div>}
+
+                <ProviderModal 
+                    isOpen={modal}
+                    toggle={toggleModal}
+                    onSubmit={handleSubmit}
+                    valueFirstName={provider.firstName}
+                    valueLastName={provider.lastName}
+                    valueSpecialty={provider.specialty}
+                    valueSuffix={provider.suffix}
+                    onChangeFirstName={(e) => setProvider({...provider, firstName: e.target.value})}
+                    onChangeLastName={(e) => setProvider({...provider, lastName: e.target.value})}
+                    onChangeSpecialty={(e) => setProvider({...provider, specialty: e.target.value})}
+                    onChangeSuffix={(e) => setProvider({...provider, suffix: e.target.value})}
+                    onProviderClick={toggleModal}
+                />
+                {/*  if the provider has no patients */}
+                {!patients.length > 0 ? (
+                    <Col className='text-center'>
+                        You don't have any patients.<br/>
+                        Would you like to <Link to={`/provider/${id}/addPatient`}>
+                            add a patient</Link>?
                     </Col>
-                </Row>
+                ) : (
+                    <Col className='d-flex flex-column justify-content-center'>
+                        <Col  xs={12} sm={10} className='m-auto my-2 text-center'>
+                            <Link to={`/provider/${id}/addPatient`}
+                                    className=' text-decoration-none add-link'>Add A Patient?
+                            </Link>
+                        </Col>
+                        {/* </Button> */}
+                        <Col xs={12} sm={10} className='m-auto'>
+                            <Card className='p-2 ' id='tableHolder'>
+                                <form >
+                                    <div className='form-group d-flex flex-row mb-2'>
+                                        <label htmlFor="search bar" className='hidden'>Search Patients</label>
+                                    <input 
+                                        type="text" 
+                                        id='search-bar'
+                                        placeholder="Search Patients"
+                                        className='form-control'
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                    />
+                                    </div>
+                                </form>
+                                <Table hover striped responsive  className='pat-table'>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                First
+                                            </th>
+                                            <th>
+                                                Last 
+                                            </th>
+                                            <th>
+                                                Age
+                                            </th>
+                                            <th className='d-flex justify-content-end'>
+                                                Files
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {patientList}
+                                    </tbody>
+                                </Table>
+                            </Card>
+                        </Col>
+                    </Col>
 
-            )}
-        </div>
+                )}
+            </Col>
+        </Row>
     )
 }
 

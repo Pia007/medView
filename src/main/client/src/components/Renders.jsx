@@ -15,7 +15,7 @@ export const RenderProvider = ({provider, onClick}) => {
 
     return (
         <>
-            <Row className='text-center p-3 mt-2'>
+            <Col xs={12} sm={10} className='m-auto text-center'>
                 <Col xs={12}>
                     <button className='p-1 text-center provider-icon-button' onClick={onClick}>
                         <FontAwesomeIcon icon={faUserPen} className='icon provider-icon' />
@@ -26,7 +26,7 @@ export const RenderProvider = ({provider, onClick}) => {
                     <h3>{specialty}</h3>
                 </Col>
 
-            </Row>
+            </Col>
         </>
     )
 }
@@ -35,8 +35,6 @@ export const RenderProvider = ({provider, onClick}) => {
 /* render patient */
 export const RenderPatient = ({singlePatient, handleClick}) => {
 
-
-    
     return (
         <>
             <Card className=' p-3'>

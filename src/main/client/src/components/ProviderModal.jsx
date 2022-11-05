@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 
-const ProviderModal = (args, {
+const ProviderModal = ( {
     onSubmit,
     isOpen, 
     toggle, 
@@ -13,11 +13,11 @@ const ProviderModal = (args, {
     onChangeLastName, 
     onChangeSpecialty,
     onChangeSuffix,
-    closeModal}) => {
+    onProviderClick}) => {
 
     return (
         <>
-            <Modal isOpen={isOpen} toggle={toggle} {...args}>
+            <Modal isOpen={isOpen} toggle={toggle} centered>
                 <ModalBody>
                     <h2 className='px-2'>Provider Update</h2> 
                     <form action="" onSubmit={onSubmit}>
@@ -61,8 +61,9 @@ const ProviderModal = (args, {
                                 onChange={onChangeSuffix}
                             />
                         </div>
-                        <div className='d-flex justify-content-end p-2'>
-                            <button className='p-2 form-btn' type='submit'>Submit</button>
+                        <div className='d-flex justify-content-between'>
+                            <button className='mt-3 mr-0 p-2 form-btn' type='submit'>Submit</button>
+                            <button type='button' className='mt-3 mr-0 p-2 cancel-btn' onClick={onProviderClick}>Cancel</button>
                         </div>
                     </form>
                 </ModalBody>

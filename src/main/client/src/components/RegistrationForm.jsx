@@ -188,8 +188,6 @@ const RegistrationForm = () => {
             <section className='row m-auto p-3 justify-content-around m-5'>
                 <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
 
-               
-                
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
                     <h1 className='text-left p-2 mb-0 form-title'>Sign up</h1>
                     <h2 className='text-left p-2 mb-0 form-st'>

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Routes, Route} from 'react-router-dom';
 import Header from '../components/Header';
 import Home from '../pages/Home';
@@ -14,27 +13,29 @@ const Main = () => {
 
     return (
         <div>
-            <Header  />
+            <Header />
+            <Routes>
+                <Route path='/' element={<Home/>} />
                 
-                <Routes>
-                    <Route path='/' element={<Home/>} />
-                    
-                    <Route path='register' element={<Registration />} />
-                    {/* protect the provider route with its id  */}
-                    <Route path='login/' element={<Login />} />
-                    <Route path='provider/:id' element={
-                        <Protected>     
-                            <Provider />
-                        </Protected>} />
-                    <Route path='provider/:id/addpatient' element={
-                        <Protected>
-                            <AddPatient />
-                        </Protected>} />
-                    <Route path='patient/:id' element={
-                        <Protected>
-                            <Patient />
-                        </Protected>} />
-                </Routes>
+                <Route path='register' element={<Registration />} />
+                {/* protect the provider route with its id  */}
+                <Route path='login/' element={<Login />} />
+                <Route path='provider/:id' element={
+                    <Protected>     
+                        <Provider />
+                    </Protected>} 
+                />
+                <Route path='provider/:id/addpatient' element={
+                    <Protected>
+                        <AddPatient />
+                    </Protected>} 
+                />
+                <Route path='patient/:id' element={
+                    <Protected>
+                        <Patient />
+                    </Protected>} 
+                />
+            </Routes>
         </div>
     )
 }

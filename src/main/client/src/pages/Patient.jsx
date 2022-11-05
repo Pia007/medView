@@ -64,14 +64,13 @@ const Patient = ({
     valueDateCreated,
     onChangeBody,
     onChangeDateCreated,
+    onPatientClick,
     onButtonClick
      }) => { 
 
     const { id } = useParams();
 
     const navigate = useNavigate();
-
-
 
     const [patient, setPatient] = useState('');
     const [error, setError] = useState('');
@@ -370,7 +369,7 @@ const Patient = ({
                 onChangeConditions={(e) => setPatient({...patient, conditions: e.target.value})}
                 onChangeMedications={(e) => setPatient({...patient, medications: e.target.value})}
                 onSubmit={handleSubmit}
-                // closeModal={() => toggleModal()}
+                onPatientClick={toggleModal}
             />
 
             <Row  className='d-flex p-2'>

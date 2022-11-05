@@ -34,13 +34,13 @@ const Header = () => {
     const MenuItem = ({ to, linkName }) => {
         return (
             <NavItem>
-                <NavLink className='nav-link text-decoration-none' to={to} onClick={() => (navigation ? setNavigation(!navigation): setNavigation(navigation))}>{linkName}</NavLink>
+                <NavLink className='nav-link text-decoration-none' to={to} onClick={() => (navigation ? setNavigation(!navigation): setNavigation(navigation))} end>{linkName}</NavLink>
             </NavItem>
         );
     }
 
     return (
-        <React.Fragment>
+        <>
             <Navbar className='navbar navbar-expand-md p-1 d-flex justify-content-between sticky-top  myNav' style={{zIndex: '5'}}>
                 <div className='container-fluid d-flex flex-row justify-content-between'>
                     {/* <Zoom> */}
@@ -62,21 +62,21 @@ const Header = () => {
                     <Nav navbar className='ml-auto text-center text-light '>
 
                         { pathname === '/' || pathname === '/login' || pathname === '/register' ? (
-                            <React.Fragment>
-                                <MenuItem to='/' linkName='Home' />
+                            <>
+                                <MenuItem to='/' linkName='Home'exact={true} />
                                 <MenuItem to='/login' linkName='Login' />
                                 <MenuItem to='/register' linkName='Register' /> 
-                            </React.Fragment>
+                            </>
                         ) : (
-                            <React.Fragment>
-                            <MenuItem to='/' linkName='Home' />
-                            <button className='nav-link logout' onClick={logout}>Logout </button> 
-                            </React.Fragment>
+                            <>
+                                <MenuItem to='/' linkName='Home' />
+                                <button className='btn btn-link-link logout' onClick={logout}>Logout </button> 
+                            </>
                         )}
                     </Nav>
                 </Collapse>
             </Navbar>
-        </React.Fragment>
+        </>
     )
 }
 

@@ -38,6 +38,9 @@ body {
     /* prevent shift right on modal load */
     padding-right: 0px !important; 
     position: relative!important;
+    /* stop horizontal scroll */
+    overflow-x: hidden;
+    scroll-behavior:smooth;
 }
 
 
@@ -53,6 +56,10 @@ body {
   font-weight: 700;
   color: var(--opt-orange);
   font-family: var(--mont);
+}
+.nav-item {
+  width: 100%;
+  word-wrap: none;
 }
 .nav-link {
   color: var(--opt-darkgray);
@@ -74,7 +81,7 @@ body {
 
 .main {
   width: 100%;
-  height: auto;
+  height: 100vh;
 
 }
 .logout {
@@ -92,7 +99,7 @@ body {
   border: none;
 }
 
-h2, h3, h4  {
+h2, h3, h4, h5  {
   color: var(--opt-darkblue);
   font-weight: 700;
 }
@@ -104,6 +111,17 @@ h4 {
 
 .view {
   height: 90vh;
+}
+.view-content {
+  margin: auto;
+}
+.holder {
+  height: 90vh;
+  width: 100%;
+  /* display: flex; */
+  /* flex-direction: column;
+  justify-content: center; */
+  align-items: center;
 }
 
 /* forms */
@@ -270,9 +288,24 @@ th {
   /* font-weight: 700; */
   color: var(--opt-orange);
 }
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.pt-link {
+  color: var(--opt-orange);
+  font-weight: 600;
+}
 label {
   font-weight: 500;
+  color: var(--opt-darkblue);
   font-family: var(--poppins);
+}
+
+
+hr {
+  border: 1px solid var(--opt-alert);
 }
 p {
   display: flex-inline;
@@ -335,6 +368,24 @@ span {
     border: none;
     background: transparent;
     color: #002677  ;
+}
+
+.scroll-btn {
+  position: fixed;
+  bottom: 50px;
+  right: 50%;
+  color: var(--opt-darkblue);
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+.scroll-btn:hover,
+.scroll-btn:focus,
+.scroll-btn:active {
+  /* font-size: 2.5rem; */
+  transform: scale(1.5);
 }
 
 
