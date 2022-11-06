@@ -99,9 +99,6 @@ public class Patient {
     @ManyToOne
     private Provider provider;
 
-    /* patient relationship with patient notes */
-    // @OneToMany(mappedBy = "patient", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-
     // change to cascade all when ready recedin db
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference
@@ -143,7 +140,6 @@ public class Patient {
         if (patientDto.getBloodType() != null) {
             this.bloodType = patientDto.getBloodType();
         }
-
         if (patientDto.getEmail() != null) {
             this.email = patientDto.getEmail();
         }
@@ -162,7 +158,6 @@ public class Patient {
         if (patientDto.getZip() != null) {
             this.zip = patientDto.getZip();
         }
-
         if (patientDto.getContactFirstname() != null) {
             this.contactFirstname = patientDto.getContactFirstname();
         }
@@ -195,12 +190,14 @@ public class Patient {
     /*  toString */
     @Override
     public String toString() {
+        /* return all patient data */
         return "Patient [id=" + id + ", patientCode=" + patientCode + ", +  firstName=" + firstName
                 + ", lastName=" + lastName + ", dob=" + dob + ", age=" + age + ", email=" + email
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
-                + ", contactFirstname=" + contactFirstname + ", contactLastname=" + contactLastname + ", contactPhone="
-                + contactPhone + ", contactRelationship=" + contactRelationship + ", insurance=" + insurance + ",       allergies=" + allergies + ", conditions=" + conditions
-                + ", medications=" + medications + "]";
+                + ", contact firstname=" + contactFirstname + ", contact lastname=" + contactLastname + ", Phone="
+                + contactPhone + ", contact relationship=" + contactRelationship + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions
+                + ", medications=" + medications 
+                + ", gender=" + gender + ", race/ethnicity=" + ethnicity + ", social security=" + socialSecurity + ", blood type=" + bloodType + "]";
     }
 
     public Provider getProvider() {

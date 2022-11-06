@@ -33,6 +33,12 @@ export const RenderProvider = ({provider, onClick}) => {
 /* render patient */
 export const RenderPatient = ({singlePatient, handleClick}) => {
 
+    // regex with only spaces or only commas
+    const regex = /^[\s,]+$/;
+
+    // contains only letters, commas, and spaces
+    const regex2 = /^[a-zA-Z, ]*$/;   
+
     return (
         <>
             <Card className='p-3 my-5'>
@@ -74,10 +80,19 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                         </p>
                     </Col>
                     <Col className='order-3 d-flex flex-column justify-content-end my-2 my-lg-1'>
-                        
-                        {singlePatient.allergies && 
-                            (singlePatient.allergies !== 'None' || singlePatient.allergies !== 'none' || singlePatient.allergies !== '') 
-                            ? (
+
+                        {
+                            singlePatient.allergies && (
+                                !regex.test(singlePatient.allergies) && 
+                                regex2.test(singlePatient.allergies) &&
+                                singlePatient.allergies !== 'none' && 
+                                singlePatient.allergies !== 'None' && 
+                                singlePatient.allergies !== 'NONE' && 
+                                singlePatient.allergies !== 'na' && 
+                                singlePatient.allergies !== 'NA' && 
+                                singlePatient.allergies !== 'Na')
+                            ?   
+                            (
                                 <Col className='d-flex flex-column justify-content-end align-items-center align-items-lg-end'>
                                     <Bounce delay={750} duration={3000} forever={false}>
                                         <FontAwesomeIcon icon={faTriangleExclamation} className='icon alert-icon' alt='alert allergies'/>

@@ -33,15 +33,4 @@ public class PatientNoteDto implements Serializable {
             this.patientDto = new PatientDto(patientNote.getPatient());
         }
     }
-
-    /* set dateCreate */
-    // public void setDateCreated(LocalDate dateCreated) {
-    //     this.dateCreated = dateCreated;
-    // }
-
-    // /* get dateCreated */
-    // public LocalDate getDateCreated() {
-    //     return this.dateCreated;
-    // }
-    
 }

@@ -6,7 +6,7 @@ import Login from './Login';
 import Provider from './Provider';
 import AddPatient from './AddPatient';
 import Patient from './Patient';
-import Protected from '../ProtectedRoute';
+import Protected from '../utils/ProtectedRoute';
 
 
 const Main = () => {

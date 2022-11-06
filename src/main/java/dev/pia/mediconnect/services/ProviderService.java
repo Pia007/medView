@@ -23,7 +23,6 @@ public interface ProviderService {
     @Transactional
     List<String> updateProvider(Long providerId, ProviderDto providerDto);
 
-
     /* get all providers */
     List<ProviderDto> getAllProviders();
 

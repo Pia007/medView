@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-// import com.fasterxml.jackson.annotation.*;
-
 import dev.pia.mediconnect.dtos.*;
 import lombok.*;
 
@@ -31,13 +29,9 @@ public class PatientNote {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateCreated;
 
-    /* relationship to patient */
-    // @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+   
     @ManyToOne
-    // @JoinColumn
-    // @JsonBackReference
     private Patient patient;
-
 
     /* custom constructor */
     public PatientNote(PatientNoteDto patientNoteDto) {

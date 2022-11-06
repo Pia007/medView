@@ -8,7 +8,7 @@ public class MediconnectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MediconnectApplication.class, args);
-		
+
 	}
 
 }

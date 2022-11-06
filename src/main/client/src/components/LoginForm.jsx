@@ -75,7 +75,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <section className='row m-auto p-3 justify-content-around m-5 login-section'>
+            <section className='row m-auto p-3 justify-content-around m-5 login-section '>
                 <Card className='col-12 col-md-10 col-lg-8 p-2 login-card mt-2 align-self-center my-5'>
                     <h1 className='text-left p-2 mb-0 form-title'>Login</h1>
                     <h2 className='text-left p-2 mb-0 form-st'>

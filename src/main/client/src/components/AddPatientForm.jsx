@@ -11,37 +11,37 @@ const ADD_PATIENT_URL = '/patients/provider/';
 
 const PATIENT_CODE_REGEX = /^[A-z][A-z0-9-_]{3,9}$/;
 
-// firstname regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
+// firstname regex - must be at least 2 characters long, can contain eletters, hyphens or spaces
 const FIRSTNAME_REGEX = /^[A-z- ]{2,}$/;
 
-// lastname regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
+// lastname regex - must be at least 2 characters long, can contain letters, hyphens or spaces
 const LASTNAME_REGEX = /^[A-z- ]{2,}$/;
 
 // dob format - cannot be empty
 const DOB_REGEX = /^(?!\s*$).+/;
 
-// gender format - must be at least 1 character long, can contain loweletters, hyphens or spaces
+// gender format - must be at least 1 character long, can contain eletters, hyphens or spaces
 const GENDER_REGEX = /^[A-z- ]{1,}$/;
 
-// ethnicity format - must be at least 2 character long, can contain loweletters, hyphens or spaces
+// ethnicity format - must be at least 2 character long, can contain letters, hyphens or spaces
 const ETHNICITY_REGEX = /^[A-z- ]{2,}$/;
 
 // social security number format - 9 digits and 2 hyphens
 const SSN_REGEX = /^\d{3}-\d{2}-\d{4}$/;
 
-// email regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
+// email regex - must be at least 5 characters long, can contain letters, hyphens or spaces
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
 
 // phone regex - must be at least 10 characters long, can contain numbers, hyphens or spaces
 const PHONE_REGEX = /^[0-9- ]{10,}$/;
 
-// address regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
+// address regex - must be at least 5 characters long, can contain letters, hyphens or spaces
 const ADDRESS_REGEX = /^[A-z0-9- ]{5,}$/;
 
-// city regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
+// city regex - must be at least 2 characters long, can contain letters, hyphens or spaces
 const CITY_REGEX = /^[A-z- ]{2,}$/;
 
-// state regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
+// state regex - must be at least 2 characters long, can contain letters, hyphens or spaces
 const STATE_REGEX = /^[A-z- ]{2,}$/;
 
 // zip regex - must be at least 5 characters long, can contain numbers, hyphens or spaces
@@ -56,22 +56,22 @@ const CONTACT_LASTNAME_REGEX = /^[A-z- ]{2,}$/;
 // contact phone regex - must be at least 10 characters long, can contain numbers, hyphens or spaces
 const CONTACT_PHONE_REGEX = /^[0-9- ]{10,}$/;
 
-// contact relationship regex - must be at least 5 characters long, can contain loweletters, hyphens or spaces
+// contact relationship regex - must be at least 5 characters long, can contain letters, hyphens or spaces
 const CONTACT_RELATIONSHIP_REGEX = /^[A-z- ]{2,}$/;
 
-// allergies regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
-const ALLERGIES_REGEX = /^[A-z-, ]{2,}$/;
+// allergies regex - must be at least 2 characters long, can contain letters, hypens, commas or spaces
+const ALLERGIES_REGEX = /^[A-z- ,]{2,}$/;
 
-// blood type regex - must be at least 2 characters long, can contain loweletters, hypens, +,  spaces
+// blood type regex - must be at least 2 characters long, can contain letters, hypens, +,  spaces
 const BLOOD_TYPE_REGEX = /^[A-z-+ ]{2,}$/;
 
-// insurance regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
+// insurance regex - must be at least 2 characters long, can contain letters, hypens, commas or spaces
 const INSURANCE_REGEX = /^[A-z-, ]{2,}$/;
 
-// conditions regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
+// conditions regex - must be at least 2 characters long, can contain letters, hypens, commas or spaces
 const CONDITIONS_REGEX = /^[A-z-, ]{2,}$/;
 
-// medications regex - must be at least 2 characters long, can contain loweletters, hypens, commas or spaces
+// medications regex - must be at least 2 characters long, can contain letters, hypens, commas or spaces
 const MEDICATIONS_REGEX = /^[A-z-, ]{2,}$/;
 
 

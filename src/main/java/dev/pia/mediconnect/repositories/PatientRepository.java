@@ -10,12 +10,7 @@ import dev.pia.mediconnect.entities.*;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-     // Optional<Patient> findByPatientCode(String patientCode);
      Optional<Patient> findByPatientCode(String patientCode);
-
-
-
-     // us a Query to find patient by first name and last name
 
      List<Patient> findByFirstNameAndLastName(String firstName, String lastName);
 
@@ -28,11 +23,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
      List<Patient> findAllByProvider(Provider provider);
 
      List<Patient> findAllByProviderEquals(Provider provider);
-
-     List<Patient> findAllByLastNameIgnoreCase(String lastName);
-
-     List<Patient> findAllByInsuranceIgnoreCase(String insurance);
-
-     List<Patient> findAllByFirstNameIgnoreCase(String firstName);
 
 } 

@@ -19,7 +19,6 @@ public interface PatientNoteService {
     /* get all notes for a patient */
     public List<PatientNoteDto> getAllNotesByPatientId(Long patientId);
     
-    
     // get patient note by id
     @Transactional
     public PatientNoteDto getPatientNoteById(Long patientNoteId);

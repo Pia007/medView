@@ -194,6 +194,12 @@ h4 {
     margin-bottom: 0.5rem;
 }
 
+/* login page */
+
+.login-section {
+  height: calc(100vh - 75px);
+}
+
 
 /* provider */
 .provider-icon-button {
