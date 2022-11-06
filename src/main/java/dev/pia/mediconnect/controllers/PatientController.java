@@ -39,15 +39,6 @@ public class PatientController {
     public List<String> updatePatient(@PathVariable Long patientId, @RequestBody PatientDto patientDto) {
         return patientService.updatePatient(patientId, patientDto);
     }
-    // public List<String> updatePatient(@RequestBody PatientDto patientDto) {
-    //     return patientService.updatePatient(patientDto);
-    // }
-
-    /*  update patient name */
-    @PutMapping("/update/name")
-    public List<String> updatePatientName(@RequestBody PatientDto patientDto) {
-        return patientService.updatePatientName(patientDto);
-    }
 
     /* get all patients */
     @GetMapping
@@ -55,29 +46,9 @@ public class PatientController {
         return patientService.getAllPatients();
     }
 
-
     /* get all patients by provider id */
     @GetMapping("/provider/{providerId}")
     public List<PatientDto> getAllPatientsByProviderId(@PathVariable Long providerId) {
         return patientService.getAllPatientsByProviderId(providerId);
-    }
-
-    /* get all patients with last name */
-    @GetMapping("/lastName/{lastName}")
-    public List<PatientDto> getAllPatientsByLastName(@PathVariable String lastName) {
-        return patientService.getAllPatientsByLastName(lastName);
-    }
-
-    /* get all patients with first name */
-    @GetMapping("/firstName/{firstName}")
-    public List<PatientDto> getAllPatientsByFirstName(@PathVariable String firstName) {
-        return patientService.getAllPatientsByFirstName(firstName);
-    }
-
-    /* get all patients with same insurance */
-    /* use %20 to account for white space */
-    @GetMapping("/insurance/{insurance}")
-    public List<PatientDto> getAllPatientsByInsurance(@PathVariable String insurance) {
-        return patientService.getAllPatientsByInsurance(insurance);
     }
 }

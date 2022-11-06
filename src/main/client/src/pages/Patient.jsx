@@ -7,6 +7,8 @@ import { RenderPatient } from '../components/Renders';
 import PatientModal from '../components/PatientModal';
 import NoteModal from '../components/NoteModal';
 import edit from '../images/edit.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark, faPencil } from '@fortawesome/free-solid-svg-icons';
 import trash from '../images/delete.svg';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
@@ -211,12 +213,13 @@ const Patient = ({
                             <p className='mb-1 detail text-capitalize'><strong>Text:</strong> {note.body}</p>
                             <p className='mb-1 detail text-capitalize'><strong>Provider:</strong> {note.patientDto.provider.firstName} {note.patientDto.provider.lastName}</p>
                         </div>
-                        <div className='d-flex align-content-around'>
+                        <div className='d-flex align-content-around justify-content-around'>
                             <button 
                                 type='submit' 
                                 className='trash-btn' 
                                 onClick={() => handleDelete(note.id)}>
-                                    <img src={trash} alt='delete' />
+                                    {/* <img src={trash} alt='delete' /> */}
+                                    <FontAwesomeIcon icon={faXmark} className='icon trash-icon' alt='delete button'/>
                             </button>
                         </div>
                     </Card>
@@ -243,7 +246,7 @@ const Patient = ({
                         <button className='edit-conditions-btn'
                             onClick={toggleModal}
                         >
-                            <img src={edit} alt="edit conditions" className="edit-icon" />
+                            <img src={edit} alt="edit conditions button" className="edit-icon" />
                         </button>
                     </Col>
                 </Card>
@@ -311,7 +314,7 @@ const Patient = ({
 
 
     return (
-        <div className='container'>
+        <div className='container '>
             <RenderPatient singlePatient={patient} handleClick={toggleModal} />
             <Col className='text-center'>
                 <Button type='button' color='primary' className='form-btn' onClick={toggleNoteModal}>Add Note</Button>

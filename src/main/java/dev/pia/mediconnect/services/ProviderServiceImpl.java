@@ -56,23 +56,16 @@ public class ProviderServiceImpl implements ProviderService {
 
                 String id = optionalProvider.get().getId().toString();
                 String username = optionalProvider.get().getUsername();
-                String password = providerDto.getPassword();
                 
                 response.add(id);
                 response.add("Provider logged in successfully");
                 response.add(username);
-                // response.add(password);
-                
-               
-                //set the 
             } else {
                 response.add("Invalid password");
-                
             }
         } else {
             response.add("Invalid Provider username or password");
         }
-        
         return  response;
     }
 
@@ -94,10 +87,6 @@ public class ProviderServiceImpl implements ProviderService {
         List<String> response = new ArrayList<>();
         Optional<Provider> optionalProvider = providerRepository.findById(id);
 
-
-
-        // List<String> response = new ArrayList<>();
-        // Optional<Provider> optionalProvider = providerRepository.findById(providerDto.getId());
         if (optionalProvider.isPresent()) {
             Provider provider = optionalProvider.get();
             provider.setFirstName(providerDto.getFirstName());

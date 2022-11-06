@@ -16,7 +16,6 @@ import dev.pia.mediconnect.repositories.*;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    
     private PatientRepository patientRepository;
     private ProviderRepository providerRepository;
 
@@ -38,11 +37,6 @@ public class PatientServiceImpl implements PatientService {
         if (optionalProvider.isPresent()) {
 
             Provider provider = optionalProvider.get();
-            // us first and last names to check if patient exists
-            // List<Patient> patients = patientRepository.findByFirstNameAndLastName(patientDto.getFirstName(), patientDto.getLastName());
-            // if patient exists
-            
-
             Optional<Patient> optionalPatient = patientRepository.findByPatientCode(patientDto.getPatientCode());
         
             if (optionalPatient.isPresent()) {
@@ -123,67 +117,12 @@ public class PatientServiceImpl implements PatientService {
         }
         return response;
     }
-    
-
-    /* update patient first name */
-    @Transactional
-    public List<String> updatePatientName(PatientDto patientDto) {
-        List<String> response = new ArrayList<>();
-        Optional<Patient> optionalPatient = patientRepository.findById(patientDto.getId());
-        if (optionalPatient.isPresent()) {
-            Patient patient = optionalPatient.get();
-            patient.setFirstName(patientDto.getFirstName());
-            patient.setLastName(patientDto.getLastName());
-            patientRepository.saveAndFlush(patient);
-            response.add("Patient first name and last name updated successfully");
-        } else {
-            response.add("Patient not found");
-        }
-        return response;
-    }
 
     /* get all patients */
     @Override
     @Transactional
     public List<PatientDto> getAllPatients() {
         List<Patient> patients = patientRepository.findAll();
-        List<PatientDto> patientDtos = new ArrayList<>();
-        for (Patient patient : patients) {
-            patientDtos.add(new PatientDto(patient));
-        }
-        return patientDtos;
-    }
-
-    /* get all patients with same last name */
-    @Override
-    @Transactional
-    public List<PatientDto> getAllPatientsByLastName(String lastName) {
-        List<Patient> patients = patientRepository.findAllByLastNameIgnoreCase(lastName);
-        List<PatientDto> patientDtos = new ArrayList<>();
-        for (Patient patient : patients) {
-            patientDtos.add(new PatientDto(patient));
-        }
-        return patientDtos;
-    }
-
-    /* get patients with same first name */
-    @Override
-    @Transactional
-    public List<PatientDto> getAllPatientsByFirstName(String firstName) {
-        List<Patient> patients = patientRepository.findAllByFirstNameIgnoreCase(firstName);
-        List<PatientDto> patientDtos = new ArrayList<>();
-        for (Patient patient : patients) {
-            patientDtos.add(new PatientDto(patient));
-        }
-        return patientDtos;
-    }
-
-    /* get patients with same insurance and ignore case*/
-    @Override
-    @Transactional
-    public List<PatientDto> getAllPatientsByInsurance(String insurance) {
-
-        List<Patient> patients = patientRepository.findAllByInsuranceIgnoreCase(insurance);
         List<PatientDto> patientDtos = new ArrayList<>();
         for (Patient patient : patients) {
             patientDtos.add(new PatientDto(patient));

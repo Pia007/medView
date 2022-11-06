@@ -135,9 +135,11 @@ const Provider = ({
 
     if (loading) {
         return  (
-            <Spinner color="secondary">
-                Loading...
-            </Spinner>
+            <div className='d-flex flex-row justify-content-center align-items-center my-6'>
+                <Spinner color="primary">
+                    Loading...
+                </Spinner>
+            </div>
         )
     }
 

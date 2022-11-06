@@ -324,7 +324,16 @@ const AddPatientForm = () => {
         <>
             <section className='row m-auto p-3 justify-content-around'>
                 <Card className='col-12 col-md-10 col-lg-8 p-2 mt-2 align-self-center my-5'>
-                    <h3 className='px-3 form-title'>New Patient Form</h3>
+                    <Col className='d-flex justify-content-between'>
+                        <h3 className='px-3 form-title'>New Patient Form</h3>
+                        <button 
+                            type='button' 
+                            className='mt-0 mr-0 p-2 cancel-btn' 
+                            onClick={() => navigate('/provider/' + id)}
+                        >
+                            Cancel
+                        </button>
+                    </Col>
                     <form action="" onSubmit={handleSubmit} className='p-3'>
                         
                         <Row id='demos'>
@@ -892,14 +901,7 @@ const AddPatientForm = () => {
                                     Letters, numbers, spaces, and hyphens allowed.
                                 </p>
                             </Col>
-                            <div className="d-flex justify-content-between mt-2">
-                                <button 
-                                    type='button' 
-                                    className='mt-3 mr-0 p-2 cancel-btn' 
-                                    onClick={() => navigate('/provider/' + id)}
-                                >
-                                    Cancel
-                                </button>
+                            <div className="d-flex justify-content-around mt-2">
                                 <button 
                                     type='submit' 
                                     className='mt-3 mr-0 p-2 form-btn'

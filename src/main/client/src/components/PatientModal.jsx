@@ -62,8 +62,15 @@ const PatientModal = ({
                 <ModalBody >
                     <form  onSubmit={onSubmit}>
                         {/* <Row className='d-flex flex-row justify-content-between'> */}
-                            <Col md={6}className='' id='top'>
+                            <Col className='d-flex flex-row justify-content-between' id='top'>
                                 <h3 className='px-2'>MRN: {patCode} </h3>
+                                <button 
+                                    type='button' 
+                                    className='mt-0 mr-0 p-2 cancel-btn ' 
+                                    onClick={onPatientClick}
+                                >
+                                    Cancel
+                                </button>
                             </Col>
                             <Col className='d-flex justify-content-around'>
                                 <Scrollspy
@@ -344,14 +351,8 @@ const PatientModal = ({
                                 />
                             </Col>
                         </Row>
-                        <div className='d-flex justify-content-between'>
-                            <button 
-                                type='button' 
-                                className='mt-3 mr-0 p-2 cancel-btn ' 
-                                onClick={onPatientClick}
-                            >
-                                Cancel
-                            </button>
+                        <div className='d-flex justify-content-end'>
+                
                             <button 
                                 type='submit' 
                                 className='mt-3 mr-0 p-2 form-btn'

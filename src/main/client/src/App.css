@@ -1,15 +1,11 @@
 :root {
 
-  --open-sans: 'Open Sans', sans-serif;
-  --lato: 'Lato', sans-serif;
-  --mullish: 'Mullish', sans-serif;
   --mont: 'Montserrat Alternates', sans-serif;
   --poppins: 'Poppins', sans-serif;
 
   --opt-orange: #ff612b;
-  --opt-light: #efcabe;
   --opt-skyblue: #d9f6fa;
-  --opt-softblue: #e8f4f6;
+  --opt-softblue: #f3ffff;
   --opt-warmwhite: #fbf9f4;
   --opt-darkblue: #002677;
   --opt-darkgray: #5a5a5a;
@@ -52,13 +48,14 @@ body {
 
 .main-inner {
   height: 100%;
+  background: var(--opt-softblue);
 }
 .home {
   height: 95vh;
   width: auto;
   margin: auto;
   padding: auto;
-  background: var(--opt-warmwhite);
+  background: transparent;
   justify-content: center;
   align-content: center;
 }
@@ -148,8 +145,9 @@ h4 {
   font-weight: 600;
 }
 
+/* calculate the height  */
 .view {
-  height: 100vh;
+  height: 100%;
 }
 .view-content {
   margin: auto;
@@ -277,6 +275,7 @@ h4 {
   border: none;
   background: none;
   outline: none;
+  
 }
 .trash-btn:hover,
 .trash-btn:focus,
@@ -289,6 +288,18 @@ h4 {
 .edit-conditions-btn:active {
   transform: scale(1.2);
 }
+.trash-icon {
+
+  width: 2rem;
+  height: 2rem;
+  color: white;
+  background: var(--opt-alert);
+  border: 1px solid white;
+  border-radius: 50%;
+  box-shadow:  5px 5px 16px #91908e,
+    -5px -5px 16px #ffffff;
+}
+
 .hidden {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -403,7 +414,13 @@ span {
 .edit-conditions-btn {
     border: none;
     background: transparent;
-    color: #002677  ;
+
+}
+.edit-icon {
+  border-radius: 2px;
+  background: white;
+  box-shadow:  3px 3px 6px #646462,
+    -3px -3px 6px #ffffff;
 }
 
 .scroll-btn {
@@ -420,7 +437,6 @@ span {
 .scroll-btn:hover,
 .scroll-btn:focus,
 .scroll-btn:active {
-  /* font-size: 2.5rem; */
   transform: scale(1.5);
 }
 

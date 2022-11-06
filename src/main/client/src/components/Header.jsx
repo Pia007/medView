@@ -38,14 +38,13 @@ const Header = () => {
         <>
             <Navbar className='navbar navbar-expand-md p-1 d-flex justify-content-between sticky-top  myNav' style={{zIndex: '5'}}>
                 <div className='container-fluid d-flex flex-row justify-content-between'>
-                    {/* <Zoom> */}
+                
                     <div className='d-flex align-content-around'>
                         <NavLink tag='link' to='/' className='py-2 text-decoration-none med-view'
                             onClick={() => (navigation ? setNavigation(!navigation): setNavigation(navigation))}>
                                 <h1 className='mb-0 med-view'>MedView</h1>
                         </NavLink>
                     </div>
-                    {/* </Zoom> */}
                 
 
                     <NavbarToggler onClick={openNav} className='align-self-end p-0 pb-2'>
