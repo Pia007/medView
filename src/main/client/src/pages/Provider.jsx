@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import files from '../images/files.svg';
-import { Row, Col, Table, Card, Button} from 'reactstrap';
+import { Row, Col, Table, Card, Spinner} from 'reactstrap';
 import { RenderProvider } from '../components/Renders';
 import ProviderModal from '../components/ProviderModal';
 import axios from '../api/AxiosApi';
@@ -134,7 +134,11 @@ const Provider = ({
 
 
     if (loading) {
-        return <div>Loading...</div>
+        return  (
+            <Spinner color="secondary">
+                Loading...
+            </Spinner>
+        )
     }
 
 

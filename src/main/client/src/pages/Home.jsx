@@ -1,12 +1,12 @@
 import React from 'react'
+import Info from '../components/Info'
 import { Row } from 'reactstrap'
 
 const Home = () => {
     return (
-        <Row className='container' style={{overflowX: 'hidden', width: '95vw'}}>
-            <div className='px-2 px-md-2'>
-                <h1 className="home">HOME</h1>
-            </div>
+        <Row className='d-flex flex-row justify-content-around home' >
+            <h1 className='mb-5 text-center title '>Welcome to MedView</h1>
+            <Info />
         </Row>
     )
 }

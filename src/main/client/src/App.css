@@ -7,7 +7,9 @@
   --poppins: 'Poppins', sans-serif;
 
   --opt-orange: #ff612b;
+  --opt-light: #efcabe;
   --opt-skyblue: #d9f6fa;
+  --opt-softblue: #e8f4f6;
   --opt-warmwhite: #fbf9f4;
   --opt-darkblue: #002677;
   --opt-darkgray: #5a5a5a;
@@ -25,8 +27,7 @@
 
 html,
 body {
-    background: var(--opt-warmwhite);
-    /* background: black; */
+    background: var(--opt-softblue);
     height: 100vh;
     width: 100%;
     font-family: var(--poppins);
@@ -43,12 +44,54 @@ body {
     scroll-behavior:smooth;
 }
 
+.main {
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.main-inner {
+  height: 100%;
+}
+.home {
+  height: 95vh;
+  width: auto;
+  margin: auto;
+  padding: auto;
+  background: var(--opt-warmwhite);
+  justify-content: center;
+  align-content: center;
+}
+.title {
+  font-family: var(--mont);
+  font-size: 2.5em;
+  color: var(--opt-orange);
+  font-weight: 700;
+}
+.intro-holder {
+  padding: 0 30px;
+}
+
+.intro-card {
+  background: var(--opt-orange);
+}
+
+.card-two {
+  background: var(--opt-darkblue);
+}
+.intro-text {
+  background: none;
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: 700;
+}
 
 /* header */
 .myNav {
   border-bottom: 1px solid var(--opt-orange);
   background: var(--opt-warmwhite);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 100;
   
 }
 .med-view {
@@ -79,13 +122,7 @@ body {
   outline: none;
 }
 
-.main {
-  
-  align-items: center;
-  width: 100%;
-  height: 90vh;
 
-}
 .logout {
   background: none;
   border: none;
@@ -112,7 +149,7 @@ h4 {
 }
 
 .view {
-  height: 90vh;
+  height: 100vh;
 }
 .view-content {
   margin: auto;
@@ -120,9 +157,6 @@ h4 {
 .holder {
   height: 90vh;
   width: 100%;
-  /* display: flex; */
-  /* flex-direction: column;
-  justify-content: center; */
   align-items: center;
 }
 
@@ -168,7 +202,6 @@ h4 {
     width: 5rem;
     height: 5rem;
     background: #ffffff;
-    /* fill: var(--opt-skyblue); */
     border-radius: 50%;
     padding: 0.25rem;
     margin: 0.25rem;
@@ -177,7 +210,7 @@ h4 {
     border:none;
     box-shadow: 0px 0px 2px 2px rgb(52, 51, 51);
     box-shadow:  5px 5px 18px #646462,
-             -5px -5px 18px #ffffff;
+        -5px -5px 18px #ffffff;
 }
 .pat-icon-button {
     width: 7.5rem;
@@ -226,8 +259,6 @@ h4 {
 }
 .pat-text {
   color: var(--opt-darkblue);
-  /* font-weight: 600; */
-  /* font-size: 1.25rem; */
 }
 .alert-icon {
   float: right;
@@ -256,7 +287,6 @@ h4 {
 .edit-conditions-btn:hover,
 .edit-conditions-btn:focus,
 .edit-conditions-btn:active {
-  /* font-size: 2.5rem; */
   transform: scale(1.2);
 }
 .hidden {
@@ -288,7 +318,6 @@ th {
   font-weight: 600;
 }
 .form-link {
-  /* font-weight: 700; */
   color: var(--opt-orange);
 }
 ul {
@@ -322,7 +351,6 @@ p {
 span {
   color: var(--opt-alert);
   font-weight: 600;
-  /* font-family: var(--poppins); */
 }
 .text {
   color: var(--opt-darkblue);
@@ -395,6 +423,42 @@ span {
   /* font-size: 2.5rem; */
   transform: scale(1.5);
 }
+
+@media screen and (min-width: 576px) {
+  .title {
+    font-size: 2.5em;
+  }
+  .intro-text {
+    font-size: 1.4em;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 3em;
+  }
+
+  .intro-text {
+    font-size: 1.6em;
+  }
+  .card-blue {
+    background-color: var(--opt-darkblue);
+  }
+  .card-orange {
+    background-color: var(--opt-orange);
+  }
+}
+@media screen and (min-width: 992px) {
+  .title {
+    font-size: 3.5em;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .title {
+    font-size: 4.5em;
+  }
+}
+
 
 
 

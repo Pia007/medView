@@ -25,6 +25,7 @@ const Header = () => {
         logout();
     }
     
+
     const MenuItem = ({ to, linkName }) => {
         return (
             <NavItem>
@@ -57,7 +58,7 @@ const Header = () => {
 
                         { pathname === '/' || pathname === '/login' || pathname === '/register' ? (
                             <>
-                                <MenuItem to='/' linkName='Home'exact={true} />
+                                <MenuItem to='/' linkName='Home' exact={true} />
                                 <MenuItem to='/login' linkName='Login' />
                                 <MenuItem to='/register' linkName='Register' /> 
                             </>

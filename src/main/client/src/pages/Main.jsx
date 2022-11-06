@@ -1,4 +1,4 @@
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route, useLocation} from 'react-router-dom';
 import Header from '../components/Header';
 import Home from '../pages/Home';
 import Registration from './Registration';
@@ -11,14 +11,21 @@ import Protected from '../ProtectedRoute';
 
 const Main = () => {
 
+    // no header on home page
+    const RenderHeader = () => {
+        const location = useLocation();
+        return location.pathname === '/' ? null : <Header />
+    }
+
     return (
-        <div >
-            <Header />
-            <div className='main'>
+        <div className='main'>
+            <RenderHeader />
+            <div className='main-inner d-flex flex-column justify-content-around'>
                 <Routes>
                     <Route path='/' element={<Home/>} />
                     
                     <Route path='register' element={<Registration />} />
+
                     {/* protect the provider route with its id  */}
                     <Route path='login/' element={<Login />} />
                     <Route path='provider/:id' element={
