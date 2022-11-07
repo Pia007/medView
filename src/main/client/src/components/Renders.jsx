@@ -57,11 +57,11 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                             </span>
                         </p>
                         <p className='mb-0 detail'><strong>Gender:</strong> {singlePatient.gender} </p>
-                        <p className='mb-0 detail'><strong>Blood Type:</strong> {singlePatient.bloodType} </p>
-                        <p className='mb-0 detail'>
-                            <span className='text-two'>{singlePatient.address}</span>, {''}
-                            <span className='text-two'>{singlePatient.city}</span>, {''}
-                            <span className='text-two text-uppercase'>{singlePatient.state}</span> {''}
+                        <p className='mb-0 detail'><strong>Blood Type:</strong><span> {singlePatient.bloodType} </span></p>
+                        <p className='mb-0 detail text-center text-lg-start'>
+                            {singlePatient.address} {''}
+                            {singlePatient.city} {''}
+                            {singlePatient.state} {''}
                             {singlePatient.zip}
                         </p>
                         <p className='mb-0 detail'>{singlePatient.phone}</p>

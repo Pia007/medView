@@ -5,6 +5,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
 import { Row, Card, Button } from 'reactstrap';
+import { Fade } from 'react-reveal';
 
 const LOGIN_URL = '/providers/login'
 

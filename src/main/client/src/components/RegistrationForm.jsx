@@ -3,7 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../api/AxiosApi';
-import { Row, Card, Button } from 'reactstrap';
+import { Row, Col, Card, Button } from 'reactstrap';
+import { Fade } from 'react-reveal';
 
 
 const REGISTER_URL = '/providers/register';
@@ -189,11 +190,16 @@ const RegistrationForm = () => {
                 <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
 
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
-                    <h1 className='text-left p-2 mb-0 form-title'>Sign up</h1>
+                    <Col className='d-flex flex-column flex-sm-row justify-content-between'>
+                        <h1 className='text-left p-2 mb-0 form-title'>Sign up</h1>
+                        <Fade delay={1000}>
+                            <span className='text-left align-self-sm-center p-2'>Demo application: Do not use sensitive information</span>
+                        </Fade>
+                    </Col>
                     
                     <h2 className='text-left p-2 mb-0 form-st'>
-                            Already have an account? <Link to='/login' className='text-decoration-none form-link'> Sign in</Link> here.
-                        </h2>
+                        Already have an account? <Link to='/login' className='text-decoration-none form-link'> Sign in</Link> here.
+                    </h2>
                     <form onSubmit={handleSubmit} className='py-2 px-3' style={{border: ''}}>
                         <Row className=''>
                             <div className='form-group col-12 p-2'>

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
 import { Row, Col, Card } from 'reactstrap'
+import { Fade } from 'react-reveal';
 
 const ADD_PATIENT_URL = '/patients/provider/';
 
@@ -325,7 +326,7 @@ const AddPatientForm = () => {
             <section className='row m-auto p-3 justify-content-around'>
                 <Card className='col-12 col-md-10 col-lg-8 p-2 mt-2 align-self-center my-5'>
                     <Col className='d-flex justify-content-between'>
-                        <h3 className='px-3 form-title'>New Patient Form</h3>
+                        <h3 className='px-2 align-self-center form-title'>New Patient Form</h3>
                         <button 
                             type='button' 
                             className='mt-0 mr-0 p-2 cancel-btn' 
@@ -334,7 +335,10 @@ const AddPatientForm = () => {
                             Cancel
                         </button>
                     </Col>
-                    <form action="" onSubmit={handleSubmit} className='p-3'>
+                    <Fade delay={1000}>
+                        <span className='text-left align-self-sm-center p-2'>Demo application: Do not use sensitive information</span>
+                    </Fade>
+                    <form action="" onSubmit={handleSubmit} className='p-2'>
                         
                         <Row id='demos'>
                             <Col md={6} className="form-group my-2">
