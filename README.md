@@ -37,6 +37,7 @@ https://user-images.githubusercontent.com/66088725/200205968-1d90516d-8ef1-4284-
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007acc?style=plastic&logo=visual-studio-code&logoColor=white) 
 
 <h3 style="color: #7DF9FF">Key Dependencies</h3>
+
 <img src="https://img.shields.io/badge/-cors-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-Project%20Lombok-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-moment-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-react%20router%20dom-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-reactstrap-285d95?style=plastic" />
 
 <br />
