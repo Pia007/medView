@@ -62,8 +62,8 @@ const PatientModal = ({
                 <ModalBody >
                     <form  onSubmit={onSubmit}>
                         {/* <Row className='d-flex flex-row justify-content-between'> */}
-                            <Col className='d-flex flex-row justify-content-between' id='top'>
-                                <h3 className='px-2'>MRN: {patCode} </h3>
+                            <Col className='d-flex flex-row justify-content-between mb-2' id='top'>
+                                <h3 className='align-self-center'>MRN: {patCode} </h3>
                                 <button 
                                     type='button' 
                                     className='mt-0 mr-0 p-2 cancel-btn ' 
@@ -80,7 +80,7 @@ const PatientModal = ({
                                     <ul className='list-unstyled d-flex justify-content-between pl-0 m-0'>
                                         <li className='px-2'><a className='text-decoration-none pt-link' href="#up-pd">General</a></li>
                                         <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ci">Contact</a></li>
-                                        <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ec">Emergency Contact</a></li>
+                                        <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ec">Emergency </a></li>
                                         <li className='px-2'><a className='text-decoration-none pt-link' href="#up-md">Medical</a></li>
                                     </ul>
                                 </Scrollspy>
