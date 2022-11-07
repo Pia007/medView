@@ -38,7 +38,7 @@ https://user-images.githubusercontent.com/66088725/200205968-1d90516d-8ef1-4284-
 
 <h3 style="color: #7DF9FF">Key Dependencies</h3>
 
-<img src="https://img.shields.io/badge/-cors-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-Project%20Lombok-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-moment-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-react%20router%20dom-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-reactstrap-285d95?style=plastic" />
+<img src="https://img.shields.io/badge/-CORS-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-Project%20Lombok-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-Moment-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-React%20Router%20Dom-285d95?style=plastic" /> <img src="https://img.shields.io/badge/-Reactstrap-285d95?style=plastic" />
 
 <br />
 
