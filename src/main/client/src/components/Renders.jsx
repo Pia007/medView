@@ -60,8 +60,8 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                         <p className='mb-0 detail'><strong>Blood Type:</strong><span> {singlePatient.bloodType} </span></p>
                         <p className='mb-0 detail text-center text-lg-start'>
                             {singlePatient.address} {''}
-                            {singlePatient.city} {''}
-                            <span className='text-capitalize'>{singlePatient.state}</span> {''}
+                            {singlePatient.city}, {''}
+                            <span className='text-two detail text-capitalize'>{singlePatient.state}</span> {''}
                             {singlePatient.zip}
                         </p>
                         <p className='mb-0 detail'>{singlePatient.phone}</p>
