@@ -11,7 +11,6 @@ import Protected from '../utils/ProtectedRoute';
 
 const Main = () => {
 
-    // no header on home page
     const RenderHeader = () => {
         const location = useLocation();
         return location.pathname === '/' ? null : <Header />
@@ -26,8 +25,8 @@ const Main = () => {
                     
                     <Route path='register' element={<Registration />} />
 
-                    {/* protect the provider route with its id  */}
                     <Route path='login/' element={<Login />} />
+                    
                     <Route path='provider/:id' element={
                         <Protected>     
                             <Provider />

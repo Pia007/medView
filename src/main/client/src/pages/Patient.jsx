@@ -4,11 +4,11 @@ import React, {useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark, faPencil } from '@fortawesome/free-solid-svg-icons';
 import PatientModal from '../components/PatientModal';
 import NoteModal from '../components/NoteModal';
 import edit from '../images/edit.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPencil } from '@fortawesome/free-solid-svg-icons';
 import trash from '../images/delete.svg';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
@@ -90,7 +90,6 @@ const Patient = ({
 
     const [ category, setCategory ] = useState('conditions');
 
-    // call the api to get the patient
     useEffect (() => {
         const getPatient = async () => {
             try {

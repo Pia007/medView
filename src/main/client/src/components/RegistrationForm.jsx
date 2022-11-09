@@ -1,143 +1,106 @@
 import React, { useRef, useState, useEffect } from 'react';
+import axios from '../api/AxiosApi';
 import { useNavigate, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from '../api/AxiosApi';
 import { Row, Col, Card, Button } from 'reactstrap';
 import { Fade } from 'react-reveal';
 
 
 const REGISTER_URL = '/providers/register';
-// username regex - must start with lower or upper case letter, must be followed by  3-9 charcters that can be lower/upper case letters, digits, hyphens or underscores, overall it must be 4 to 10 characters long
+
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,9}$/;
-
-// password regex - must be at least 4-10 characters long, must contain at least one lower case letter, one upper case letter, one digit and one special character
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,10}$/;
-
-// firstname regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
 const FIRSTNAME_REGEX = /^[A-z- ]{2,}$/;
-
-// lastname regex - must be at least 2 characters long, can contain loweletters, hyphens or spaces
 const LASTNAME_REGEX = /^[A-z- ]{2,}$/;
-
-// regex for specialty - must be at least 8 characters long, can have letters, spaces, hyphens, commas, apostrophes, periods
 const SPECIALTY_REGEX = /^[A-z ,.'-]{8,}$/;
-
-// regex for suffix - must be at least 2 characters long, only letters
+const SUFFIX_REGEX = /^[A-z]{2,}$/;
 
 
 const RegistrationForm = () => {
-    // set the focus on the username when the component loads
+    
     const usernameRef = useRef();
 
-    // if error, focus on the input that caused the error, screen reader will read the error message
     const errRef = useRef();
 
     const navigate = useNavigate();
 
 
-    // state for the username input
     const [username, setUsername] = useState('');
-    // boolean to check if the username is valid
     const [validUsername, setValidUsername] = useState(false);
-    // boolean if userfield is focused or not
     const [usernameFocus, setUsernameFocus] = useState(false);
 
-
-    // password state
     const [password, setPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    // password match state
     const [matchPassword, setMatchPassword] = useState('');
     const [validMatch, setValidMatch] = useState(false);
     const [passwordMatchFocus, setPasswordMatchFocus] = useState(false);
 
-    // first name state
     const [firstName, setFirstName] = useState('');
     const [validFirstName, setValidFirstName] = useState(false);
     const [firstNameFocus, setFirstNameFocus] = useState(false);
 
-    // last name state
     const [lastName, setLastName] = useState('');
     const [validLastName, setValidLastName] = useState(false);
     const [lastNameFocus, setLastNameFocus] = useState(false);
 
-    // specialty state
     const [specialty, setSpecialty] = useState('')
     const [validSpecialty, setValidSpecialty] = useState(false);
     const [specialtyFocus, setSpecialtyFocus] = useState(false);
 
-    // suffix state
     const [suffix, setSuffix] = useState('');
     const [validSuffix, setValidSuffix] = useState(false);
     const [suffixFocus, setSuffixFocus] = useState(false);
 
-    // state for success/ error messages
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
 
-    // set the focus on username input when the component loads
+    
     useEffect(() => {
         usernameRef.current.focus();
     }, []);
 
-    // useEffect to validate the username
     useEffect(() => {
         const result = USERNAME_REGEX.test(username);
-        console.log(result);
-        console.log(username);
-        setValidUsername(USERNAME_REGEX.test(username)); //all in one line without the console.log
         setValidUsername(result);
     }, [username]);
 
-    // useEffect to validate the password
+    
     useEffect(() => {
         const result = PASSWORD_REGEX.test(password);
-        console.log(result);
-        console.log(password);
-        setValidPassword(PASSWORD_REGEX.test(password)); //all in one line without the console.log
+        setValidPassword(PASSWORD_REGEX.test(password)); 
         const match = password === matchPassword;
         setValidMatch(match)
         setValidPassword(result);
     }, [password, matchPassword]);
 
-    // useEffect to validate the first name
+    
     useEffect(() => {
         const result = FIRSTNAME_REGEX.test(firstName);
-        console.log(result);
-        console.log(firstName);
-        // setValidName(USER_REGEX.test(user)); all in one line without the console.log
         setValidFirstName(result);
     }, [firstName]);
 
-    // useEffect to validate the last name
+    
     useEffect(() => {
         const result = LASTNAME_REGEX.test(lastName);
-        console.log(result);
-        console.log(lastName);
-        // setValidName(USER_REGEX.test(user)); all in one line without the console.log
         setValidLastName(result);
     }, [lastName]);
 
-    // useEffect to validate the specialty
+    
     useEffect(() => {
         const result = SPECIALTY_REGEX.test(specialty);
-        console.log(result);
-        console.log(specialty);
         setValidSpecialty(result);
     }, [specialty]);
 
-    // useEffect to validate the suffix
+    
     useEffect(() => {
-        const result = LASTNAME_REGEX.test(suffix);
-        console.log(result);
-        console.log(suffix);
+        const result = SUFFIX_REGEX.test(suffix);
         setValidSuffix(result);
     }, [suffix]);
 
-    // useEffect for error message
+    
     useEffect(() => {
         setError('');
     }, [username, password, firstName, lastName, specialty, suffix]);
@@ -162,7 +125,6 @@ const RegistrationForm = () => {
 
             navigate('/login');
 
-            // clear the form
             setUsername('');
             setPassword('');
             setMatchPassword('');
@@ -187,7 +149,7 @@ const RegistrationForm = () => {
     return (
         <>
             <section className='row m-auto p-3 justify-content-around m-5'>
-                <p ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>{error}</p>
+                
 
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
                     <Col className='d-flex flex-column flex-sm-row justify-content-between'>
@@ -200,7 +162,11 @@ const RegistrationForm = () => {
                     <h2 className='text-left p-2 mb-0 form-st'>
                         Already have an account? <Link to='/login' className='text-decoration-none form-link'> Sign in</Link> here.
                     </h2>
+                    
                     <form onSubmit={handleSubmit} className='py-2 px-3' style={{border: ''}}>
+                        <span ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>
+                            <FontAwesomeIcon icon={faInfoCircle} /> {error}
+                        </span>
                         <Row className=''>
                             <div className='form-group col-12 p-2'>
                                 <label htmlFor='username' className=''>

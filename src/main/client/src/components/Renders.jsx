@@ -30,13 +30,9 @@ export const RenderProvider = ({provider, onClick}) => {
 }
 
 
-/* render patient */
 export const RenderPatient = ({singlePatient, handleClick}) => {
 
-    // regex with only spaces or only commas
     const regex = /^[\s,]+$/;
-
-    // contains only letters, commas, and spaces
     const regex2 = /^[a-zA-Z, ]*$/;   
 
     return (
@@ -61,7 +57,7 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                         <p className='mb-0 detail text-center text-lg-start'>
                             {singlePatient.address} {''}
                             {singlePatient.city}, {''}
-                            <span className='text-two detail text-capitalize'>{singlePatient.state}</span> {''}
+                            <span className='text-two detail text-uppercase'>{singlePatient.state}</span> {''}
                             {singlePatient.zip}
                         </p>
                         <p className='mb-0 detail'>{singlePatient.phone}</p>

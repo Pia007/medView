@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link} from 'react-router-dom';
+import axios from '../api/AxiosApi';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from '../api/AxiosApi';
 import { Row, Card, Button } from 'reactstrap';
 import { Fade } from 'react-reveal';
 
@@ -14,13 +14,11 @@ const LoginForm = () => {
 
     const navigate = useNavigate();
 
-
     const usernameRef = useRef();
     const errorRef = useRef();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // const [ provider, setProvider ] = useState();
     const [err, setErr] = useState('');
     const [loginMsg, setLoginMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -64,7 +62,7 @@ const LoginForm = () => {
                 
                 setProviderId(response.data[0]);
                 const id = response.data[0];
-               
+
                 setUsername('');
                 setPassword('');
                 localStorage.setItem('username', response.data[2]);

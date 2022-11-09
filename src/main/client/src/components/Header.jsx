@@ -16,10 +16,8 @@ const Header = () => {
         navigate('/login');
     }
 
-    // get the provider id from the token
     const token = localStorage.getItem('username');
 
-    // if token is undefined  go to login page
     if (token === undefined) {
         navigate('/login');
         logout();

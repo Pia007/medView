@@ -1,6 +1,6 @@
 import React from 'react';
 import RegistrationForm from '../components/RegistrationForm';
-import { Row, Col, Card } from 'reactstrap';
+import { Row } from 'reactstrap';
 
 const Registrations = () => {
     return (

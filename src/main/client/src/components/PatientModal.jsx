@@ -60,32 +60,31 @@ const PatientModal = ({
         <>
             <Modal isOpen={isOpen} toggle={toggle} size='lg' centered scrollable>
                 <ModalBody >
-                    <form  onSubmit={onSubmit}>
-                        {/* <Row className='d-flex flex-row justify-content-between'> */}
-                            <Col className='d-flex flex-row justify-content-between mb-2' id='top'>
-                                <h3 className='align-self-center'>MRN: {patCode} </h3>
-                                <button 
-                                    type='button' 
-                                    className='mt-0 mr-0 p-2 cancel-btn ' 
-                                    onClick={onPatientClick}
-                                >
-                                    Cancel
-                                </button>
-                            </Col>
-                            <Col className='d-flex justify-content-around'>
-                                <Scrollspy
-                                    items={ ['up-pd', 'up-ci', 'up-ec', 'up-md'] }
-                                    currentClassName="active"
-                                >
-                                    <ul className='list-unstyled d-flex justify-content-between pl-0 m-0'>
-                                        <li className='px-2'><a className='text-decoration-none pt-link' href="#up-pd">General</a></li>
-                                        <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ci">Contact</a></li>
-                                        <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ec">Emergency </a></li>
-                                        <li className='px-2'><a className='text-decoration-none pt-link' href="#up-md">Medical</a></li>
-                                    </ul>
-                                </Scrollspy>
-                            </Col>
-                        {/* </Row> */}
+                <form  onSubmit={onSubmit}>
+                        <Col className='d-flex flex-row justify-content-between mb-2' id='top'>
+                            <h3 className='align-self-center'>MRN: {patCode} </h3>
+                            <button 
+                                type='button' 
+                                className='mt-0 mr-0 p-2 cancel-btn ' 
+                                onClick={onPatientClick}
+                            >
+                                Cancel
+                            </button>
+                        </Col>
+                        <Col className='d-flex justify-content-around'>
+                            <Scrollspy
+                                items={ ['up-pd', 'up-ci', 'up-ec', 'up-md'] }
+                                currentClassName="active"
+                            >
+                                <ul className='list-unstyled d-flex justify-content-between pl-0 m-0'>
+                                    <li className='px-2'><a className='text-decoration-none pt-link' href="#up-pd">General</a></li>
+                                    <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ci">Contact</a></li>
+                                    <li className='px-2'><a className='text-decoration-none pt-link' href="#up-ec">Emergency </a></li>
+                                    <li className='px-2'><a className='text-decoration-none pt-link' href="#up-md">Medical</a></li>
+                                </ul>
+                            </Scrollspy>
+                        </Col>
+                        
                         <Row id='up-pd' className='p-2'>
                             <Col xs={12} md={6} className='form-group p-2'>
                                 <label htmlFor="patientCode">Patient Code</label>

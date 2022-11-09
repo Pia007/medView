@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect} from 'react';
 import { useParams, Link } from 'react-router-dom';
 import files from '../images/files.svg';
@@ -25,7 +27,6 @@ const Provider = ({
     
     const { id } = useParams();
 
-    // console.log("provider id: " + id);
 
     const [provider, setProvider] = useState('')
     const [ providerInitials, setProviderInitials ] = useState('')
@@ -69,9 +70,7 @@ const Provider = ({
 
                 // check if array is empty
                 if (patients.length === 0) {
-                    // setMessage("No patients found");
                     setPatients(null);
-                    // 
                     setLoading(false);
                     console.log('No patients');
                 } else {
@@ -85,13 +84,9 @@ const Provider = ({
                     setPatients(response.data);
                     console.log(patients);
 
-                    // setMessage(' You do not have any patients yet');
-
-                    // create an array of patient ids
                     const patientIds = patients.map(patient => patient.id);
                     console.log("These are ids: " + patientIds);
 
-                    // get the id of the each patient
                     patientIds.forEach (patientId => {
                         const id = patientId;
                         console.log("This is the id: " + id);
@@ -206,7 +201,6 @@ const Provider = ({
                                     className=' text-decoration-none add-link'>Add Patient?
                             </Link>
                         </Col>
-                        {/* </Button> */}
                         <Col xs={12} sm={10} className='m-auto'>
                             <Card className='p-2 ' id='tableHolder'>
                                 <form >
@@ -246,7 +240,6 @@ const Provider = ({
                             </Card>
                         </Col>
                     </Col>
-
                 )}
             </Col>
         </Row>
