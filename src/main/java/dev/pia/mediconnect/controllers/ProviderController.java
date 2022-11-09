@@ -25,7 +25,6 @@ public class ProviderController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @PostMapping("/register")
     public List<String> registerProvider(@RequestBody ProviderDto providerDto) {
         providerDto.setPassword(passwordEncoder.encode(providerDto.getPassword()));
@@ -42,13 +41,11 @@ public class ProviderController {
         return providerService.getAllProviders();
     }
 
-    /* get provider by id */
     @GetMapping("/{providerId}")
     public ProviderDto getProviderById(@PathVariable Long providerId) {
         return providerService.getProviderById(providerId);
     }
 
-    /* update provider  by id*/
     @PutMapping("/{providerId}")
     public List<String> updateProvider(@PathVariable Long providerId, @RequestBody ProviderDto providerDto) {
         return providerService.updateProvider(providerId, providerDto);

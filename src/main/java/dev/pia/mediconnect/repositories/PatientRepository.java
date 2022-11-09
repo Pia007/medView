@@ -12,12 +12,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
      Optional<Patient> findByPatientCode(String patientCode);
 
-     List<Patient> findByFirstNameAndLastName(String firstName, String lastName);
-
-     // get patient by patient id
      Optional<Patient> findById(Long id);
 
-     // find all patients who  have the same provider id as the provider id
      Optional<Provider> findByProvider(Long id);
 
      List<Patient> findAllByProvider(Provider provider);

@@ -11,14 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 public class PatientNoteDto implements Serializable {
 
-    //fields
     private Long id;
     private String body;
     private LocalDate dateCreated;
     private PatientDto patientDto;
 
     /* custom constructor */
-    
     public PatientNoteDto(PatientNote patientNote) {
         if(patientNote.getId() != null) {
             this.id = patientNote.getId();

@@ -94,12 +94,9 @@ public class Patient {
     @Column(name = "medications", length = 2000)
     private String medications;
 
-
-    /* provider relationship - many patients to one provider */
     @ManyToOne
     private Provider provider;
 
-    // change to cascade all when ready recedin db
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonBackReference
     private Set<PatientNote> patientNoteSet = new HashSet<>();

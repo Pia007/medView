@@ -39,7 +39,6 @@ public class Provider {
     @Column(name = "suffix", length = 10)
     private String suffix;
 
-    // relationship with patient - one to many
     @OneToMany(mappedBy="provider",  fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonBackReference
     private Set<Patient> patientSet = new HashSet<>();
@@ -69,8 +68,6 @@ public class Provider {
         }
     }
 
-
-    /* toString */
     @Override
     public String toString() {
         return "Provider [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName

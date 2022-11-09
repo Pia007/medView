@@ -15,15 +15,14 @@ public interface ProviderService {
     @Transactional
     List<String> loginProvider(ProviderDto providerDto);
 
-    /* get provider by provider id */
     @Transactional
     ProviderDto getProviderById(Long providerId);
 
-    /* update provider by id*/
     @Transactional
     List<String> updateProvider(Long providerId, ProviderDto providerDto);
 
     /* get all providers */
+    @Transactional
     List<ProviderDto> getAllProviders();
 
 }
