@@ -15,15 +15,14 @@ import dev.pia.mediconnect.services.*;
 public class ProviderController {
 
     private ProviderService providerService;
+    private PasswordEncoder passwordEncoder;
     
     // constructor injection
     @Autowired
     public ProviderController(ProviderService providerService) {
         this.providerService = providerService;
+        this.passwordEncoder = passwordEncoder;
     }   
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public List<String> registerProvider(@RequestBody ProviderDto providerDto) {
