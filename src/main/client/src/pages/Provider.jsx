@@ -47,15 +47,12 @@ const Provider = ({
             try {
                 const response = await axios.get(`${PROVIDER_URL}/${id}`);
                 setProvider(response.data);
-                // setLoading(true);
 
-                // get provider initials
                 const providerInitials = response.data.firstName.charAt(0) + response.data.lastName.charAt(0);
                 setProviderInitials(providerInitials);
                 console.log(providerInitials);
             } catch (error) {
                 setError(error);
-                // setLoading(false);
             }
         }
 

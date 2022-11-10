@@ -217,7 +217,6 @@ const Patient = ({
                                 type='submit' 
                                 className='trash-btn' 
                                 onClick={() => handleDelete(note.id)}>
-                                    {/* <img src={trash} alt='delete' /> */}
                                     <FontAwesomeIcon icon={faXmark} className='icon trash-icon' alt='delete button'/>
                             </button>
                         </div>
@@ -227,7 +226,13 @@ const Patient = ({
         } else {
             return (
                 <div>
-                    <p className='detail'>{message}. Would you like to <button onClick={toggleNoteModal} className='btn btn-link px-0 pt-link'>add a note</button>?</p>
+                    <p className='detail'>
+                        {message}. Would you like to 
+                            <button onClick={toggleNoteModal} className='btn btn-link px-0 pt-link'>
+                                add a note
+                            </button>
+                        ?
+                    </p>
                 </div>
             )
         }
@@ -253,7 +258,13 @@ const Patient = ({
         } else {
             return (
                 <div>
-                    <p className='detail'> No conditions listed. Would you like to <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>conditions</button>?</p>
+                    <p className='detail'> 
+                        No conditions listed. Would you like to 
+                            <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>
+                                conditions
+                            </button>
+                        ?
+                    </p>
                 </div>
             )
         }
@@ -279,7 +290,13 @@ const Patient = ({
         } else {
             return (
                 <div>
-                    <p className='detail'> No allergies listed. Would you like to <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>add allergies</button>?</p>
+                    <p className='detail'> 
+                        No allergies listed. Would you like to 
+                            <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>
+                                add allergies
+                            </button>
+                        ?
+                    </p>
                 </div>
             )
         }
@@ -305,7 +322,13 @@ const Patient = ({
         } else {
             return (
                 <div>
-                    <p className='detail'> No medications listed. Would you like to <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>add medications</button>?</p>
+                    <p className='detail'> 
+                        No medications listed. Would you like to 
+                            <button onClick={toggleModal} className='btn btn-link px-0 pt-link'>
+                                add medications
+                            </button>
+                        ?
+                    </p>
                 </div>
             )
         }
@@ -402,7 +425,6 @@ const Patient = ({
                             onClick={() => {
                                 setCategory('notes') 
                             }}
-
                         >
                             Notes
                         </button>

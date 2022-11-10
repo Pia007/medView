@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
 import axios from '../api/AxiosApi';
 import { useNavigate, Link } from 'react-router-dom';
