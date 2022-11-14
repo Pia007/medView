@@ -110,7 +110,7 @@ const RegistrationForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(username, password);
+        // console.log(username, password);
         
         axios.post(REGISTER_URL, 
             {
