@@ -22,7 +22,7 @@ const RegistrationForm = () => {
     
     const usernameRef = useRef();
 
-    const errRef = useRef();
+    const errorRef = useRef();
 
     const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ const RegistrationForm = () => {
     const [suffixFocus, setSuffixFocus] = useState(false);
 
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
+    const [err, setErr] = useState('');
 
     
     useEffect(() => {
@@ -103,7 +103,7 @@ const RegistrationForm = () => {
 
     
     useEffect(() => {
-        setError('');
+        setErr('');
     }, [username, password, firstName, lastName, specialty, suffix]);
 
     
@@ -112,39 +112,40 @@ const RegistrationForm = () => {
 
         console.log(username, password);
         
-        try {
-            const registration = await axios.post(REGISTER_URL, {
+        axios.post(REGISTER_URL, 
+            {
                 username,
                 password,
                 firstName,
                 lastName,
                 specialty,
                 suffix
-            });
-            
-            console.log(JSON.stringify(registration.data));
-
-            navigate('/login');
-
-            setUsername('');
-            setPassword('');
-            setMatchPassword('');
-            setFirstName('');
-            setLastName('');
-            setSpecialty('');
-            setSuffix('');
-            setSuccess(true);
-
-        } catch (error) {
-            if (!error?.response) {
-                setError('Something went wrong, please try again later');
-            } else if ( error.response?.status === 409) {
-                setError('Username already exists, please choose another one');
-            } else {
-                setError('Registration failed');
             }
-            errRef.current.focus();
-        }
+        )
+        .then((response) => {
+        
+            console.log("Status: ", response.status)
+            console.log("Message: ", response.message)
+            console.log("Data: ", response.data)
+            console.log(JSON.stringify(response.data));
+
+            if (response.status === 200 && response.data[0] === 'Username already exists') {
+                setErr(response.data[0]);
+                setSuccess(false);
+                console.log('SORRY, USERNAME ALREADY EXISTS');
+            } else {
+                setUsername('');
+                setPassword('');
+                setMatchPassword('');
+                setFirstName('');
+                setLastName('');
+                setSpecialty('');
+                setSuffix('');
+                setSuccess(true);
+
+                navigate('/login');
+            }
+        })
     }
 
     return (
@@ -165,8 +166,8 @@ const RegistrationForm = () => {
                     </h2>
                     
                     <form onSubmit={handleSubmit} className='py-2 px-3' style={{border: ''}}>
-                        <span ref={errRef} className={error ? 'error' : 'offscreen'} aria-live='assertive'>
-                            <FontAwesomeIcon icon={faInfoCircle} /> {error}
+                        <span ref={errorRef} className={err ? 'error' : 'offscreen'} aria-live='assertive'>
+                            <FontAwesomeIcon icon={faInfoCircle} /> {err}
                         </span>
                         <Row className=''>
                             <div className='form-group col-12 p-2'>

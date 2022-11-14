@@ -14,7 +14,7 @@ import moment from 'moment';
 import axios from '../api/AxiosApi';
 
 const PATIENT_URL = '/patients';
-const NOTES_URL = '/notes';;
+const NOTES_URL = '/notes';
 
 const Patient = ({
     singlePatient,
