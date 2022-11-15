@@ -31,7 +31,7 @@ https://user-images.githubusercontent.com/66088725/201790097-3a806e29-800a-4edd-
 
 ![Java](https://img.shields.io/badge/Java-F89820?style=plastic&logo=&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=plastic&logo=spring-boot&logoColor=white) ![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=plastic&logo=spring-security&logoColor=white)
 ![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?style=plastic&logo=postgresql&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-812878?style=plastic&logo=apache&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-812878?style=plastic&logo=apache-maven&logoColor=white)
 
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007acc?style=plastic&logo=visual-studio-code&logoColor=white) 
 
