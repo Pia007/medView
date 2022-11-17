@@ -64,6 +64,7 @@ public class PatientNoteServiceImpl implements PatientNoteService {
         Optional<Patient> optionalPatient = patientRepository.findById(patientId);
         if (optionalPatient.isPresent()) {
             List<PatientNote> patientNoteList = patientNoteRepository.findAllByPatientEquals(optionalPatient.get());
+            // using stream to convert list of patient notes to list of patient note dtos. lambda expression is used to convert each patient note to patient note dto
             return patientNoteList.stream().map(patientNote -> (new PatientNoteDto(patientNote))).collect(Collectors.toList());
         }
         return Collections.emptyList();

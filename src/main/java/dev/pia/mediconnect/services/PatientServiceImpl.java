@@ -62,6 +62,7 @@ public class PatientServiceImpl implements PatientService {
         Optional<Provider> optionalProvider = providerRepository.findById(providerId);
         if (optionalProvider.isPresent()) {
             List<Patient> patientList = patientRepository.findAllByProviderEquals(optionalProvider.get());
+            // :: is a method reference operator - calls the method by referring to it with the help of its class directly
             return patientList.stream().map(PatientDto::new).collect(Collectors.toList());
         }
         return Collections.emptyList();
