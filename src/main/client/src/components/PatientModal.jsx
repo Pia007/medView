@@ -60,7 +60,7 @@ const PatientModal = ({
         <>
             <Modal isOpen={isOpen} toggle={toggle} size='lg' centered scrollable>
                 <ModalBody >
-                <form  onSubmit={onSubmit}>
+                    <form  onSubmit={onSubmit}>
                         <Col className='d-flex flex-row justify-content-between mb-2' id='top'>
                             <h3 className='align-self-center'>MRN: {patCode} </h3>
                             <button 

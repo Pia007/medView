@@ -96,9 +96,10 @@ const Provider = ({
                 setLoading(false);
             }
         }
-            getProvider();
-            getPatients();
-        }, []);
+
+        getProvider();
+        getPatients();
+    }, []);
 
     
 
@@ -203,17 +204,17 @@ const Provider = ({
                                 <form >
                                     <div className='form-group d-flex flex-row mb-2'>
                                         <label htmlFor="search bar" className='hidden'>Search Patients</label>
-                                    <input 
-                                        type="text" 
-                                        id='search-bar'
-                                        placeholder="Search Patients"
-                                        className='form-control'
-                                        value={search}
-                                        onChange={(e) => setSearch(e.target.value)}
-                                    />
+                                        <input 
+                                            type="text" 
+                                            id='search-bar'
+                                            placeholder="Search Patients"
+                                            className='form-control'
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
+                                        />
                                     </div>
                                 </form>
-                                <Table hover striped responsive  className='pat-table'>
+                                <Table hover striped responsive className='pat-table'>
                                     <thead>
                                         <tr className='text-two fw-bold'>
                                             <th>

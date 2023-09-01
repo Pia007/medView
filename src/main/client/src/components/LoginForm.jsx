@@ -44,9 +44,10 @@ const LoginForm = () => {
             }
         )
         .then((response) => {
-            console.log("Status: ", response.status)
-            console.log("Message: ", response.message)
-            console.log("Data: ", response.data)
+            console.log(response)
+            // console.log("Status: ", response.status)
+            // console.log("Message: ", response.message)
+            // console.log("Data: ", response.data)
             
             if (response.status === 200 && response.data[0] === 'Invalid Provider username or password') {
                 setErr(response.data);
