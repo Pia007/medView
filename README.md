@@ -52,7 +52,7 @@ From your command line:
 $ git clone https://github.com/Pia007/medView
 
 # Go into the repository
-$ cd medView
+$ cd server/mediconnect
 
 # Start the Spring Boot server
 $ mvn spring-boot:run
