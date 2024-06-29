@@ -1,0 +1,1 @@
+web: java -jar target/medview-0.0.1-SNAPSHOT.jar
