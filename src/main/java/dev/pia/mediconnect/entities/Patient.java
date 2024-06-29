@@ -1,17 +1,32 @@
 package dev.pia.mediconnect.entities;
 
-import java.time.*;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import dev.pia.mediconnect.dtos.*;
-import lombok.*;
+import dev.pia.mediconnect.dtos.PatientDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="Patients")
+@Table(name = "Patients")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,10 +38,8 @@ public class Patient {
     private Long id;
 
     @Column(unique = true)
-    private String patientCode;
+    private String patientMRN;
 
-    // reorder first, last, dob, change patientCode to patient code
-    // add gender, ethnicity
     @Column(name = "first_name", length = 25)
     private String firstName;
 
@@ -34,7 +47,7 @@ public class Patient {
     private String lastName;
 
     @Column(name = "dob")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
     private LocalDate dob;
 
     @Column(name = "gender")
@@ -105,13 +118,11 @@ public class Patient {
     public int getAge() {
         return Period.between(this.dob, LocalDate.now()).getYears();
     }
-
-
     /* custom constructor */
     public Patient(PatientDto patientDto) {
-        
-        if (patientDto.getPatientCode() != null) {
-            this.patientCode = patientDto.getPatientCode();
+
+        if (patientDto.getPatientMRN() != null) {
+            this.patientMRN = patientDto.getPatientMRN();
         }
         if (patientDto.getFirstName() != null) {
             this.firstName = patientDto.getFirstName();
@@ -127,10 +138,9 @@ public class Patient {
             this.gender = patientDto.getGender();
         }
         // ethnicity
-        if (patientDto.getEthnicity() !=null) {
+        if (patientDto.getEthnicity() != null) {
             this.ethnicity = patientDto.getEthnicity();
         }
-        
         if (patientDto.getSocialSecurity() != null) {
             this.socialSecurity = patientDto.getSocialSecurity();
         }
@@ -184,17 +194,19 @@ public class Patient {
         }
     }
 
-    /*  toString */
+    /* toString */
     @Override
     public String toString() {
         /* return all patient data */
-        return "Patient [id=" + id + ", patientCode=" + patientCode + ", +  firstName=" + firstName
+        return "Patient [id=" + id + ", patientMRN=" + patientMRN + ", +  firstName=" + firstName
                 + ", lastName=" + lastName + ", dob=" + dob + ", age=" + age + ", email=" + email
                 + ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
                 + ", contact firstname=" + contactFirstname + ", contact lastname=" + contactLastname + ", Phone="
-                + contactPhone + ", contact relationship=" + contactRelationship + ", insurance=" + insurance + ", allergies=" + allergies + ", conditions=" + conditions
-                + ", medications=" + medications 
-                + ", gender=" + gender + ", race/ethnicity=" + ethnicity + ", social security=" + socialSecurity + ", blood type=" + bloodType + "]";
+                + contactPhone + ", contact relationship=" + contactRelationship + ", insurance=" + insurance
+                + ", allergies=" + allergies + ", conditions=" + conditions
+                + ", medications=" + medications
+                + ", gender=" + gender + ", race/ethnicity=" + ethnicity + ", social security=" + socialSecurity
+                + ", blood type=" + bloodType + "]";
     }
 
     public Provider getProvider() {

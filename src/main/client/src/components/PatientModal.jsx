@@ -2,12 +2,12 @@ import React from 'react';
 import { Row, Col, Modal, ModalBody } from 'reactstrap';
 import arrow from '../images/arrowup.svg'
 import Scrollspy from 'react-scrollspy';
+import { getStates } from '../utils/usstates';
 
 const PatientModal = ({
     isOpen, 
     toggle, 
-    patCode,
-    valuePatientCode,
+    patMRN,
     valueFirstName, 
     valueLastName,
     valueDob,
@@ -29,7 +29,6 @@ const PatientModal = ({
     valueInsurance,
     valueConditions,
     valueMedications,
-    onChangePatientCode,
     onChangeFirstName,
     onChangeLastName,
     onChangeDob,
@@ -62,7 +61,7 @@ const PatientModal = ({
                 <ModalBody >
                     <form  onSubmit={onSubmit}>
                         <Col className='d-flex flex-row justify-content-between mb-2' id='top'>
-                            <h3 className='align-self-center'>MRN: {patCode} </h3>
+                            <h3 className='align-self-center'>MRN: {patMRN} </h3>
                             <button 
                                 type='button' 
                                 className='mt-0 mr-0 p-2 cancel-btn ' 
@@ -87,12 +86,12 @@ const PatientModal = ({
                         
                         <Row id='up-pd' className='p-2'>
                             <Col xs={12} md={6} className='form-group p-2'>
-                                <label htmlFor="patientCode">Patient Code</label>
+                                <label htmlFor="patientMRN">Medical Record Number</label>
                                 <input
                                     type="text"
                                     className='form-control'
-                                    id='patientCode'
-                                    value={valuePatientCode}
+                                    id='patientMRN'
+                                    value={patMRN}
                                     readOnly
                                     
                                 />
@@ -120,7 +119,7 @@ const PatientModal = ({
                             <Col xs={12} lg={6} className='form-group p-2'>
                                 <label htmlFor="dob">Date of Birth</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     className='form-control'
                                     id='dob'
                                     value={valueDob}
@@ -133,6 +132,7 @@ const PatientModal = ({
                                     name='gender'
                                     id='gender'
                                     className='form-select'
+                                    value={valueGender}
                                     onChange={onChangeGender}
                                 >
                                     <option value="">Select</option>
@@ -160,6 +160,7 @@ const PatientModal = ({
                                     name='bloodType'
                                     id='bloodType'
                                     className='form-select'
+                                    value={valueBloodType}
                                     onChange={onChangeBloodType}
                                 >
                                     <option value="">Select</option>
@@ -171,6 +172,7 @@ const PatientModal = ({
                                     <option value='O-'>O-</option>
                                     <option value='AB+'>AB+</option>
                                     <option value='AB-'>AB-</option>
+                                    <option value='Unknown'>Unknown</option>
                                 </select>
                             </Col>
                             <Col className='form-group p-2'>
@@ -179,6 +181,7 @@ const PatientModal = ({
                                         name='ethnicity'
                                         id='ethnicity'
                                         className='form-select'
+                                        value={valueEthnicity}
                                         onChange={onChangeEthnicity}
                                 >
                                     <option value="">Select</option>
@@ -239,13 +242,20 @@ const PatientModal = ({
                             </Col>
                             <Col className='form-group p-2'>
                                 <label htmlFor="state">State</label>
-                                <input
-                                    type="text"
-                                    className='form-control'
+                                <select
+                                    name='state'
                                     id='state'
+                                    className='form-select'
                                     value={valueState}
                                     onChange={onChangeState}
-                                />
+                                >
+                                    <option value="">Select</option>
+                                    {getStates().map((state) => (
+                                        <option key={state.abbreviation} value={state.abbreviation}>
+                                            {state.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </Col>
                             <Col className='form-group p-2'>
                                 <label htmlFor="zip">Zip</label>
@@ -295,13 +305,21 @@ const PatientModal = ({
                             </Col>
                             <Col className='form-group p-2'>
                                 <label htmlFor='contactRelationship'>Relationship</label>
-                                <input
-                                    type="text"
-                                    className='form-control'
+                                <select
+                                    name='contactRelationship'
                                     id='contactRelationship'
+                                    className='form-select'
                                     value={valueContactRelationship}
                                     onChange={onChangeContactRelationship}
-                                />
+                                >
+                                    <option value="">Select</option>
+                                    <option value='Parent'>Parent</option>
+                                    <option value='Spouse'>Spouse</option>
+                                    <option value='Sibling'>Sibling</option>
+                                    <option value='Child'>Child</option>
+                                    <option value='Partner'>Partner</option>
+                                    <option value='Other'>Other</option>
+                                </select>
                             </Col>
                         </Row>
 
@@ -351,7 +369,6 @@ const PatientModal = ({
                             </Col>
                         </Row>
                         <div className='d-flex justify-content-end'>
-                
                             <button 
                                 type='submit' 
                                 className='mt-3 mr-0 p-2 form-btn'

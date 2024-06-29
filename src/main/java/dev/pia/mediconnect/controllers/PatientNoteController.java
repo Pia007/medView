@@ -2,7 +2,6 @@ package dev.pia.mediconnect.controllers;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import dev.pia.mediconnect.dtos.*;
@@ -15,7 +14,6 @@ public class PatientNoteController {
 
     private PatientNoteService patientNoteService;
 
-    @Autowired
     public PatientNoteController(PatientNoteService patientNoteService) {
         this.patientNoteService = patientNoteService;
     }
@@ -49,5 +47,4 @@ public class PatientNoteController {
     public List<String> deletePatientNoteById(@PathVariable Long patientNoteId) {
         return patientNoteService.deletePatientNoteById(patientNoteId);
     }
-    
 }

@@ -3,8 +3,11 @@ package dev.pia.mediconnect.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import dev.pia.mediconnect.entities.*;
-import lombok.*;
+import dev.pia.mediconnect.entities.Patient;
+import dev.pia.mediconnect.entities.Provider;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -12,9 +15,9 @@ import lombok.*;
 
 public class PatientDto implements Serializable {
 
-    /*fields */
+    /* fields */
     private Long id;
-    private String patientCode;
+    private String patientMRN;
     private LocalDate dob;
     private String firstName;
     private String lastName;
@@ -39,16 +42,14 @@ public class PatientDto implements Serializable {
     private String medications;
     private Provider provider;
 
-
-    
     /* custom constructor */
     public PatientDto(Patient patient) {
-        
+
         if (patient.getId() != null) {
             this.id = patient.getId();
         }
-        if (patient.getPatientCode() != null) {
-            this.patientCode = patient.getPatientCode();
+        if (patient.getPatientMRN() != null) {
+            this.patientMRN = patient.getPatientMRN();
         }
         if (patient.getFirstName() != null) {
             this.firstName = patient.getFirstName();
@@ -59,7 +60,7 @@ public class PatientDto implements Serializable {
         if (patient.getGender() != null) {
             this.gender = patient.getGender();
         }
-        if (patient.getEthnicity() != null ) {
+        if (patient.getEthnicity() != null) {
             this.ethnicity = patient.getEthnicity();
         }
         if (patient.getSocialSecurity() != null) {

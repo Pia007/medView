@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ public class ProviderServiceImpl implements ProviderService {
     private PasswordEncoder passwordEncoder;
 
     /* constructor injection */
-    @Autowired
     public ProviderServiceImpl(ProviderRepository providerRepository, PasswordEncoder passwordEncoder) {
         this.providerRepository = providerRepository;
         this.passwordEncoder = passwordEncoder;

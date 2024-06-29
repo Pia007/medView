@@ -2,7 +2,6 @@ package dev.pia.mediconnect.controllers;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +15,8 @@ public class ProviderController {
 
     private ProviderService providerService;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
     
-    // constructor injection
-    @Autowired
     public ProviderController(ProviderService providerService) {
         this.providerService = providerService;
     }

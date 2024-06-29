@@ -1,11 +1,10 @@
 import React from 'react';
 import {Card, Col, Row} from "reactstrap";
-import { faUserPen, faUser, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faUserPen, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Bounce } from 'react-reveal';
+import moment from 'moment';
 
 export const RenderProvider = ({provider, onClick}) => {
-
     return (
         <>
             <Col xs={12} sm={10} className='m-auto text-center'>
@@ -29,7 +28,6 @@ export const RenderProvider = ({provider, onClick}) => {
     )
 }
 
-
 export const RenderPatient = ({singlePatient, handleClick}) => {
 
     const regex = /^[\s,]+$/;
@@ -41,13 +39,13 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                 <Row className='d-flex flex-column flex-lg-row text-capitalize'>
                     <Col xm={4} className='order-2 order-lg-1 d-flex flex-column align-items-center align-items-lg-start my-2 my-lg-0'>
                         <h3 className='pat-text'>{singlePatient.lastName}, {''}
-                            {singlePatient.firstName} 
+                            {singlePatient.firstName}
                         </h3>
                         <p className='mb-0 detail'>
                             <strong>
                                 DOB:
                             </strong> {' '}
-                            {new Date(singlePatient.dob).toLocaleDateString()} - {''}
+                                {moment(singlePatient.dob).format('MM-DD-YYYY')} -{' '}
                             <span className='text-lowercase text-two'>
                                 {singlePatient.age}yrs
                             </span>
@@ -66,17 +64,16 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                     </Col>
                     <Col lg={4} className='order-1 order-lg-2 d-flex flex-column justify-content-around my-2 my-lg-0'>
                         <button className='p-1 m-auto pat-icon-button ' onClick={handleClick} >
-                            <FontAwesomeIcon icon={faUser} className='icon pat-icon' alt='patient edit button'/>
+                            <FontAwesomeIcon icon={faUserPen} className='icon pat-icon' alt='patient edit button'/>
                         </button>
                     
                         <p className='m-auto my-2 my-md-0 pat-text detail fw-bold'>
-                            MRN: <span className='fw-normal text text-lowercase' >
-                                {singlePatient.patientCode}
+                            MRN: <span className='fw-normal text' >
+                                {singlePatient.patientMRN}
                             </span>
                         </p>
                     </Col>
                     <Col className='order-3 d-flex flex-column justify-content-end my-2 my-lg-1'>
-
                         {
                             singlePatient.allergies && (
                                 !regex.test(singlePatient.allergies) && 
@@ -90,10 +87,8 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
                             ?   
                             (
                                 <Col className='d-flex flex-column justify-content-end align-items-center align-items-lg-end'>
-                                    <Bounce delay={750} duration={3000} forever={false}>
-                                        <FontAwesomeIcon icon={faTriangleExclamation} className='icon alert-icon' alt='alert allergies'/>
-                                        <p className=' alert-detail detail d'>Allergies</p>
-                                    </Bounce>
+                                    <FontAwesomeIcon icon={faTriangleExclamation} className='icon alert-icon' alt='alert allergies'/>
+                                    <p className=' alert-detail detail d'>Allergies</p>
                                 </Col>
                             ) 
                             : null
@@ -119,5 +114,3 @@ export const RenderPatient = ({singlePatient, handleClick}) => {
         </>
     ) 
 }
-
-

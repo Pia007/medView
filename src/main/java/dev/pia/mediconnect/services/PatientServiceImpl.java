@@ -1,17 +1,21 @@
 package dev.pia.mediconnect.services;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.pia.mediconnect.dtos.*;
-import dev.pia.mediconnect.entities.*;
-import dev.pia.mediconnect.repositories.*;
-
+import dev.pia.mediconnect.dtos.PatientDto;
+import dev.pia.mediconnect.entities.Patient;
+import dev.pia.mediconnect.entities.Provider;
+import dev.pia.mediconnect.repositories.PatientRepository;
+import dev.pia.mediconnect.repositories.ProviderRepository;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -19,15 +23,12 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;
     private ProviderRepository providerRepository;
 
-    /* constructor injection */
-    @Autowired
     public PatientServiceImpl(PatientRepository patientRepository, ProviderRepository providerRepository) {
         this.patientRepository = patientRepository;
         this.providerRepository = providerRepository;
     }
 
-
-    /* provider adds a patient with patientCode */
+    /* provider adds a patient with patientMRN */
     @Override
     @Transactional
     public List<String> addPatient(PatientDto patientDto, Long providerId) {
@@ -37,8 +38,8 @@ public class PatientServiceImpl implements PatientService {
         if (optionalProvider.isPresent()) {
 
             Provider provider = optionalProvider.get();
-            Optional<Patient> optionalPatient = patientRepository.findByPatientCode(patientDto.getPatientCode());
-        
+            Optional<Patient> optionalPatient = patientRepository.findByPatientMRN(patientDto.getPatientMRN());
+
             if (optionalPatient.isPresent()) {
                 return Arrays.asList("Patient already exists");
             } else {
@@ -58,11 +59,12 @@ public class PatientServiceImpl implements PatientService {
     /* get all patients by provider id */
     @Override
     @Transactional
-    public List<PatientDto> getAllPatientsByProviderId(Long providerId) { 
+    public List<PatientDto> getAllPatientsByProviderId(Long providerId) {
         Optional<Provider> optionalProvider = providerRepository.findById(providerId);
         if (optionalProvider.isPresent()) {
             List<Patient> patientList = patientRepository.findAllByProviderEquals(optionalProvider.get());
-            // :: is a method reference operator - calls the method by referring to it with the help of its class directly
+            // :: is a method reference operator - calls the method by referring to it with
+            // the help of its class directly
             return patientList.stream().map(PatientDto::new).collect(Collectors.toList());
         }
         return Collections.emptyList();
@@ -74,7 +76,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientDto getPatientById(Long patientId) {
         Optional<Patient> optionalPatient = patientRepository.findById(patientId);
         if (optionalPatient.isPresent()) {
-            //print optional patient
+            // print optional patient
             System.out.println(optionalPatient);
             return new PatientDto(optionalPatient.get());
         }
@@ -89,6 +91,7 @@ public class PatientServiceImpl implements PatientService {
         Optional<Patient> optionalPatient = patientRepository.findById(patientId);
         if (optionalPatient.isPresent()) {
             Patient patient = optionalPatient.get();
+            patient.setPatientMRN(patientDto.getPatientMRN());
             patient.setFirstName(patientDto.getFirstName());
             patient.setLastName(patientDto.getLastName());
             patient.setAddress(patientDto.getAddress());
@@ -106,7 +109,7 @@ public class PatientServiceImpl implements PatientService {
             patient.setEthnicity(patientDto.getEthnicity());
             patient.setSocialSecurity(patientDto.getSocialSecurity());
             patient.setBloodType(patientDto.getBloodType());
-            patient.setPatientCode(patientDto.getPatientCode());
+            patient.setPatientMRN(patientDto.getPatientMRN());
             patient.setContactFirstname(patientDto.getContactFirstname());
             patient.setContactLastname(patientDto.getContactLastname());
             patient.setContactPhone(patientDto.getContactPhone());

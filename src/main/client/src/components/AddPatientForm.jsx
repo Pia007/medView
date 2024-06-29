@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
 import { Row, Col, Card } from 'reactstrap'
-import { Fade } from 'react-reveal';
+import { getStates } from '../utils/usstates';
 
 const ADD_PATIENT_URL = '/patients/provider/';
 
@@ -40,12 +40,12 @@ const AddPatientForm = () => {
 
     const { id } = useParams();
     console.log(id);
-    const patientCodeRef = useRef();
+    const patientMRNRef = useRef();
     const errRef = useRef();
 
-    const [patientCode, setPatientCode] = useState('');
-    const [validPatientCode, setValidPatientCode] = useState(false);
-    const [patientCodeFocus, setPatientCodeFocus] = useState('');
+    const [patientMRN, setMRN] = useState('');
+    const [validPatientMRN, setValidPatientMRN] = useState(false);
+    const [patientMRNFocus, setMRNFocus] = useState('');
 
     const [firstName, setFirstName] = useState('');
     const [validFirstName, setValidFirstName] = useState(false);
@@ -133,11 +133,11 @@ const AddPatientForm = () => {
 
 
     useEffect (() => {
-        patientCodeRef.current.focus();
+        patientMRNRef.current.focus();
     }, []);
 
     useEffect(() => {
-        setValidPatientCode(PATIENT_CODE_REGEX.test(patientCode));
+        setValidPatientMRN(PATIENT_CODE_REGEX.test(patientMRN));
         setValidFirstName(FIRSTNAME_REGEX.test(firstName));
         setValidLastName(LASTNAME_REGEX.test(lastName));
         setValidDob(DOB_REGEX.test(dob));
@@ -160,7 +160,7 @@ const AddPatientForm = () => {
         setValidConditions(CONDITIONS_REGEX.test(conditions));
         setValidMedications(MEDICATIONS_REGEX.test(medications));
         
-    }, [patientCode, 
+    }, [patientMRN, 
         firstName, 
         lastName,
         dob,
@@ -186,7 +186,7 @@ const AddPatientForm = () => {
     
     useEffect(() => {
         setError('');
-    }, [patientCode, 
+    }, [patientMRN, 
         firstName, 
         lastName,
         dob,
@@ -210,13 +210,22 @@ const AddPatientForm = () => {
         medications
     ]);
 
+    function generateRandomString(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
                 const newPatient = await axios.post(`${ADD_PATIENT_URL}/${id}`, {
-                patientCode,
+                patientMRN: generateRandomString(10),
                 firstName,
                 lastName,
                 dob: moment(dob).format('YYYY-MM-DD'),
@@ -243,7 +252,8 @@ const AddPatientForm = () => {
 
             navigate(`/provider/${id}`);
 
-            setPatientCode('');
+            // ge
+            setMRN(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
             setFirstName('');
             setLastName('');
             setDob('');
@@ -293,31 +303,29 @@ const AddPatientForm = () => {
                             Cancel
                         </button>
                     </Col>
-                    <Fade delay={1000}>
-                        <span className='text-left align-self-sm-center p-2'>Demo application: Do not use sensitive information</span>
-                    </Fade>
+                    <span className='text-left align-self-sm-center p-2'>Demo application: Do not use sensitive information</span>
                     <form action="" onSubmit={handleSubmit} className='p-2'>
                         
                         <Row id='demos'>
                             <Col md={6} className="form-group my-2">
-                                <label htmlFor="patientCode">Patient Code</label>
+                                <label htmlFor="patientMRN">Medical Record Number</label>
                                 <input
                                     type="text"
-                                    ref={patientCodeRef}
+                                    ref={patientMRNRef}
                                     className='form-control'
-                                    id='patientCode'
-                                    name='patientCode'
-                                    value={patientCode}
-                                    aria-invalid={validPatientCode ? 'false' : 'true'}
+                                    id='patientMRN'
+                                    name='patientMRN'
+                                    value={patientMRN}
+                                    aria-invalid={validPatientMRN ? 'false' : 'true'}
                                     aria-describedby='newpatientnote'
                                     autoComplete='off'
-                                    onChange={(e) => setPatientCode(e.target.value)}
-                                    onFocus={() => setPatientCodeFocus('focus')}
-                                    onBlur={() => setPatientCodeFocus('')}
+                                    onChange={(e) => setMRN(e.target.value)}
+                                    onFocus={() => setMRNFocus('focus')}
+                                    onBlur={() => setMRNFocus('')}
                                 />
-                                <p id='newpatientnote' className={patientCodeFocus && patientCode && !validPatientCode ? 'instructions' : 'offscreen'}>
+                                <p id='newpatientnote' className={patientMRNFocus && patientMRN && !validPatientMRN ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
-                                    <FontAwesomeIcon icon={faTimes} className={validPatientCode || !patientCode ? 'hide' : 'invalid'} />
+                                    <FontAwesomeIcon icon={faTimes} className={validPatientMRN || !patientMRN ? 'hide' : 'invalid'} />
                                     4 to 10 characters.<br />
                                     Must begin with a letter.<br />
                                     Letters, numbers, underscores, hyphens allowed.
@@ -444,9 +452,6 @@ const AddPatientForm = () => {
                                     123-45-6789.
                                 </p>
                             </Col>
-
-                            
-
                             <Col md={6} className="form-group  my-2">
                                 <label htmlFor='bloodType'>
                                     Blood Type:
@@ -493,6 +498,7 @@ const AddPatientForm = () => {
                                     <option value='White or Caucasian'>White or Caucasian</option>
                                     <option value='Multiracial or Biracial'>Multiracial or Biracial</option>
                                     <option value='A race/ethnicity not listed here'>A race/ethnicity not listed here</option>
+                                    <option value='Prefer Not to Answer'>Prefer Not to Answer</option>
                                 </select>
                             </Col>
                         </Row>
@@ -605,20 +611,24 @@ const AddPatientForm = () => {
                                     State:
                                     <FontAwesomeIcon icon={faCheck} className={validState ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validState || !state ? 'hide' : 'invalid'} />
-                                </label>    
-                                <input
-                                    type='text'
-                                    className='form-control'
+                                </label>
+                                <select
+                                    className='form-control' 
                                     id='state'
                                     required
                                     autoComplete='off'
                                     value={state}
-                                    aria-invalid={validState ? 'false' : 'true'}
-                                    aria-describedby='statenote'
                                     onChange={(e) => setState(e.target.value)}
                                     onFocus={() => setStateFocus(true)}
                                     onBlur={() => setStateFocus(false)}
-                                />
+                                >
+                                    <option value=''>Select a state</option>
+                                    {getStates().map((state) => (
+                                        <option key={state.abbreviation} value={state.abbreviation}>
+                                            {state.abbreviation} - {state.name}
+                                        </option>
+                                    ))}
+                                </select>
                                 <p id='statenote' className={stateFocus && !validState ? 'instructions' : 'offscreen'}>
                                     <FontAwesomeIcon icon={faInfoCircle} />
                                     Must be a valid state abbreviation.<br />
@@ -737,24 +747,22 @@ const AddPatientForm = () => {
                                     <FontAwesomeIcon icon={faCheck} className={validContactRelationship ? 'valid' : 'hide'} />
                                     <FontAwesomeIcon icon={faTimes} className={validContactRelationship || !contactRelationship ? 'hide' : 'invalid'} />
                                 </label>
-                                <input
-                                    type='text'
-                                    className='form-control'
+                                <select
+                                    name='contactRelationship'
                                     id='contactRelationship'
-                                    required
-                                    autoComplete='off'
-                                    value={contactRelationship}
-                                    aria-invalid={validContactRelationship ? 'false' : 'true'}
-                                    aria-describedby='crnote'
+                                    className='form-select'
                                     onChange={(e) => setContactRelationship(e.target.value)}
                                     onFocus={() => setContactRelationshipFocus(true)}
                                     onBlur={() => setContactRelationshipFocus(false)}
-                                />
-                                <p id='crnote' className={contactRelationshipFocus && !validContactRelationship ? 'instructions' : 'offscreen'}>
-                                    <FontAwesomeIcon icon={faInfoCircle} />
-                                    Must be at least 2 characters.<br />
-                                    Letters, spaces, and hyphens allowed.
-                                </p>
+                                >
+                                    <option value=''>Select</option>
+                                    <option value='Parent'>Parent</option>
+                                    <option value='Spouse'>Spouse</option>
+                                    <option value='Sibling'>Sibling</option>
+                                    <option value='Child'>Child</option>        
+                                    <option value='Partner'>Partner</option>    
+                                    <option value='Other'>Other</option>      
+                                </select> 
                             </Col>
                         </Row>
 

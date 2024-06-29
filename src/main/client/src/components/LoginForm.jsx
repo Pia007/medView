@@ -5,8 +5,6 @@ import axios from '../api/AxiosApi';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Row, Card, Button } from 'reactstrap';
-import { Fade } from 'react-reveal';
-
 const LOGIN_URL = '/providers/login'
 
 
@@ -24,8 +22,6 @@ const LoginForm = () => {
     const [success, setSuccess] = useState(false);
     const [providerId, setProviderId] = useState(null)
     
-    
-
     useEffect(() => {
         usernameRef.current.focus();  
     }, [])
@@ -44,11 +40,6 @@ const LoginForm = () => {
             }
         )
         .then((response) => {
-            console.log(response)
-            // console.log("Status: ", response.status)
-            // console.log("Message: ", response.message)
-            // console.log("Data: ", response.data)
-            
             if (response.status === 200 && response.data[0] === 'Invalid Provider username or password') {
                 setErr(response.data);
                 setSuccess(false);
@@ -70,7 +61,6 @@ const LoginForm = () => {
         })
     }
     
-
     return (
         <>
             <section className='row m-auto p-3 justify-content-around m-5 login-section '>

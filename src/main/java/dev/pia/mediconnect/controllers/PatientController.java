@@ -2,7 +2,6 @@ package dev.pia.mediconnect.controllers;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import dev.pia.mediconnect.dtos.*;
@@ -16,7 +15,6 @@ public class PatientController {
     
     private PatientService patientService;;
 
-    @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }

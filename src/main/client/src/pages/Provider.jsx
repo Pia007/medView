@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect} from 'react';
-import { useParams, Link } from 'react-router-dom';
-import files from '../images/files.svg';
-import { Row, Col, Table, Card, Spinner} from 'reactstrap';
-import { RenderProvider } from '../components/Renders';
-import ProviderModal from '../components/ProviderModal';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Card, Col, Row, Spinner, Table } from 'reactstrap';
 import axios from '../api/AxiosApi';
+import ProviderModal from '../components/ProviderModal';
+import { RenderProvider } from '../components/Renders';
+import files from '../images/files.svg';
 
 const PROVIDER_URL = '/providers';
 const PATIENT_URL = '/patients';
@@ -136,16 +137,19 @@ const Provider = ({
         )
     }
 
-
+    // search patients by firstname or lastname or date of birth
     const patientList = patients.filter((patient => {
         return search.toLowerCase() !== "" 
-        ? patient.firstName.toLowerCase().includes(search.toLowerCase()) || patient.lastName.toLowerCase().includes(search.toLowerCase()) 
+        ? patient.firstName.toLowerCase().includes(search.toLowerCase()) || 
+        patient.lastName.toLowerCase().includes(search.toLowerCase()) ||
+        patient.dob.includes(search)
         : patient
     })).map(patient => {
         return (
             <tr key={patient.id} className="table-info text-capitalize">
                 <td>{patient.firstName}</td>
                 <td>{patient.lastName}</td>
+                <td>{moment(patient.dob).format('MM-DD-YYYY')}</td>
                 <td>{patient.age}</td>
                 <td className='d-flex justify-content-end'>
                     <button className='p-0 file-button mr-0'
@@ -161,12 +165,9 @@ const Provider = ({
             </tr>
         )
     })
-
     
     return (
-
         <Row className='p-5'>
-
             <Col className='row m-auto p-3 justify-content-around m-5' >
                 <RenderProvider provider={provider} onClick={toggleModal} />
                 {patients.length > 0 ? <div></div> : <div>{message}</div>}
@@ -222,6 +223,9 @@ const Provider = ({
                                             </th>
                                             <th>
                                                 Last 
+                                            </th>
+                                            <th>
+                                                DOB
                                             </th>
                                             <th>
                                                 Age

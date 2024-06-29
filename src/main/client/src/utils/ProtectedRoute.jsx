@@ -4,10 +4,8 @@ const Protected = ({ children }) => {
     const token = localStorage.getItem('username');
 
     if (!token) {
-
         return <Navigate to="/login" replace />
     }
-
     return children;
 }
 

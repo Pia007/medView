@@ -5,7 +5,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { faCheck, faTimes, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Row, Col, Card, Button } from 'reactstrap';
-import { Fade } from 'react-reveal';
 
 
 const REGISTER_URL = '/providers/register';
@@ -109,8 +108,6 @@ const RegistrationForm = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // console.log(username, password);
         
         axios.post(REGISTER_URL, 
             {
@@ -156,9 +153,7 @@ const RegistrationForm = () => {
                 <Card className='col-12 col-md-10 col-lg-8  p-2 login-card mt-2 hv-center align-self-center'>
                     <Col className='d-flex flex-column flex-sm-row justify-content-between'>
                         <h1 className='text-left p-2 mb-0 form-title'>Sign up</h1>
-                        <Fade delay={1000}>
-                            <span className='text-left align-self-sm-center p-2'>Demo application: Do not use sensitive information</span>
-                        </Fade>
+                        <span className='text-left align-self-sm-center p-2'>Demo application: Do not use sensitive information</span>
                     </Col>
                     
                     <h2 className='text-left p-2 mb-0 form-st'>

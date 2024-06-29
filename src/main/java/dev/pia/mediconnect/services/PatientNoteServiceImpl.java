@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.pia.mediconnect.dtos.*;
@@ -18,7 +17,6 @@ public class PatientNoteServiceImpl implements PatientNoteService {
     private PatientRepository patientRepository;
     private PatientNoteRepository patientNoteRepository;
 
-    @Autowired
     public PatientNoteServiceImpl(PatientRepository patientRepository, PatientNoteRepository patientNoteRepository) {
         this.patientRepository = patientRepository;
         this.patientNoteRepository = patientNoteRepository;

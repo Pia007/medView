@@ -22,11 +22,8 @@ const Main = () => {
             <div className='main-inner d-flex flex-column justify-content-around'>
                 <Routes>
                     <Route path='/' element={<Home/>} />
-                    
                     <Route path='register' element={<Registration />} />
-
                     <Route path='login/' element={<Login />} />
-                    
                     <Route path='provider/:id' element={
                         <Protected>     
                             <Provider />

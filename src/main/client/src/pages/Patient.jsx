@@ -5,11 +5,10 @@ import { useParams, Link } from 'react-router-dom'
 import { Row, Col, Card, ButtonToolbar, ButtonGroup, Button } from 'reactstrap';
 import { RenderPatient } from '../components/Renders';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faXmark} from '@fortawesome/free-solid-svg-icons';
 import PatientModal from '../components/PatientModal';
 import NoteModal from '../components/NoteModal';
 import edit from '../images/edit.svg';
-import trash from '../images/delete.svg';
 import moment from 'moment';
 import axios from '../api/AxiosApi';
 
@@ -19,8 +18,8 @@ const NOTES_URL = '/notes';
 const Patient = ({
     singlePatient,
     handleClick,
-    patCode,
-    valuePatientCode,
+    patMRN,
+    valuePatientMRN,
     valueFirstName, 
     valueLastName,
     valueDob,
@@ -42,7 +41,7 @@ const Patient = ({
     valueInsurance,
     valueConditions,
     valueMedications,
-    onChangePatientCode,
+    onChangepatientMRN,
     onChangeFirstname,
     onChangeLastname,
     onChangeDob,
@@ -131,7 +130,7 @@ const Patient = ({
 
         try {
             const response = await axios.put(`${PATIENT_URL}/${id}`, {
-                patientCode: patient.patientCode,
+                patientMRN: patient.patientMRN,
                 firstName: patient.firstName,
                 lastName: patient.lastName,
                 dob: patient.dob,
@@ -184,7 +183,7 @@ const Patient = ({
         
     };
 
-    // delete the node
+    // delete the note
     const handleDelete = async (noteId) => {
         
         console.log("Delete this note: ", noteId);
@@ -345,8 +344,8 @@ const Patient = ({
             <PatientModal 
                 isOpen={modal}
                 toggle={() => toggleModal()}
-                patCode={patient.patientCode}
-                valuePatientCode={patient.patientCode}
+                patMRN={patient.patientMRN}
+                valuepatientMRN={patient.patientMRN}
                 valueFirstName={patient.firstName}
                 valueLastName={patient.lastName}
                 valueDob={patient.dob}
@@ -396,9 +395,7 @@ const Patient = ({
             <Row  className='d-flex p-2'>
                 <ButtonToolbar>
                     <ButtonGroup className="m-auto ">
-    
                         <button 
-                            
                             type="button" 
                             className='btn form-btn button-grp'
                             onClick={() => {setCategory('conditions')}} 
