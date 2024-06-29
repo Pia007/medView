@@ -1,7 +1,7 @@
 package dev.pia.mediconnect.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ClientForwardController {
@@ -16,7 +16,7 @@ public class ClientForwardController {
 
     */
     
-    @GetMapping(value = "/**/{path:[^\\.]*}")
+    @RequestMapping(value = "/**/{path:[^\\.]*}")
     public String forward() {
         return "forward:/";
     }
