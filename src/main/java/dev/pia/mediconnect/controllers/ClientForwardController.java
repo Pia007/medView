@@ -5,18 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ClientForwardController {
-
-    /* 
-    
-        fowarding any request to the spring boot app to the react application \
-        using regex to parse the path coming in from the browser and looking at 
-        everything except for things that start with the dot (.) character.
-
-        For pages that you want to be handled by spring boot, you can add (.)
-
-    */
-    
-    @RequestMapping(value = "/**/{path:[^\\.]*}")
+    @RequestMapping(value = "/**")
     public String forward() {
         return "forward:/";
     }
